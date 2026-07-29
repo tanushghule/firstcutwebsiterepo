@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIRSTCUT Take 13 | Coming Soon</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&family=Playfair+Display:ital,wght@1,400..700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Screen Flash Overlay for Camera Capture Simulation -->
+  <div id="flash-overlay"></div>
+
+  <!-- Custom Camera Cursor -->
+  <div id="custom-camera-cursor">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+      <circle cx="12" cy="13" r="3"></circle>
+    </svg>
+    <div class="shutter-indicator"></div>
+  </div>
+
+  <!-- Coming Soon Screen -->
+  <div class="coming-soon-container">
+    
+    <!-- Title Area with Hand-Drawn Highlights -->
+    <div class="title-wrapper">
+      <div class="festival-subtitle">FLAME FIRSTCUT TAKE 13</div>
+      
+      <div class="loading-text">
+        LOADING...
+        <!-- Hand-drawn spark accent next to loading text (matching user screenshot) -->
+        <svg class="hand-drawn-spark" viewBox="0 0 100 100">
+          <path d="M15,85 C22,55 35,28 42,10" class="pencil-path path-spark-1" />
+          <path d="M15,85 C35,70 65,55 85,42" class="pencil-path path-spark-2" />
+          <path d="M15,85 C38,88 65,88 88,85" class="pencil-path path-spark-3" />
+        </svg>
+      </div>
+      
+      <div class="main-coming-soon">
+        COMING SOON
+        <!-- Hand-drawn rough double-loop pencil circle surrounding COMING SOON -->
+        <svg class="hand-drawn-circle" viewBox="0 0 500 120" preserveAspectRatio="none">
+          <path d="M 20,60 C 20,15 480,10 480,60 C 480,110 20,115 25,60 C 30,30 460,25 450,60 C 440,85 80,95 75,70" class="pencil-path path-loop" />
+        </svg>
+      </div>
+    </div>
+    
+    <!-- Instructions to interact -->
+    <div class="click-instructions">
+      Click anywhere to take a photo.
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

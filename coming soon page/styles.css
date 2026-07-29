@@ -1,0 +1,278 @@
+:root {
+  /* Brand Kit Colors */
+  --color-black: #040204;
+  --color-yellow-light: #FAC85C;
+  --color-yellow-base: #F5B223;
+  --color-yellow-dark: #D69200;
+  --color-white: #FFFFFF;
+  --color-spark: #9CA4F4; /* Lavender blue color from user screenshot */
+  
+  /* Fonts */
+  --font-header: 'Oswald', sans-serif;
+  --font-sub: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: none !important; /* Hide default cursor to use camera cursor */
+}
+
+html, body {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Subtle background blueprint grid matching the screenshot */
+body {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Custom Camera Cursor */
+#custom-camera-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  color: var(--color-white);
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.1s ease-out;
+}
+
+/* Camera Lens Center Indicator */
+.shutter-indicator {
+  position: absolute;
+  top: 13px;
+  left: 12px;
+  width: 2px;
+  height: 2px;
+  background-color: var(--color-yellow-base);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#custom-camera-cursor.hovered {
+  transform: translate(-50%, -50%) scale(1.3);
+  color: var(--color-yellow-base);
+}
+
+#custom-camera-cursor.hovered .shutter-indicator {
+  opacity: 1;
+}
+
+/* Shutter photo click animations (Flip) */
+#custom-camera-cursor.click-flip {
+  animation: camera-flip 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes camera-flip {
+  0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(1.4) rotateY(90deg); }
+  100% { transform: translate(-50%, -50%) scale(1) rotateY(180deg); }
+}
+
+/* Camera Screen Flash overlay */
+#flash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-white);
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+#flash-overlay.active {
+  animation: shutter-flash 0.25s ease-out forwards;
+}
+
+@keyframes shutter-flash {
+  0% { opacity: 0.9; }
+  10% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Main Container Layout */
+.coming-soon-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.festival-subtitle {
+  font-family: var(--font-sub);
+  font-size: 2rem;
+  font-style: italic;
+  color: var(--color-yellow-base);
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.loading-text {
+  font-family: var(--font-header);
+  font-size: 3.5vw;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* Hand-Drawn Spark SVG */
+.hand-drawn-spark {
+  position: absolute;
+  top: -25px;
+  right: -45px;
+  width: 42px;
+  height: 42px;
+}
+
+.pencil-path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.path-spark-1, .path-spark-2, .path-spark-3 {
+  stroke: var(--color-spark);
+  stroke-width: 5;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: sketch 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.path-spark-1 { animation-delay: 0.2s; }
+.path-spark-2 { animation-delay: 0.35s; }
+.path-spark-3 { animation-delay: 0.5s; }
+
+/* Hand-Drawn Circle SVG */
+.main-coming-soon {
+  font-family: var(--font-header);
+  font-size: 9.5vw;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -3.5px; /* Extremely tight letters touching each other */
+  color: var(--color-white);
+  padding: 1.5rem 3.5rem;
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
+
+.hand-drawn-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.path-loop {
+  stroke: var(--color-yellow-light);
+  stroke-width: 3.5;
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+  animation: sketch 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes sketch {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Instructions */
+.click-instructions {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 4rem;
+  animation: pulse-instruct 2s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-instruct {
+  0% { opacity: 0.3; }
+  100% { opacity: 0.7; }
+}
+
+/* Mobile Cursor Support - track tap pointer events */
+@media (max-width: 768px) {
+  * {
+    cursor: auto !important; /* Enable tap cursors */
+  }
+  
+  #custom-camera-cursor {
+    width: 40px;
+    height: 40px;
+    mix-blend-mode: normal; /* Better color rendering on mobile */
+    color: var(--color-yellow-base);
+    background-color: rgba(4, 2, 4, 0.8);
+    border: 1px solid var(--color-white);
+    border-radius: 50%;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+  }
+  
+  #custom-camera-cursor.touch-active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  .festival-subtitle {
+    font-size: 1.4rem;
+  }
+  .loading-text {
+    font-size: 1.8rem;
+  }
+  .main-coming-soon {
+    font-size: 14vw;
+    letter-spacing: -2px;
+    padding: 1rem 1.8rem;
+  }
+  .hand-drawn-spark {
+    width: 25px;
+    height: 25px;
+    top: -15px;
+    right: -25px;
+  }
+}
