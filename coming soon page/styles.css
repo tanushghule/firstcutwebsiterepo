@@ -293,36 +293,36 @@ body::before {
 .path-loop-behind {
   stroke: var(--color-yellow-light);
   stroke-width: 3.5;
-  stroke-dasharray: 800;
-  stroke-dashoffset: 800;
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
   animation: scribble-behind 5s linear infinite;
 }
 
 .path-loop-front {
   stroke: var(--color-yellow-light);
   stroke-width: 3.5;
-  stroke-dasharray: 800;
-  stroke-dashoffset: 800;
+  stroke-dasharray: 280;
+  stroke-dashoffset: 280;
   animation: scribble-front 5s linear infinite;
 }
 
 @keyframes scribble-behind {
-  0% { stroke-dashoffset: 800; opacity: 0; }
-  4% { stroke-dashoffset: 800; opacity: 1; }
+  0% { stroke-dashoffset: 280; opacity: 0; }
+  4% { stroke-dashoffset: 280; opacity: 1; }
   24% { stroke-dashoffset: 0; opacity: 1; }  /* Top half draws behind SOON */
   60% { stroke-dashoffset: 0; opacity: 1; }  /* Stays highlighted */
-  80% { stroke-dashoffset: -800; opacity: 0; } /* Erases forward */
-  100% { stroke-dashoffset: -800; opacity: 0; }
+  80% { stroke-dashoffset: -280; opacity: 0; } /* Erases forward */
+  100% { stroke-dashoffset: -280; opacity: 0; }
 }
 
 @keyframes scribble-front {
-  0% { stroke-dashoffset: 800; opacity: 0; }
-  16% { stroke-dashoffset: 800; opacity: 0; }
-  20% { stroke-dashoffset: 800; opacity: 1; }
+  0% { stroke-dashoffset: 280; opacity: 0; }
+  16% { stroke-dashoffset: 280; opacity: 0; }
+  20% { stroke-dashoffset: 280; opacity: 1; }
   40% { stroke-dashoffset: 0; opacity: 1; }  /* Bottom half draws in front of SOON */
   60% { stroke-dashoffset: 0; opacity: 1; }  /* Stays highlighted */
-  80% { stroke-dashoffset: -800; opacity: 0; } /* Erases forward */
-  100% { stroke-dashoffset: -800; opacity: 0; }
+  80% { stroke-dashoffset: -280; opacity: 0; } /* Erases forward */
+  100% { stroke-dashoffset: -280; opacity: 0; }
 }
 
 /* Instructions */
