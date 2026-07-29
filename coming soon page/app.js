@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. CUSTOM CAMERA CURSOR TRACKING
   // ==========================================
   const cameraCursor = document.getElementById('custom-camera-cursor');
+  const cameraLens = document.getElementById('camera-lens');
   let mouseX = 0, mouseY = 0;
   let cursorX = 0, cursorY = 0;
   let isTouch = false;
@@ -14,8 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     isTouch = false;
     mouseX = e.clientX;
     mouseY = e.clientY;
-    
-    // Make sure cursor is visible on desktop
     cameraCursor.style.display = 'block';
   });
 
@@ -49,13 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('touchend', () => {
     isTouch = true;
-    // Fade cursor out after a period of inactivity on mobile
     touchTimeout = setTimeout(() => {
       cameraCursor.classList.remove('touch-active');
     }, 1000);
   });
 
-  // Smooth cursor follow (lerping)
+  // Smooth cursor follow (lerp factor: 0.18)
   function updateCursor() {
     if (!isTouch) {
       cursorX += (mouseX - cursorX) * 0.18;
@@ -63,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cameraCursor.style.left = `${cursorX}px`;
       cameraCursor.style.top = `${cursorY}px`;
     } else {
-      // Direct drag on mobile touch
       cursorX += (mouseX - cursorX) * 0.3;
       cursorY += (mouseY - cursorY) * 0.3;
       cameraCursor.style.left = `${cursorX}px`;
@@ -73,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updateCursor();
 
-  // Add scale animation over links or hoverable elements
-  const hoverables = document.querySelectorAll('.festival-subtitle, .loading-text, .main-coming-soon, .click-instructions');
+  // Hover states scale effects
+  const hoverables = document.querySelectorAll('.festival-subtitle, .loading-text, .soon-text, .click-instructions');
   hoverables.forEach(el => {
     el.addEventListener('mouseenter', () => cameraCursor.classList.add('hovered'));
     el.addEventListener('mouseleave', () => cameraCursor.classList.remove('hovered'));
@@ -91,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const ctx = new AudioCtx();
       
-      // 1. Initial mechanical high frequency metallic click (Triangle wave)
+      // Initial mechanical metallic latch click (Triangle wave)
       const clickOsc = ctx.createOscillator();
       const clickGain = ctx.createGain();
       clickOsc.connect(clickGain);
@@ -107,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
       clickOsc.start();
       clickOsc.stop(ctx.currentTime + 0.05);
       
-      // 2. White noise for the shutter leaf release decay (curtains closing)
-      const bufferSize = ctx.sampleRate * 0.15; // 150ms buffer
+      // Noise buffer for the curtain release
+      const bufferSize = ctx.sampleRate * 0.15;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++) {
@@ -118,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const noise = ctx.createBufferSource();
       noise.buffer = buffer;
       
-      // Bandpass filter for the noise
       const filter = ctx.createBiquadFilter();
       filter.type = 'bandpass';
       filter.frequency.value = 1200;
@@ -142,45 +138,98 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ==========================================
-  // 3. CAPTURE SIMULATION (FLASH + FLIP + SOUND)
+  // 3. SHUTTER FLASH PARTICLES ENGINE
+  // ==========================================
+  function createFlashParticles(x, y) {
+    const particleCount = 12;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'flash-particle';
+      document.body.appendChild(particle);
+      
+      // Initialize position at coordinates
+      gsap.set(particle, {
+        left: x,
+        top: y,
+        xPercent: -50,
+        yPercent: -50,
+        scale: 1 + Math.random() * 0.6
+      });
+      
+      // Generate radial trajectory vectors
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 20 + Math.random() * 60;
+      const targetX = Math.cos(angle) * distance;
+      const targetY = Math.sin(angle) * distance;
+      
+      // Explode outwards and fade
+      gsap.to(particle, {
+        x: targetX,
+        y: targetY,
+        opacity: 0,
+        scale: 0.1,
+        duration: 0.35 + Math.random() * 0.3,
+        ease: 'power2.out',
+        onComplete: () => {
+          particle.remove();
+        }
+      });
+    }
+  }
+
+
+  // ==========================================
+  // 4. CAPTURE COORDINATOR
   // ==========================================
   const flashOverlay = document.getElementById('flash-overlay');
   let isCapturing = false;
 
-  function triggerPhotoCapture(e) {
-    // Avoid double trigger from click and touch
+  function triggerPhotoCapture(clientX, clientY) {
     if (isCapturing) return;
     isCapturing = true;
     
-    // Play shutter sound
+    // Play sound click
     playShutterClick();
     
-    // Trigger Screen Flash
+    // Spawn camera glow particles
+    createFlashParticles(clientX, clientY);
+    
+    // Trigger Subtle screen flash overlay
     flashOverlay.classList.remove('active');
-    void flashOverlay.offsetWidth; // Force CSS reflow
+    void flashOverlay.offsetWidth; // Reflow
     flashOverlay.classList.add('active');
     
-    // Trigger Camera Cursor Flip
+    // Trigger Camera Lens Snip Animation
+    cameraLens.classList.remove('snip-active');
+    void cameraLens.offsetWidth; // Reflow
+    cameraLens.classList.add('snip-active');
+    
+    // Trigger Camera Cursor Rotation Flip
     cameraCursor.classList.remove('click-flip');
-    void cameraCursor.offsetWidth; // Force CSS reflow
+    void cameraCursor.offsetWidth; // Reflow
     cameraCursor.classList.add('click-flip');
     
-    // Clean up flags after animations finish
+    // Reset indicators
     setTimeout(() => {
       isCapturing = false;
       flashOverlay.classList.remove('active');
+      cameraLens.classList.remove('snip-active');
       cameraCursor.classList.remove('click-flip');
     }, 400);
   }
 
-  // Bind clicks and taps
+  // Window click / touch event routers
   window.addEventListener('click', (e) => {
-    triggerPhotoCapture(e);
+    // Avoid running on mobile touchend if it duplicates click
+    if (isTouch) return;
+    triggerPhotoCapture(e.clientX, e.clientY);
   });
 
   window.addEventListener('touchend', (e) => {
-    // Check target to avoid touch events blocking other elements if any
-    triggerPhotoCapture(e);
+    if (e.changedTouches.length > 0) {
+      const touch = e.changedTouches[0];
+      triggerPhotoCapture(touch.clientX, touch.clientY);
+    }
   });
 
 });

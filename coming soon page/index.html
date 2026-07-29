@@ -10,18 +10,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&family=Playfair+Display:ital,wght@1,400..700&display=swap" rel="stylesheet">
   
+  <!-- GSAP Core for particle animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Screen Flash Overlay for Camera Capture Simulation -->
+  <!-- Screen Flash Overlay for Camera Capture Simulation (Subtle opacity) -->
   <div id="flash-overlay"></div>
 
   <!-- Custom Camera Cursor -->
   <div id="custom-camera-cursor">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
-      <circle cx="12" cy="13" r="3"></circle>
+      <!-- Circle of the camera cursor representing the lens shutter -->
+      <circle id="camera-lens" cx="12" cy="13" r="3.5"></circle>
     </svg>
     <div class="shutter-indicator"></div>
   </div>
@@ -33,9 +37,10 @@
     <div class="title-wrapper">
       <div class="festival-subtitle">FLAME FIRSTCUT TAKE 13</div>
       
+      <!-- Small loading text with animated blinking dots -->
       <div class="loading-text">
-        LOADING...
-        <!-- Hand-drawn spark accent next to loading text (matching user screenshot) -->
+        LOADING<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
+        <!-- Hand-drawn spark accent next to loading text -->
         <svg class="hand-drawn-spark" viewBox="0 0 100 100">
           <path d="M15,85 C22,55 35,28 42,10" class="pencil-path path-spark-1" />
           <path d="M15,85 C35,70 65,55 85,42" class="pencil-path path-spark-2" />
@@ -43,12 +48,22 @@
         </svg>
       </div>
       
+      <!-- COMING SOON text with circle wrapping around SOON only (weaving behind/front) -->
       <div class="main-coming-soon">
-        COMING SOON
-        <!-- Hand-drawn rough double-loop pencil circle surrounding COMING SOON -->
-        <svg class="hand-drawn-circle" viewBox="0 0 500 120" preserveAspectRatio="none">
-          <path d="M 20,60 C 20,15 480,10 480,60 C 480,110 20,115 25,60 C 30,30 460,25 450,60 C 440,85 80,95 75,70" class="pencil-path path-loop" />
-        </svg>
+        COMING 
+        <span class="soon-wrapper">
+          <span class="soon-text">SOON</span>
+          
+          <!-- Loop Behind Text -->
+          <svg class="hand-drawn-circle circle-behind" viewBox="0 0 200 100" preserveAspectRatio="none">
+            <path d="M 12,50 C 12,12 188,10 188,50 C 188,88 12,85 18,50" class="pencil-path path-loop-behind" />
+          </svg>
+          
+          <!-- Loop In Front of Text -->
+          <svg class="hand-drawn-circle circle-front" viewBox="0 0 200 100" preserveAspectRatio="none">
+            <path d="M 18,50 C 24,20 178,22 172,50 C 166,78 30,80 25,62" class="pencil-path path-loop-front" />
+          </svg>
+        </span>
       </div>
     </div>
     

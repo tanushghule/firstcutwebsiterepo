@@ -27,14 +27,30 @@ html, body {
   overflow: hidden;
   height: 100vh;
   width: 100%;
+  position: relative;
 }
 
-/* Subtle background blueprint grid matching the screenshot */
-body {
-  background-size: 50px 50px;
+/* Faint neon yellow glowing background grid that continuously scrolls */
+body::before {
+  content: '';
+  position: absolute;
+  top: -60px; /* Offset to allow seamless translation loop */
+  left: 0;
+  width: 100%;
+  height: calc(100% + 60px);
+  background-size: 60px 60px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(to right, rgba(245, 178, 35, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 178, 35, 0.035) 1px, transparent 1px);
+  filter: drop-shadow(0 0 1px rgba(245, 178, 35, 0.2));
+  animation: scroll-grid 6s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes scroll-grid {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(60px); }
 }
 
 /* Custom Camera Cursor */
@@ -49,7 +65,35 @@ body {
   z-index: 10000;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%) scale(1);
-  transition: transform 0.1s ease-out;
+  transition: transform 0.08s ease-out;
+}
+
+/* Shutter photo click animation (Flip) */
+#custom-camera-cursor.click-flip {
+  animation: camera-flip 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes camera-flip {
+  0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  50% { transform: translate(-50%, -50%) scale(1.3) rotateY(90deg); }
+  100% { transform: translate(-50%, -50%) scale(1) rotateY(180deg); }
+}
+
+/* Camera Shutter Lens Snip Animation (Shrink and expand) */
+#camera-lens {
+  transform-origin: 12px 13px; /* Centers transform relative to cx="12" cy="13" */
+  transition: transform 0.1s ease;
+}
+
+#camera-lens.snip-active {
+  animation: lens-snip 0.35s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes lens-snip {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.1); }
+  65% { transform: scale(1.9); }
+  100% { transform: scale(1); }
 }
 
 /* Camera Lens Center Indicator */
@@ -74,18 +118,19 @@ body {
   opacity: 1;
 }
 
-/* Shutter photo click animations (Flip) */
-#custom-camera-cursor.click-flip {
-  animation: camera-flip 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Glowing camera flash particles flying from lens */
+.flash-particle {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background-color: var(--color-white);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  box-shadow: 0 0 6px var(--color-yellow-light), 0 0 12px var(--color-white);
 }
 
-@keyframes camera-flip {
-  0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
-  50% { transform: translate(-50%, -50%) scale(1.4) rotateY(90deg); }
-  100% { transform: translate(-50%, -50%) scale(1) rotateY(180deg); }
-}
-
-/* Camera Screen Flash overlay */
+/* Camera Screen Flash overlay (Subtle opacity as requested) */
 #flash-overlay {
   position: fixed;
   top: 0;
@@ -103,8 +148,7 @@ body {
 }
 
 @keyframes shutter-flash {
-  0% { opacity: 0.9; }
-  10% { opacity: 1; }
+  0% { opacity: 0.15; } /* Faint screen flash */
   100% { opacity: 0; }
 }
 
@@ -131,31 +175,54 @@ body {
 
 .festival-subtitle {
   font-family: var(--font-sub);
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-style: italic;
   color: var(--color-yellow-base);
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   opacity: 0.9;
 }
 
+/* Small Loading Text Style */
 .loading-text {
   font-family: var(--font-header);
-  font-size: 3.5vw;
-  font-weight: 500;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 1rem;
+  font-size: 0.95rem; /* Very small loading font */
+  font-weight: 700;
+  letter-spacing: 5px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1.5rem;
   position: relative;
   display: inline-block;
+  text-transform: uppercase;
+}
+
+/* Animated dots */
+.loading-dots span {
+  display: inline-block;
+  animation: blink-dot 1.4s infinite both;
+  font-weight: bold;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: .4s;
+}
+
+@keyframes blink-dot {
+  0% { opacity: .2; }
+  20% { opacity: 1; }
+  100% { opacity: .2; }
 }
 
 /* Hand-Drawn Spark SVG */
 .hand-drawn-spark {
   position: absolute;
-  top: -25px;
-  right: -45px;
-  width: 42px;
-  height: 42px;
+  top: -20px;
+  right: -35px;
+  width: 32px;
+  height: 32px;
 }
 
 .pencil-path {
@@ -176,35 +243,64 @@ body {
 .path-spark-2 { animation-delay: 0.35s; }
 .path-spark-3 { animation-delay: 0.5s; }
 
-/* Hand-Drawn Circle SVG */
+/* COMING SOON Layout */
 .main-coming-soon {
   font-family: var(--font-header);
   font-size: 9.5vw;
   font-weight: 700;
   line-height: 0.95;
-  letter-spacing: -3.5px; /* Extremely tight letters touching each other */
+  letter-spacing: -3.5px;
   color: var(--color-white);
-  padding: 1.5rem 3.5rem;
-  position: relative;
-  display: inline-block;
   user-select: none;
 }
 
-.hand-drawn-circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+/* SOON Wrapper with layered SVGs circling only this word */
+.soon-wrapper {
+  position: relative;
+  display: inline-block;
+  color: var(--color-white);
+  padding: 0.5rem 1.8rem;
 }
 
-.path-loop {
+.soon-text {
+  position: relative;
+  z-index: 2; /* Sandwiched between behind-loop and front-loop SVGs */
+}
+
+/* Hand-Drawn Layered Circle Loops */
+.hand-drawn-circle {
+  position: absolute;
+  top: -12%;
+  left: -2%;
+  width: 104%;
+  height: 124%;
+  pointer-events: none;
+}
+
+.circle-behind {
+  z-index: 1; /* Underneath text */
+}
+
+.circle-front {
+  z-index: 3; /* Overlaid on top of text */
+}
+
+.path-loop-behind {
   stroke: var(--color-yellow-light);
   stroke-width: 3.5;
-  stroke-dasharray: 1500;
-  stroke-dashoffset: 1500;
-  animation: sketch 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: sketch 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   animation-delay: 0.8s;
+}
+
+.path-loop-front {
+  stroke: var(--color-yellow-light);
+  stroke-width: 3.5;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: sketch 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: 1.8s; /* Plays after the behind loop completes */
 }
 
 @keyframes sketch {
@@ -220,7 +316,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 3px;
   color: rgba(255, 255, 255, 0.35);
-  margin-top: 4rem;
+  margin-top: 4.5rem;
   animation: pulse-instruct 2s infinite alternate ease-in-out;
 }
 
@@ -229,16 +325,16 @@ body {
   100% { opacity: 0.7; }
 }
 
-/* Mobile Cursor Support - track tap pointer events */
+/* Mobile Cursor Support */
 @media (max-width: 768px) {
   * {
-    cursor: auto !important; /* Enable tap cursors */
+    cursor: auto !important;
   }
   
   #custom-camera-cursor {
     width: 40px;
     height: 40px;
-    mix-blend-mode: normal; /* Better color rendering on mobile */
+    mix-blend-mode: normal;
     color: var(--color-yellow-base);
     background-color: rgba(4, 2, 4, 0.8);
     border: 1px solid var(--color-white);
@@ -262,12 +358,15 @@ body {
     font-size: 1.4rem;
   }
   .loading-text {
-    font-size: 1.8rem;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
   }
   .main-coming-soon {
     font-size: 14vw;
     letter-spacing: -2px;
-    padding: 1rem 1.8rem;
+  }
+  .soon-wrapper {
+    padding: 0.2rem 0.8rem;
   }
   .hand-drawn-spark {
     width: 25px;
