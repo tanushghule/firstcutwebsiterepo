@@ -40,10 +40,10 @@ body::before {
   height: calc(100% + 60px);
   background-size: 60px 60px;
   background-image: 
-    linear-gradient(to right, rgba(245, 178, 35, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(245, 178, 35, 0.035) 1px, transparent 1px);
-  filter: drop-shadow(0 0 1px rgba(245, 178, 35, 0.2));
-  animation: scroll-grid 6s linear infinite;
+    linear-gradient(to right, rgba(245, 178, 35, 0.1) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(245, 178, 35, 0.1) 1.5px, transparent 1.5px);
+  filter: drop-shadow(0 0 3px rgba(245, 178, 35, 0.5));
+  animation: scroll-grid 5s linear infinite; /* Medium-paced scroll */
   z-index: 1;
   pointer-events: none;
 }
@@ -175,11 +175,16 @@ body::before {
 
 .festival-subtitle {
   font-family: var(--font-sub);
-  font-size: 2.2rem;
-  font-style: italic;
+  font-size: 2.8rem; /* Increased size */
+  font-style: normal; /* Non-italic */
   color: var(--color-yellow-base);
   margin-bottom: 0.8rem;
   opacity: 0.9;
+  letter-spacing: 1px;
+}
+
+.festival-subtitle strong {
+  font-weight: 800; /* Bold FLAME */
 }
 
 /* Small Loading Text Style */
@@ -290,8 +295,7 @@ body::before {
   stroke-width: 3.5;
   stroke-dasharray: 800;
   stroke-dashoffset: 800;
-  animation: sketch 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 0.8s;
+  animation: scribble-behind 5s linear infinite;
 }
 
 .path-loop-front {
@@ -299,14 +303,26 @@ body::before {
   stroke-width: 3.5;
   stroke-dasharray: 800;
   stroke-dashoffset: 800;
-  animation: sketch 1.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  animation-delay: 1.8s; /* Plays after the behind loop completes */
+  animation: scribble-front 5s linear infinite;
 }
 
-@keyframes sketch {
-  to {
-    stroke-dashoffset: 0;
-  }
+@keyframes scribble-behind {
+  0% { stroke-dashoffset: 800; opacity: 0; }
+  4% { stroke-dashoffset: 800; opacity: 1; }
+  24% { stroke-dashoffset: 0; opacity: 1; }  /* Top half draws behind SOON */
+  60% { stroke-dashoffset: 0; opacity: 1; }  /* Stays highlighted */
+  80% { stroke-dashoffset: -800; opacity: 0; } /* Erases forward */
+  100% { stroke-dashoffset: -800; opacity: 0; }
+}
+
+@keyframes scribble-front {
+  0% { stroke-dashoffset: 800; opacity: 0; }
+  16% { stroke-dashoffset: 800; opacity: 0; }
+  20% { stroke-dashoffset: 800; opacity: 1; }
+  40% { stroke-dashoffset: 0; opacity: 1; }  /* Bottom half draws in front of SOON */
+  60% { stroke-dashoffset: 0; opacity: 1; }  /* Stays highlighted */
+  80% { stroke-dashoffset: -800; opacity: 0; } /* Erases forward */
+  100% { stroke-dashoffset: -800; opacity: 0; }
 }
 
 /* Instructions */
