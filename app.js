@@ -211,57 +211,59 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const wordList = document.querySelector('[data-looping-words-list]');
   const edgeElement = document.querySelector('[data-looping-words-selector]');
-  let loopingIndex = 0;
-
+  
   if (wordList && edgeElement) {
-    const listItems = wordList.children;
-    const totalWords = listItems.length; // 6 items including duplicate
+    const totalWords = wordList.children.length; // 5 unique words
     const wordHeight = 100 / totalWords;
+    let currentIndex = 0;
 
     function updateEdgeWidth() {
-      // The word currently scrolling into view is at index loopingIndex
-      const activeWordIndex = loopingIndex % totalWords;
-      const activeWord = listItems[activeWordIndex];
-      if (activeWord) {
-        const textEl = activeWord.querySelector('.looping-words__p');
-        const wordWidth = textEl ? textEl.getBoundingClientRect().width : activeWord.getBoundingClientRect().width;
+      // The original JS targets the word at `currentIndex + 1` for width calculation,
+      // as that is effectively the word centered in the viewport after the list has shifted.
+      const centerWordIndex = (currentIndex + 1) % totalWords;
+      const centerWord = wordList.children[centerWordIndex];
+
+      if (centerWord) {
+        const textEl = centerWord.querySelector('.looping-words__p');
+        const centerWordWidth = textEl ? textEl.getBoundingClientRect().width : centerWord.getBoundingClientRect().width;
         const listWidth = wordList.getBoundingClientRect().width;
-        const percentageWidth = (wordWidth / listWidth) * 100;
+        const percentageWidth = (centerWordWidth / listWidth) * 100;
 
         gsap.to(edgeElement, {
           width: `${percentageWidth}%`,
           duration: 0.5,
-          ease: 'expo.out'
+          ease: 'expo.out',
         });
       }
     }
 
     function moveWords() {
-      loopingIndex++;
+      currentIndex++; // Increment the local currentIndex for the next word.
 
       gsap.to(wordList, {
-        yPercent: -wordHeight * loopingIndex,
+        yPercent: -wordHeight * currentIndex,
         duration: 1.2,
         ease: 'elastic.out(1, 0.85)',
-        onStart: updateEdgeWidth,
+        onStart: updateEdgeWidth, // Update selector width at start of scroll.
         onComplete: function() {
-          // If we reached the duplicate VISIONARIES (last item at index totalWords - 1)
-          if (loopingIndex >= totalWords - 1) {
-            loopingIndex = 0;
-            gsap.set(wordList, { yPercent: 0 });
+          // seamless looping effect: move first child to end, adjust index, and snap
+          if (currentIndex >= totalWords - 3) {
+            wordList.appendChild(wordList.children[0]);
+            currentIndex--; // Adjust index for the shifted element
+            gsap.set(wordList, { yPercent: -wordHeight * currentIndex }); // Snap instantly
           }
-        }
+        },
       });
     }
 
-    // Set initial width on load
-    setTimeout(updateEdgeWidth, 100);
+    // Initial call to set edge width on page load
+    setTimeout(updateEdgeWidth, 150);
 
-    // Timeline for infinite looping words
+    // Timeline repeating infinitely
     const loopingTimeline = gsap.timeline({ repeat: -1, delay: 1 });
     loopingTimeline
       .call(moveWords)
-      .to({}, { duration: 2.2 }); // 2.2s pause before next cycle
+      .to({}, { duration: 2 }); // 2-second pause between cycles
   }
 
   // ==========================================
