@@ -284,10 +284,10 @@ section {
 
 .hero-title {
   font-family: var(--font-header);
-  font-size: 4.2vw !important; /* Reduced from 4.8vw to fit on a single line */
+  font-size: 10.42vw !important; /* H1: 200px at 1920px width */
   font-weight: 700;
   line-height: 1 !important;
-  letter-spacing: -2px; /* Very tight letters touching each other */
+  letter-spacing: -4px !important; /* Symmetrically tight letter tracking */
   text-transform: uppercase;
   margin-bottom: 2rem;
   display: flex !important;
@@ -586,10 +586,10 @@ li.looping-words__list.is-active .looping-words__p {
 
 .section-title {
   font-family: var(--font-header) !important;
-  font-size: 5.2vw !important; /* H1: Largest size */
+  font-size: 10.42vw !important; /* H1: 200px at 1920px width */
   font-weight: 700 !important;
   line-height: 0.95 !important;
-  letter-spacing: -3px !important; /* Tight letters touching each other */
+  letter-spacing: -4px !important; /* Extremely tight for large size */
   text-transform: uppercase !important;
   margin-bottom: 2.5rem;
   white-space: nowrap !important;
@@ -604,7 +604,7 @@ li.looping-words__list.is-active .looping-words__p {
 .hero-cta-box p,
 .faq-answer {
   font-family: var(--font-body) !important;
-  font-size: 2.55vw !important; /* H3: 30% smaller than H2 */
+  font-size: 1.3vw !important; /* H3: 25px at 1920px width */
   font-weight: 400 !important;
   line-height: 1.6 !important;
   color: rgba(255, 255, 255, 0.8) !important;
@@ -2011,12 +2011,12 @@ li.looping-words__list.is-active .looping-words__p {
     display: none;
   }
   .hero-title, .section-title {
-    font-size: 7.5vw !important; /* Mobile H1 */
-    letter-spacing: -1.5px !important;
+    font-size: 16vw !important; /* Mobile H1: approx. 60px at 375px */
+    letter-spacing: -2px !important;
     white-space: nowrap !important;
   }
   .hero-cta-box h3 {
-    font-size: 5.25vw !important; /* Mobile H2 */
+    font-size: 8vw !important; /* Mobile H2: approx. 30px at 375px */
     letter-spacing: -1px !important;
   }
   .about-text, 
@@ -2027,7 +2027,7 @@ li.looping-words__list.is-active .looping-words__p {
   .sponsors-intro p, 
   .hero-cta-box p,
   .faq-answer {
-    font-size: 3.67vw !important; /* Mobile H3 */
+    font-size: 4vw !important; /* Mobile H3: approx. 15px at 375px */
     line-height: 1.5 !important;
   }
   .team-circles-container {
