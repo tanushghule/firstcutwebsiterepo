@@ -646,21 +646,35 @@ li.looping-words__list.is-active .looping-words__p {
 /* Guests Section */
 #guests-section {
   background-color: var(--color-gray-dark);
+  padding: 0 !important; /* Edge to edge screen layout */
+  overflow: hidden;
 }
 
 .guests-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Exact half width split */
-  gap: 4rem;
-  align-items: center;
+  grid-template-columns: 1fr 1fr; /* Exact 50-50 screen split */
+  gap: 0;
+  align-items: stretch;
+  width: 100%;
+}
+
+.guests-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 4rem 8rem 10vw; /* 10vw left padding perfectly aligns with standard container grid */
+}
+
+.guests-text-container .section-title {
+  white-space: normal !important; /* Allow wrapping to two lines */
 }
 
 .guests-image-container {
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 !important; /* Remove corners to cover screen edge */
+  border: none !important; /* Remove borders */
   width: 100%;
-  height: 550px; /* Cinematic tall cover height */
+  height: 100%; /* Stretch to cover full grid cell height */
+  min-height: 550px;
 }
 
 .guests-image-container img {
