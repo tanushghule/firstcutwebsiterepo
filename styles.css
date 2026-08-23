@@ -16,7 +16,8 @@
   /* Strict Font Scale Buckets (100px / 50px / 15px at 1920px width) */
   --size-h1: 5.21vw;
   --size-h2: 2.6vw;
-  --size-h3: 0.78vw;
+  --size-h3-5: 1.04vw; /* 20px at 1920px width */
+  --size-h3: 0.78vw;   /* 15px at 1920px width */
 }
 
 * {
@@ -2006,6 +2007,7 @@ li.looping-words__list.is-active .looping-words__p {
   :root {
     --size-h1: 14.67vw !important;
     --size-h2: 7.33vw !important;
+    --size-h3-5: 4.5vw !important; /* approx 17px on mobile */
     --size-h3: 3.47vw !important;
   }
   * {
@@ -2051,14 +2053,16 @@ li.looping-words__list.is-active .looping-words__p {
 }
 
 /* ==========================================================================
-   STRICT TYPOGRAPHY BUCKETS OVERRIDES (H1: 100px / H2: 50px / H3: 15px @1920)
+   STRICT TYPOGRAPHY BUCKETS OVERRIDES (H1: 100px / H2: 50px / H3: 15px / H3.5: 20px @1920)
    ========================================================================== */
 
 /* H1 Buckets */
 .hero-title, 
 .section-title, 
-.footer-giant-text,
-.loader-logo h1 {
+.loader-logo h1,
+.section-tag,
+.partners-title,
+.colleges-scroller h4 {
   font-size: var(--size-h1) !important;
 }
 
@@ -2067,7 +2071,6 @@ li.looping-words__list.is-active .looping-words__p {
 .stat-item h3,
 .event-card h3,
 .cat-title,
-.faq-question,
 .footer-tagline,
 .colleges-marquee span,
 .outreach-intro h3,
@@ -2076,6 +2079,16 @@ li.looping-words__list.is-active .looping-words__p {
 .food-card h3,
 .order-status-steps li h4 {
   font-size: var(--size-h2) !important;
+}
+
+/* Custom H2 Category Titles (Reduced by 20% to fit on one line) */
+.event-card-title {
+  font-size: calc(var(--size-h2) * 0.8) !important;
+}
+
+/* H3.5 Buckets (20px at 1920px width) */
+.benefit-card h4 {
+  font-size: var(--size-h3-5) !important;
 }
 
 /* H3 Buckets */
@@ -2087,11 +2100,10 @@ li.looping-words__list.is-active .looping-words__p {
 .sponsors-intro p, 
 .hero-cta-box p,
 .faq-answer,
-.section-tag,
 .nav-link,
 .lang-selector,
 .stat-item p,
-.event-card p,
+.event-card-desc,
 .cat-limit,
 .btn-primary,
 .btn-secondary,
@@ -2111,7 +2123,44 @@ li.looping-words__list.is-active .looping-words__p {
 .benefits-grid h4,
 .food-card h4,
 .order-status-steps li p,
-.log-console p {
+.log-console p,
+.faq-question,
+.events-subtitle,
+.outreach-brochure-card p {
   font-size: var(--size-h3) !important;
 }
+
+/* Footer Giant /FIRSTCUT Text (Original large size, even bigger) */
+.footer-giant-text {
+  font-size: 22vw !important;
+  line-height: 0.75 !important;
+  letter-spacing: -12px !important;
+}
+
+/* Festival Highlights Static 4-Column Grid Layout */
+.carousel-track {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1.5rem !important;
+  width: 100% !important;
+  transform: none !important; /* Override GSAP translation */
+}
+
+.event-card {
+  flex: none !important;
+  width: 100% !important;
+}
+
+.carousel-btn {
+  display: none !important; /* Hide scroll buttons since all cards fit side-by-side */
+}
+
+/* Mobile responsive overrides for static grid */
+@media (max-width: 768px) {
+  .carousel-track {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+}
+
 
