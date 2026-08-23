@@ -234,6 +234,15 @@ document.addEventListener('DOMContentLoaded', () => {
           duration: 0.5,
           ease: 'expo.out',
         });
+
+        // Toggle the active class to highlight only the centered word
+        Array.from(wordList.children).forEach((li, idx) => {
+          if (idx === centerWordIndex) {
+            li.classList.add('is-active');
+          } else {
+            li.classList.remove('is-active');
+          }
+        });
       }
     }
 
