@@ -16,8 +16,8 @@
   /* Strict Font Scale Buckets (100px / 50px / 15px at 1920px width) */
   --size-h1: 5.21vw;
   --size-h2: 2.6vw;
-  --size-h3-5: 1.46vw; /* Scaled up to 28px proportionally */
-  --size-h3: 1.09vw;   /* Increased to 21px at 1920px width */
+  --size-h3-5: 1.38vw; /* Reduced by 5% (approx. 26.5px) */
+  --size-h3: 1.04vw;   /* Reduced by 5% (approx. 20px) */
 }
 
 * {
@@ -2007,8 +2007,8 @@ li.looping-words__list.is-active .looping-words__p {
   :root {
     --size-h1: 14.67vw !important;
     --size-h2: 7.33vw !important;
-    --size-h3-5: 6.4vw !important; /* approx 24px on mobile */
-    --size-h3: 4.8vw !important;   /* approx 18px on mobile */
+    --size-h3-5: 6.08vw !important; /* Reduced by 5% (approx. 23px) */
+    --size-h3: 4.56vw !important;   /* Reduced by 5% (approx. 17px) */
   }
   * {
     cursor: auto !important; /* Restore cursor on mobile */
@@ -2053,7 +2053,7 @@ li.looping-words__list.is-active .looping-words__p {
 }
 
 /* ==========================================================================
-   STRICT TYPOGRAPHY BUCKETS OVERRIDES (H1: 100px / H2: 50px / H3: 15px / H3.5: 20px @1920)
+   STRICT TYPOGRAPHY BUCKETS OVERRIDES (H1: 100px / H2: 50px / H3: 20px / H3.5: 26.5px @1920)
    ========================================================================== */
 
 /* H1 Buckets */
@@ -2086,7 +2086,7 @@ li.looping-words__list.is-active .looping-words__p {
   font-size: calc(var(--size-h2) * 0.8) !important;
 }
 
-/* H3.5 Buckets (20px at 1920px width) */
+/* H3.5 Buckets (26.5px at 1920px width) */
 .benefit-card h4 {
   font-size: var(--size-h3-5) !important;
 }
@@ -2100,24 +2100,14 @@ li.looping-words__list.is-active .looping-words__p {
 .sponsors-intro p, 
 .hero-cta-box p,
 .faq-answer,
-.nav-link,
-.lang-selector,
 .stat-item p,
 .event-card-desc,
 .cat-limit,
-.btn-primary,
-.btn-secondary,
-.btn-submit,
 .footer-links a,
 .footer-copyright,
 .loader-subtitle,
 .benefit-card p,
 .food-card p,
-.food-card button,
-.form-group label,
-.form-group input,
-.form-group textarea,
-.btn-form-submit,
 .outreach-intro h4,
 .sponsors-intro h4,
 .benefits-grid h4,
@@ -2130,11 +2120,14 @@ li.looping-words__list.is-active .looping-words__p {
   font-size: var(--size-h3) !important;
 }
 
-/* Footer Giant /FIRSTCUT Text (Original large size, even bigger) */
+/* Footer Giant /FIRSTCUT Text (Original large size, even bigger, perfectly centered) */
 .footer-giant-text {
   font-size: 22vw !important;
   line-height: 0.75 !important;
   letter-spacing: -12px !important;
+  display: block !important;
+  width: 120% !important;
+  margin-left: -10% !important;
 }
 
 /* Festival Highlights Static 4-Column Grid Layout */
