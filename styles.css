@@ -284,13 +284,76 @@ section {
 
 .hero-title {
   font-family: var(--font-header);
-  font-size: 8.5vw;
+  font-size: 4.8vw; /* Reduced from 8.5vw to fit on a single line */
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -3.5px; /* Extremely tight letters touching each other */
+  line-height: 1;
+  letter-spacing: -2px; /* Very tight letters touching each other */
   text-transform: uppercase;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
 }
+
+/* Looping Words Container Styles */
+.looping-words {
+  position: relative;
+  display: inline-block;
+  height: 1.1em;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-left: 0.15em;
+  padding-right: 0.1em;
+}
+
+.looping-words__containers {
+  height: 100%;
+  overflow: hidden;
+}
+
+.looping-words__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.looping-words__item {
+  height: 1.1em;
+  display: flex;
+  align-items: center;
+}
+
+.looping-words__p {
+  color: var(--color-yellow-base);
+  font-family: var(--font-header);
+  font-size: inherit;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+  white-space: nowrap;
+  letter-spacing: -2px;
+}
+
+.looping-words__selector {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  height: 4px;
+  background-color: var(--color-yellow-base);
+  width: 0%; /* Dynamic width animated in app.js */
+}
+
+.looping-words__edge {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-yellow-base);
+}
+.looping-words__edge.is--2 { right: 0; }
 
 .hero-grid {
   display: grid;
@@ -535,28 +598,33 @@ section {
 .marquee-container {
   background-color: var(--color-yellow-base);
   color: var(--color-black);
-  padding: 1.5rem 0;
+  padding: 1.2rem 0;
   display: flex;
   overflow: hidden;
   white-space: nowrap;
+  border-top: 2px solid var(--color-black);
+  border-bottom: 2px solid var(--color-black);
+  margin-bottom: 4rem;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-infinite 30s linear infinite; /* Smooth, premium, and slow */
+}
+
+.marquee-track span {
   font-family: var(--font-header);
   font-size: 2.2rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: -1px;
-  border-y: 2px solid var(--color-black);
-  margin-bottom: 4rem;
+  padding-right: 1.5rem;
 }
 
-.marquee-content {
-  display: inline-block;
-  animation: marquee 20s linear infinite;
-  padding-left: 100%;
-}
-
-@keyframes marquee {
+@keyframes marquee-infinite {
   0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-100%, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 .events-header-block {
@@ -1872,7 +1940,8 @@ section {
     font-size: 3rem;
   }
   .hero-title {
-    font-size: 12vw;
+    font-size: 5.6vw;
+    letter-spacing: -1px;
   }
   .team-circles-container {
     height: 350px;

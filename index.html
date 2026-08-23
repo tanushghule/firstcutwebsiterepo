@@ -69,7 +69,27 @@
     <!-- Hero Section -->
     <section id="hero-section">
       <div class="hero-subtitle">FLAME FIRSTCUT TAKE 13</div>
-      <h1 class="hero-title">Celebrating<br>Student Cinema</h1>
+      <h1 class="hero-title">
+        <span>CHAMPIONING STUDENT&nbsp;</span>
+        <div class="looping-words">
+          <div class="looping-words__containers">
+            <ul data-looping-words-list="" class="looping-words__list">
+              <li class="looping-words__item"><p class="looping-words__p">VISIONARIES</p></li>
+              <li class="looping-words__item"><p class="looping-words__p">STORIES</p></li>
+              <li class="looping-words__item"><p class="looping-words__p">GENIUS</p></li>
+              <li class="looping-words__item"><p class="looping-words__p">VOICES</p></li>
+              <li class="looping-words__item"><p class="looping-words__p">FUTURES</p></li>
+              <li class="looping-words__item"><p class="looping-words__p">VISIONARIES</p></li>
+            </ul>
+          </div>
+          <div data-looping-words-selector="" class="looping-words__selector">
+            <div class="looping-words__edge"></div>
+            <div class="looping-words__edge is--2"></div>
+            <div class="looping-words__edge is--3"></div>
+            <div class="looping-words__edge is--4"></div>
+          </div>
+        </div>
+      </h1>
       
       <div class="hero-grid">
         <div class="hero-description">
@@ -168,8 +188,9 @@
     <section id="events-section">
       <!-- Scrolling Marquee Band -->
       <div class="marquee-container">
-        <div class="marquee-content">
-          FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp;
+        <div class="marquee-track">
+          <span>FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp;</span>
+          <span>FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp;</span>
         </div>
       </div>
 
@@ -299,88 +320,7 @@
         </div>
       </div>
 
-      <!-- PRD: REGISTRATIONS PIPELINE VETTING DASHBOARD (Interactive Demo) -->
-      <div class="regi-dashboard">
-        <div class="dashboard-header">
-          <h3>Registrations Vetting Pipeline</h3>
-          <button class="btn-dash-action" id="btn-run-compliance">Run Compliance Scan</button>
-        </div>
-        <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 1.5rem;">
-          Take 13 Unified Submissions Master Sheet Mockup. Live vetting tracking and automated discrepancy validation logic dashboard.
-        </p>
-        <div class="table-wrapper">
-          <table class="dashboard-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Film Title</th>
-                <th>Category</th>
-                <th>Runtime</th>
-                <th>Director</th>
-                <th>Platform</th>
-                <th>Vetting Stage</th>
-                <th>Subtitles</th>
-              </tr>
-            </thead>
-            <tbody id="submissions-table-body">
-              <tr id="sub-row-1">
-                <td>#FC-309</td>
-                <td>Echoes of Silence</td>
-                <td>Fiction</td>
-                <td class="col-runtime" data-limit="20">18m 42s</td>
-                <td>Tanisha Mehta</td>
-                <td>FilmFreeway</td>
-                <td><span class="badge-stage stage-top10">Top 10</span></td>
-                <td><span class="badge-status status-pass">Pass</span></td>
-              </tr>
-              <tr id="sub-row-2">
-                <td>#FC-310</td>
-                <td>The Street Artist</td>
-                <td>Non-Fiction</td>
-                <td class="col-runtime" data-limit="40">42m 10s</td>
-                <td>Aravind Sen</td>
-                <td>Google Forms</td>
-                <td><span class="badge-stage stage-received">Received</span></td>
-                <td><span class="badge-status status-pending">Pending</span></td>
-              </tr>
-              <tr id="sub-row-3">
-                <td>#FC-311</td>
-                <td>Paper Wings</td>
-                <td>Animation</td>
-                <td class="col-runtime" data-limit="10">8m 15s</td>
-                <td>Rohan Joshi</td>
-                <td>FilmFest Platform</td>
-                <td><span class="badge-stage stage-vetted">Vetted</span></td>
-                <td><span class="badge-status status-pass">Pass</span></td>
-              </tr>
-              <tr id="sub-row-4">
-                <td>#FC-312</td>
-                <td>Pulse</td>
-                <td>Nano</td>
-                <td class="col-runtime" data-limit="2">3m 10s</td>
-                <td>Kriti Nair</td>
-                <td>FilmFreeway</td>
-                <td><span class="badge-stage stage-received">Received</span></td>
-                <td><span class="badge-status status-fail">Missing SRT</span></td>
-              </tr>
-              <tr id="sub-row-5">
-                <td>#FC-313</td>
-                <td>Canvas of Life</td>
-                <td>Fiction</td>
-                <td class="col-runtime" data-limit="20">12m 05s</td>
-                <td>Manav Shah</td>
-                <td>Google Forms</td>
-                <td><span class="badge-stage stage-panel">Student Panel</span></td>
-                <td><span class="badge-status status-pass">Pass</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="log-console" id="regi-log-console">
-          <p>[System Log] Initialized Take 13 Master Sheet connection to FilmFreeway API & Google Forms Sheet...</p>
-          <p>[System Log] Awaiting manual action...</p>
-        </div>
-      </div>
+
 
       <!-- Submission Categories -->
       <div class="categories-container">

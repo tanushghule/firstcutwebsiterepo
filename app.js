@@ -206,4 +206,104 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ==========================================
+  // 5. GSAP LOOPING WORDS (HERO)
+  // ==========================================
+  const wordList = document.querySelector('[data-looping-words-list]');
+  const edgeElement = document.querySelector('[data-looping-words-selector]');
+  let loopingIndex = 0;
+
+  if (wordList && edgeElement) {
+    const listItems = wordList.children;
+    const totalWords = listItems.length; // 6 items including duplicate
+    const wordHeight = 100 / totalWords;
+
+    function updateEdgeWidth() {
+      // The word currently scrolling into view is at index loopingIndex
+      const activeWordIndex = loopingIndex % totalWords;
+      const activeWord = listItems[activeWordIndex];
+      if (activeWord) {
+        const textEl = activeWord.querySelector('.looping-words__p');
+        const wordWidth = textEl ? textEl.getBoundingClientRect().width : activeWord.getBoundingClientRect().width;
+        const listWidth = wordList.getBoundingClientRect().width;
+        const percentageWidth = (wordWidth / listWidth) * 100;
+
+        gsap.to(edgeElement, {
+          width: `${percentageWidth}%`,
+          duration: 0.5,
+          ease: 'expo.out'
+        });
+      }
+    }
+
+    function moveWords() {
+      loopingIndex++;
+
+      gsap.to(wordList, {
+        yPercent: -wordHeight * loopingIndex,
+        duration: 1.2,
+        ease: 'elastic.out(1, 0.85)',
+        onStart: updateEdgeWidth,
+        onComplete: function() {
+          // If we reached the duplicate VISIONARIES (last item at index totalWords - 1)
+          if (loopingIndex >= totalWords - 1) {
+            loopingIndex = 0;
+            gsap.set(wordList, { yPercent: 0 });
+          }
+        }
+      });
+    }
+
+    // Set initial width on load
+    setTimeout(updateEdgeWidth, 100);
+
+    // Timeline for infinite looping words
+    const loopingTimeline = gsap.timeline({ repeat: -1, delay: 1 });
+    loopingTimeline
+      .call(moveWords)
+      .to({}, { duration: 2.2 }); // 2.2s pause before next cycle
+  }
+
+  // ==========================================
+  // 6. ABOUT US STATS COUNTER ANIMATION
+  // ==========================================
+  const statGrid = document.querySelector('.about-stat-grid');
+  if (statGrid) {
+    const statItems = [
+      { el: statGrid.querySelector('.stat-item:nth-child(1) h3'), target: 13, suffix: '+' },
+      { el: statGrid.querySelector('.stat-item:nth-child(2) h3'), target: 1200, suffix: '+', format: true },
+      { el: statGrid.querySelector('.stat-item:nth-child(3) h3'), target: 45, suffix: '+' }
+    ];
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          statItems.forEach(item => {
+            if (!item.el) return;
+            const data = { val: 0 };
+            
+            // Set initial state to 0+
+            item.el.textContent = "0" + item.suffix;
+
+            gsap.to(data, {
+              val: item.target,
+              duration: 2.5,
+              ease: 'power2.out',
+              onUpdate: () => {
+                let displayVal = Math.floor(data.val);
+                if (item.format) {
+                  displayVal = displayVal.toLocaleString(); // Add commas, e.g. 1,200
+                }
+                item.el.textContent = displayVal + item.suffix;
+              }
+            });
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    statsObserver.observe(statGrid);
+  }
+
 });
