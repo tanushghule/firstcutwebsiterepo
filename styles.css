@@ -16,8 +16,8 @@
   /* Strict Font Scale Buckets (100px / 50px / 15px at 1920px width) */
   --size-h1: 5.21vw;
   --size-h2: 2.6vw;
-  --size-h3-5: 1.04vw; /* 20px at 1920px width */
-  --size-h3: 0.78vw;   /* 15px at 1920px width */
+  --size-h3-5: 1.46vw; /* Scaled up to 28px proportionally */
+  --size-h3: 1.09vw;   /* Increased to 21px at 1920px width */
 }
 
 * {
@@ -2007,8 +2007,8 @@ li.looping-words__list.is-active .looping-words__p {
   :root {
     --size-h1: 14.67vw !important;
     --size-h2: 7.33vw !important;
-    --size-h3-5: 4.5vw !important; /* approx 17px on mobile */
-    --size-h3: 3.47vw !important;
+    --size-h3-5: 6.4vw !important; /* approx 24px on mobile */
+    --size-h3: 4.8vw !important;   /* approx 18px on mobile */
   }
   * {
     cursor: auto !important; /* Restore cursor on mobile */
