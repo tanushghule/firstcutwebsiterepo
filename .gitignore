@@ -1,10 +1,4 @@
-# Temporary scratch files and logs
-scratch/
-*.log
-.gemini/
-.agents/
-bin/
-obj/
 node_modules/
 .DS_Store
-Thumbs.db
+.gemini/
+.system_generated/
