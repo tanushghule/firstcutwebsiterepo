@@ -445,17 +445,17 @@ li.looping-words__list.is-active .looping-words__p {
 }
 
 .hero-cta-box h3 {
-  font-family: var(--font-header);
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: -1px;
+  font-family: var(--font-header) !important;
+  font-size: 3.64vw !important; /* H2: 30% smaller than H1 */
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: -2px !important;
+  text-transform: uppercase !important;
   margin-bottom: 1rem;
   color: var(--color-white);
 }
 
 .hero-cta-box p {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 1.5rem;
 }
 
@@ -585,19 +585,29 @@ li.looping-words__list.is-active .looping-words__p {
 }
 
 .section-title {
-  font-family: var(--font-header);
-  font-size: 4.5rem;
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -2.5px; /* Tight letters touching each other */
-  text-transform: uppercase;
+  font-family: var(--font-header) !important;
+  font-size: 5.2vw !important; /* H1: Largest size */
+  font-weight: 700 !important;
+  line-height: 0.95 !important;
+  letter-spacing: -3px !important; /* Tight letters touching each other */
+  text-transform: uppercase !important;
   margin-bottom: 2.5rem;
+  white-space: nowrap !important;
 }
 
-.about-text {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.8;
+.about-text, 
+.hero-description p, 
+.cat-desc, 
+.submit-desc, 
+.outreach-intro p, 
+.sponsors-intro p, 
+.hero-cta-box p,
+.faq-answer {
+  font-family: var(--font-body) !important;
+  font-size: 2.55vw !important; /* H3: 30% smaller than H2 */
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
   margin-bottom: 2rem;
 }
 
@@ -2000,12 +2010,25 @@ li.looping-words__list.is-active .looping-words__p {
   .header-nav {
     display: none;
   }
-  .section-title {
-    font-size: 3rem;
+  .hero-title, .section-title {
+    font-size: 7.5vw !important; /* Mobile H1 */
+    letter-spacing: -1.5px !important;
+    white-space: nowrap !important;
   }
-  .hero-title {
-    font-size: 5.6vw;
-    letter-spacing: -1px;
+  .hero-cta-box h3 {
+    font-size: 5.25vw !important; /* Mobile H2 */
+    letter-spacing: -1px !important;
+  }
+  .about-text, 
+  .hero-description p, 
+  .cat-desc, 
+  .submit-desc, 
+  .outreach-intro p, 
+  .sponsors-intro p, 
+  .hero-cta-box p,
+  .faq-answer {
+    font-size: 3.67vw !important; /* Mobile H3 */
+    line-height: 1.5 !important;
   }
   .team-circles-container {
     height: 350px;

@@ -2,7 +2,7 @@ import React from 'react';
 import { LoopingWords } from '@/components/ui/looping-words-with-gsap';
 
 const DemoPage: React.FC = () => {
-  const words = ["CINEMA", "STORIES", "GENIUS", "VOICES", "FUTURES", "VISIONARIES"];
+  const words = ["CINEMA", "STORIES", "GENIUS", "VOICES", "FUTURES"];
 
   return (
     <div style={{ position: 'relative', width: '100%', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#040204' }}>
