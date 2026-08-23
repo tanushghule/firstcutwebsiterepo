@@ -284,72 +284,77 @@ section {
 
 .hero-title {
   font-family: var(--font-header);
-  font-size: 4.2vw; /* Reduced from 4.8vw to fit on a single line */
+  font-size: 4.2vw !important; /* Reduced from 4.8vw to fit on a single line */
   font-weight: 700;
-  line-height: 1;
+  line-height: 1 !important;
   letter-spacing: -2px; /* Very tight letters touching each other */
   text-transform: uppercase;
   margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
 }
 
 /* Looping Words Container Styles */
 .looping-words {
-  position: relative;
-  display: inline-block;
-  height: 1.1em; /* Exactly one line high, no vertical stacking */
-  vertical-align: bottom;
-  margin-left: 0.15em;
-  padding: 0 0.8rem; /* Padding for selector brackets spacing */
+  position: relative !important;
+  display: inline-block !important;
+  height: 1.1em !important; /* Exactly one line high, no vertical stacking */
+  vertical-align: bottom !important;
+  margin-left: 0.15em !important;
+  padding: 0 0.8rem !important; /* Padding for selector brackets spacing */
+  overflow: hidden !important;
 }
 
 .looping-words__containers {
-  height: 100%;
-  overflow: hidden;
-  position: relative;
+  height: 100% !important;
+  overflow: hidden !important;
+  position: relative !important;
 }
 
 .looping-words__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 /* Specific item heights matching container height */
 li.looping-words__list {
-  height: 1.1em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  list-style: none !important;
+  list-style-type: none !important;
+  height: 1.1em !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .looping-words__p {
-  color: var(--color-yellow-base);
+  color: var(--color-yellow-base) !important;
   font-family: var(--font-header);
   font-size: inherit;
   font-weight: 700;
-  line-height: 1.1em;
-  margin: 0;
+  line-height: 1.1em !important;
+  margin: 0 !important;
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: nowrap !important;
   letter-spacing: -2px;
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 /* Selector outline bracket centered around single active word */
 .looping-words__selector {
-  position: absolute;
-  top: 0; /* Positions exactly on the line */
-  height: 1.1em;
-  left: 50%;
-  transform: translateX(-50%);
+  position: absolute !important;
+  top: 0 !important; /* Positions exactly on the line */
+  height: 1.1em !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
   width: 0%; /* Animated dynamically via GSAP */
-  pointer-events: none;
-  z-index: 5;
+  pointer-events: none !important;
+  z-index: 5 !important;
 }
 
 /* Dynamic corner tick brackets (Coral red color matching the user screenshot) */
