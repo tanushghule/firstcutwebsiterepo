@@ -218,9 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
 
     function updateEdgeWidth() {
-      // The original JS targets the word at `currentIndex + 1` for width calculation,
-      // as that is effectively the word centered in the viewport after the list has shifted.
-      const centerWordIndex = (currentIndex + 1) % totalWords;
+      // Since we only display one word at a time in the single-line mask,
+      // the visible word corresponds exactly to the currentIndex.
+      const centerWordIndex = currentIndex % totalWords;
       const centerWord = wordList.children[centerWordIndex];
 
       if (centerWord) {
@@ -233,15 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
           width: `${percentageWidth}%`,
           duration: 0.5,
           ease: 'expo.out',
-        });
-
-        // Toggle the active class to highlight only the centered word
-        Array.from(wordList.children).forEach((li, idx) => {
-          if (idx === centerWordIndex) {
-            li.classList.add('is-active');
-          } else {
-            li.classList.remove('is-active');
-          }
         });
       }
     }
