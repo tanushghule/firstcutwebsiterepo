@@ -12,6 +12,11 @@
   --font-header: 'Oswald', sans-serif;
   --font-sub: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
+
+  /* Strict Font Scale Buckets (100px / 50px / 15px at 1920px width) */
+  --size-h1: 5.21vw;
+  --size-h2: 2.6vw;
+  --size-h3: 0.78vw;
 }
 
 * {
@@ -284,7 +289,7 @@ section {
 
 .hero-title {
   font-family: var(--font-header);
-  font-size: 10.42vw !important; /* H1: 200px at 1920px width */
+  font-size: var(--size-h1) !important; /* H1 Sizing Bucket */
   font-weight: 700;
   line-height: 1 !important;
   letter-spacing: -4px !important; /* Symmetrically tight letter tracking */
@@ -446,7 +451,7 @@ li.looping-words__list.is-active .looping-words__p {
 
 .hero-cta-box h3 {
   font-family: var(--font-header) !important;
-  font-size: 3.64vw !important; /* H2: 30% smaller than H1 */
+  font-size: var(--size-h2) !important; /* H2 Sizing Bucket */
   font-weight: 700 !important;
   line-height: 1 !important;
   letter-spacing: -2px !important;
@@ -586,10 +591,10 @@ li.looping-words__list.is-active .looping-words__p {
 
 .section-title {
   font-family: var(--font-header) !important;
-  font-size: 10.42vw !important; /* H1: 200px at 1920px width */
+  font-size: var(--size-h1) !important; /* H1 Sizing Bucket */
   font-weight: 700 !important;
   line-height: 0.95 !important;
-  letter-spacing: -4px !important; /* Extremely tight for large size */
+  letter-spacing: -3px !important; /* Tight letter tracking */
   text-transform: uppercase !important;
   margin-bottom: 2.5rem;
   white-space: nowrap !important;
@@ -604,7 +609,7 @@ li.looping-words__list.is-active .looping-words__p {
 .hero-cta-box p,
 .faq-answer {
   font-family: var(--font-body) !important;
-  font-size: 1.3vw !important; /* H3: 25px at 1920px width */
+  font-size: var(--size-h3) !important; /* H3 Sizing Bucket */
   font-weight: 400 !important;
   line-height: 1.6 !important;
   color: rgba(255, 255, 255, 0.8) !important;
@@ -1998,6 +2003,11 @@ li.looping-words__list.is-active .looping-words__p {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --size-h1: 14.67vw !important;
+    --size-h2: 7.33vw !important;
+    --size-h3: 3.47vw !important;
+  }
   * {
     cursor: auto !important; /* Restore cursor on mobile */
   }
@@ -2039,3 +2049,69 @@ li.looping-words__list.is-active .looping-words__p {
   .team-circle-4 { width: 80px; height: 80px; }
   .team-circle-5 { width: 70px; height: 70px; }
 }
+
+/* ==========================================================================
+   STRICT TYPOGRAPHY BUCKETS OVERRIDES (H1: 100px / H2: 50px / H3: 15px @1920)
+   ========================================================================== */
+
+/* H1 Buckets */
+.hero-title, 
+.section-title, 
+.footer-giant-text,
+.loader-logo h1 {
+  font-size: var(--size-h1) !important;
+}
+
+/* H2 Buckets */
+.hero-cta-box h3,
+.stat-item h3,
+.event-card h3,
+.cat-title,
+.faq-question,
+.footer-tagline,
+.colleges-marquee span,
+.outreach-intro h3,
+.sponsors-intro h3,
+.benefits-grid h3,
+.food-card h3,
+.order-status-steps li h4 {
+  font-size: var(--size-h2) !important;
+}
+
+/* H3 Buckets */
+.about-text, 
+.hero-description p, 
+.cat-desc, 
+.submit-desc, 
+.outreach-intro p, 
+.sponsors-intro p, 
+.hero-cta-box p,
+.faq-answer,
+.section-tag,
+.nav-link,
+.lang-selector,
+.stat-item p,
+.event-card p,
+.cat-limit,
+.btn-primary,
+.btn-secondary,
+.btn-submit,
+.footer-links a,
+.footer-copyright,
+.loader-subtitle,
+.benefit-card p,
+.food-card p,
+.food-card button,
+.form-group label,
+.form-group input,
+.form-group textarea,
+.btn-form-submit,
+.outreach-intro h4,
+.sponsors-intro h4,
+.benefits-grid h4,
+.food-card h4,
+.order-status-steps li p,
+.log-console p {
+  font-size: var(--size-h3) !important;
+}
+
