@@ -2054,10 +2054,10 @@ li.looping-words__list.is-active .looping-words__p {
 
 @media (max-width: 768px) {
   :root {
-    --size-h1: 14.67vw !important;
-    --size-h2: 7.33vw !important;
-    --size-h3-5: 6.08vw !important; /* Reduced by 5% (approx. 23px) */
-    --size-h3: 4.56vw !important;   /* Reduced by 5% (approx. 17px) */
+    --size-h1: 11vw !important;      /* approx. 41px on 375px width (H1) */
+    --size-h2: 5.5vw !important;     /* approx. 20px on 375px width (H2) */
+    --size-h3-5: 4.4vw !important;   /* approx. 16.5px on 375px width (H3.5) */
+    --size-h3: 3.4vw !important;     /* approx. 12.7px on 375px width (H3) */
   }
   * {
     cursor: auto !important; /* Restore cursor on mobile */
@@ -2066,39 +2066,56 @@ li.looping-words__list.is-active .looping-words__p {
     display: none !important;
   }
   .stockholm-header {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.2rem;
   }
   .header-nav {
     display: none;
   }
-  .hero-title, .section-title {
-    font-size: 16vw !important; /* Mobile H1: approx. 60px at 375px */
-    letter-spacing: -2px !important;
+  
+  /* Mobile Title Optimizations */
+  .hero-title {
+    font-size: 6vw !important; /* Fits perfectly on a single line on mobile */
     white-space: nowrap !important;
+    letter-spacing: -1.5px !important;
   }
-  .hero-cta-box h3 {
-    font-size: 8vw !important; /* Mobile H2: approx. 30px at 375px */
-    letter-spacing: -1px !important;
+  
+  .section-title {
+    font-size: var(--size-h1) !important;
+    white-space: normal !important; /* Prevent text overflow clipping */
+    letter-spacing: -1.5px !important;
+    line-height: 1.1 !important;
   }
-  .about-text, 
-  .hero-description p, 
-  .cat-desc, 
-  .submit-desc, 
-  .outreach-intro p, 
-  .sponsors-intro p, 
-  .hero-cta-box p,
-  .faq-answer {
-    font-size: 4vw !important; /* Mobile H3: approx. 15px at 375px */
-    line-height: 1.5 !important;
+  
+  /* Mobile Image Grid and Card Optimizations */
+  .hero-image-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.8rem !important;
+    margin-top: 2rem !important;
   }
+  
+  .strip-item {
+    height: 160px !important; /* Compact height for mobile */
+  }
+  
+  /* Jury & Guests Mobile Layout */
+  .guests-text-container {
+    padding: 4rem 5% 4rem 5% !important; /* Align with standard container padding */
+  }
+  
+  .guests-image-container {
+    min-height: 380px !important;
+    height: 380px !important;
+  }
+
+  /* Team Circles Container on Mobile */
   .team-circles-container {
-    height: 350px;
+    height: 300px !important;
   }
-  .team-circle-1 { width: 100px; height: 100px; }
-  .team-circle-2 { width: 80px; height: 80px; }
-  .team-circle-3 { width: 120px; height: 120px; }
-  .team-circle-4 { width: 80px; height: 80px; }
-  .team-circle-5 { width: 70px; height: 70px; }
+  .team-circle-1 { width: 80px !important; height: 80px !important; }
+  .team-circle-2 { width: 65px !important; height: 65px !important; }
+  .team-circle-3 { width: 95px !important; height: 95px !important; }
+  .team-circle-4 { width: 65px !important; height: 65px !important; }
+  .team-circle-5 { width: 55px !important; height: 55px !important; }
 }
 
 /* ==========================================================================
