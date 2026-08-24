@@ -305,7 +305,7 @@ section {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(4, 2, 4, 0.3); /* 30% black overlay */
+  background: rgba(4, 2, 4, 0.6); /* 60% black overlay */
   z-index: 1;
 }
 
