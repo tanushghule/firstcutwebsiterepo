@@ -2054,10 +2054,10 @@ li.looping-words__list.is-active .looping-words__p {
 
 @media (max-width: 768px) {
   :root {
-    --size-h1: 11vw !important;      /* approx. 41px on 375px width (H1) */
-    --size-h2: 5.5vw !important;     /* approx. 20px on 375px width (H2) */
-    --size-h3-5: 4.4vw !important;   /* approx. 16.5px on 375px width (H3.5) */
-    --size-h3: 3.4vw !important;     /* approx. 12.7px on 375px width (H3) */
+    --size-h1: 8.5vw !important;       /* Optimized for clean text scale on mobile */
+    --size-h2: 5.5vw !important;
+    --size-h3-5: 4.4vw !important;
+    --size-h3: 3.4vw !important;
   }
   * {
     cursor: auto !important; /* Restore cursor on mobile */
@@ -2072,16 +2072,25 @@ li.looping-words__list.is-active .looping-words__p {
     display: none;
   }
   
-  /* Mobile Title Optimizations */
+  /* Mobile Title & Heading Optimizations */
   .hero-title {
-    font-size: 6vw !important; /* Fits perfectly on a single line on mobile */
-    white-space: nowrap !important;
-    letter-spacing: -1.5px !important;
+    font-size: 8.2vw !important; /* Dramatic mobile size */
+    white-space: normal !important; /* Let text wrap to prevent screen clipping */
+    display: block !important;
+    letter-spacing: -2px !important;
+    line-height: 1.1 !important;
+  }
+  .hero-title span {
+    display: inline !important;
+  }
+  .looping-words {
+    display: inline-flex !important;
+    vertical-align: middle;
   }
   
   .section-title {
     font-size: var(--size-h1) !important;
-    white-space: normal !important; /* Prevent text overflow clipping */
+    white-space: normal !important; /* Wrap section titles on mobile */
     letter-spacing: -1.5px !important;
     line-height: 1.1 !important;
   }
@@ -2094,17 +2103,44 @@ li.looping-words__list.is-active .looping-words__p {
   }
   
   .strip-item {
-    height: 160px !important; /* Compact height for mobile */
+    height: 160px !important;
   }
   
   /* Jury & Guests Mobile Layout */
   .guests-text-container {
-    padding: 4rem 5% 4rem 5% !important; /* Align with standard container padding */
+    padding: 4rem 5% 4rem 5% !important;
   }
   
   .guests-image-container {
     min-height: 380px !important;
     height: 380px !important;
+  }
+
+  /* Form Elements Mobile Adjustments (iPhone 16 viewports) */
+  .checkbox-group {
+    grid-template-columns: 1fr !important; /* List checkboxes vertically to fit labels */
+    gap: 0.6rem !important;
+  }
+  .radio-group {
+    flex-direction: column !important; /* List radio buttons vertically to fit options */
+    gap: 0.6rem !important;
+    align-items: flex-start !important;
+  }
+
+  /* Footer Layout Mobile Clean Alignment */
+  .footer-bottom {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+  }
+  .footer-links {
+    justify-content: center !important;
+    flex-wrap: wrap !important; /* Wrap links (e.g. YouTube) onto new lines */
+    gap: 1rem !important;
+  }
+  .footer-copyright {
+    text-align: center !important;
   }
 
   /* Team Circles Container on Mobile */
