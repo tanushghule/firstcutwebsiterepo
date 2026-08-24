@@ -2152,6 +2152,29 @@ li.looping-words__list.is-active .looping-words__p {
   .team-circle-3 { width: 95px !important; height: 95px !important; }
   .team-circle-4 { width: 65px !important; height: 65px !important; }
   .team-circle-5 { width: 55px !important; height: 55px !important; }
+
+  /* Event Cards Mobile Spacing and Auto-expand Height */
+  .event-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important; /* Let card expand dynamically to fit all text */
+  }
+  
+  .event-card-image {
+    height: 130px !important; /* Reduce image height to fit text space */
+    flex-shrink: 0 !important;
+  }
+  
+  .event-card-content {
+    padding: 0.9rem !important; /* Snug padding to avoid container overflow */
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+  }
+
+  .event-card-desc {
+    flex-grow: 1 !important;
+  }
 }
 
 /* ==========================================================================
@@ -2227,7 +2250,7 @@ li.looping-words__list.is-active .looping-words__p {
 .footer-giant-text {
   font-size: 22vw !important;
   line-height: 0.75 !important;
-  letter-spacing: -12px !important;
+  letter-spacing: 0.05em !important; /* Spaced out letters */
   display: block !important;
   width: 120% !important;
   margin-left: -10% !important;
