@@ -2175,6 +2175,11 @@ li.looping-words__list.is-active .looping-words__p {
   .event-card-desc {
     flex-grow: 1 !important;
   }
+
+  /* Footer Giant Text Mobile Overrides */
+  .footer-giant-text {
+    letter-spacing: -2px !important; /* Condensed but not overlapping on mobile viewports */
+  }
 }
 
 /* ==========================================================================
@@ -2250,7 +2255,7 @@ li.looping-words__list.is-active .looping-words__p {
 .footer-giant-text {
   font-size: 22vw !important;
   line-height: 0.75 !important;
-  letter-spacing: 0.05em !important; /* Spaced out letters */
+  letter-spacing: 0.02em !important; /* Spaced out letters, but not too much */
   display: block !important;
   width: 120% !important;
   margin-left: -10% !important;
