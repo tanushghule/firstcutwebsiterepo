@@ -25,6 +25,15 @@
   margin: 0;
   padding: 0;
   cursor: none !important; /* Hide default cursor on desktop to use custom festival cursor */
+  caret-color: transparent !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input, textarea, select, [contenteditable="true"] {
+  caret-color: var(--color-yellow-base) !important;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 html, body {
