@@ -1,74 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
   
   // ==========================================
-  // 1. CUSTOM CURSOR WITH LERP & INVERSION
+  // 1. CUSTOM CINEMA CURSOR & MULTI-WAVE CLICK FX
   // ==========================================
   const cursor = document.getElementById('custom-cursor');
-  let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let cursorX = mouseX;
+  let cursorY = mouseY;
   
-  // Track mouse coordinates
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
   });
   
-  // Smoothly interpolate (lerp) cursor position
   function updateCursor() {
-    cursorX += (mouseX - cursorX) * 0.15;
-    cursorY += (mouseY - cursorY) * 0.15;
+    cursorX += (mouseX - cursorX) * 0.2;
+    cursorY += (mouseY - cursorY) * 0.2;
     
-    cursor.style.left = `${cursorX}px`;
-    cursor.style.top = `${cursorY}px`;
-    
+    if (cursor) {
+      cursor.style.left = `${cursorX}px`;
+      cursor.style.top = `${cursorY}px`;
+    }
     requestAnimationFrame(updateCursor);
   }
   updateCursor();
   
-  // Add hover effect to interactive items
-  const interactives = document.querySelectorAll('a, button, .event-card, .category-card, .strip-item, .team-circle');
-  interactives.forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-  });
+  const interactiveSelector = 'a, button, input, select, textarea, label, .faq-question, .event-card, .category-card, .strip-item, .team-circle, .dept-portal-card, .team-member-card';
   
-  // Dynamic event delegation for cursor hover on future elements
   document.body.addEventListener('mouseover', (e) => {
-    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('button')) {
+    if (!cursor) return;
+    if (e.target.closest(interactiveSelector)) {
       cursor.classList.add('hovered');
     } else {
-      if (!e.target.closest('.event-card') && !e.target.closest('.category-card') && !e.target.closest('.strip-item') && !e.target.closest('.team-circle')) {
-        cursor.classList.remove('hovered');
-      }
+      cursor.classList.remove('hovered');
     }
   });
 
-  // Ripple effect on click
+  // Multi-ring wave ripple animation on click
+  window.addEventListener('mousedown', () => {
+    if (cursor) cursor.classList.add('clicking');
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (cursor) cursor.classList.remove('clicking');
+  });
+
   window.addEventListener('click', (e) => {
-    const ripple = document.createElement('div');
-    ripple.className = 'cursor-ripple';
-    ripple.style.left = `${e.clientX}px`;
-    ripple.style.top = `${e.clientY}px`;
-    document.body.appendChild(ripple);
-    
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
+    const waveClasses = ['cursor-wave', 'cursor-wave wave-2', 'cursor-wave wave-3'];
+    waveClasses.forEach((cls) => {
+      const wave = document.createElement('div');
+      wave.className = cls;
+      wave.style.left = `${e.clientX}px`;
+      wave.style.top = `${e.clientY}px`;
+      document.body.appendChild(wave);
+      
+      setTimeout(() => {
+        wave.remove();
+      }, 1150);
+    });
   });
 
 
   // ==========================================
   // 2. LOADING & REVEAL FLOW
   // ==========================================
-  // Lock body scroll initially during loading
   document.body.style.overflow = 'hidden';
   document.body.style.position = 'fixed';
   document.body.style.width = '100%';
 
-  // Loader screen element
   const loader = document.getElementById('logo-loader');
 
-  // We show the loader logo screen on page load, wait 2 seconds, then transition
   setTimeout(() => {
     gsap.to(loader, {
       opacity: 0,
@@ -78,19 +80,19 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerRectangleReveal();
       }
     });
-  }, 2000);
+  }, 1600);
+
+  let lenisInstance = null;
 
   function triggerRectangleReveal() {
     const panels = document.querySelectorAll('.reveal-panel');
     
-    // Animate reveal panels sliding up sequentially
     gsap.to(panels, {
       y: '-100%',
-      stagger: 0.1,
-      duration: 0.8,
+      stagger: 0.08,
+      duration: 0.75,
       ease: 'power3.inOut',
       onStart: () => {
-        // Display main website underneath the panels
         const mainSite = document.getElementById('main-website');
         mainSite.style.display = 'block';
       },
@@ -98,14 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const mainSite = document.getElementById('main-website');
         mainSite.classList.add('revealed');
         
-        // Unlock normal page scrolling
         document.body.style.overflow = 'auto';
         document.body.style.position = 'static';
         
-        // Clean up reveal overlay elements
-        document.getElementById('reveal-overlay').remove();
+        const revealOverlay = document.getElementById('reveal-overlay');
+        if (revealOverlay) revealOverlay.remove();
         
-        // Initialize Smooth Scrolling & Site Animations
         initMainWebsiteFX();
       }
     });
@@ -113,113 +113,140 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ==========================================
-  // 3. MAIN WEBSITE EFFECTS & SMOOTH SCROLL
+  // 3. MULTI-PAGE DEPARTMENT ROUTER & SMOOTH SCROLL
   // ==========================================
-  function initMainWebsiteFX() {
-    // Initialize Lenis Smooth Scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
+  const validPages = ['home', 'submissions', 'outreach', 'sponsorship', 'team'];
+
+  function switchDepartmentPage(pageName, updateHash = true) {
+    const targetPage = validPages.includes(pageName) ? pageName : 'home';
+
+    // Toggle active department page
+    document.querySelectorAll('.dept-page').forEach((pageEl) => {
+      if (pageEl.dataset.page === targetPage) {
+        pageEl.classList.add('active');
+      } else {
+        pageEl.classList.remove('active');
+      }
     });
 
-    function raf(time) {
-      lenis.raf(time);
+    // Update desktop nav links & mobile pill links
+    document.querySelectorAll('.header-nav .nav-link, .mobile-dept-bar .mobile-nav-pill').forEach((link) => {
+      if (link.dataset.pageTarget === targetPage) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Close mobile menu dropdown if open
+    const desktopNav = document.getElementById('desktop-nav');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    if (desktopNav) desktopNav.classList.remove('mobile-open');
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', 'false');
+
+    // Update URL hash cleanly
+    if (updateHash) {
+      history.pushState(null, '', `#${targetPage}`);
+    }
+
+    // Scroll to top of page
+    if (lenisInstance) {
+      lenisInstance.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Re-trigger looping words width calculation if returning to Home
+    if (targetPage === 'home' && typeof window.recalcLoopingWords === 'function') {
+      setTimeout(window.recalcLoopingWords, 80);
+    }
+  }
+
+  // Bind all [data-page-target] links & buttons
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-page-target]');
+    if (trigger) {
+      e.preventDefault();
+      const targetPage = trigger.getAttribute('data-page-target');
+      switchDepartmentPage(targetPage, true);
+    }
+  });
+
+  // Mobile hamburger menu button
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const desktopNav = document.getElementById('desktop-nav');
+  if (mobileMenuBtn && desktopNav) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = desktopNav.classList.toggle('mobile-open');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  // Handle browser back/forward hash navigation
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace('#', '').toLowerCase();
+    if (validPages.includes(hash)) {
+      switchDepartmentPage(hash, false);
+    }
+  });
+
+  // Check initial URL hash on load
+  const initialHash = window.location.hash.replace('#', '').toLowerCase();
+  if (validPages.includes(initialHash)) {
+    switchDepartmentPage(initialHash, false);
+  }
+
+  // Smooth scroll to on-page Film Submission Portal Form
+  const scrollPortalBtn = document.getElementById('btn-scroll-portal-form');
+  if (scrollPortalBtn) {
+    scrollPortalBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const formBox = document.getElementById('film-submission-form-box');
+      if (formBox) {
+        if (lenisInstance) {
+          lenisInstance.scrollTo(formBox, { offset: -95 });
+        } else {
+          formBox.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  }
+
+  function initMainWebsiteFX() {
+    if (typeof Lenis !== 'undefined') {
+      lenisInstance = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time) {
+        lenisInstance.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
-
-    // Bind navigation smooth links to Lenis scroll
-    document.querySelectorAll('.nav-link, .header-title, #contrib-link-submit, #footer-submit-btn').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId && targetId.startsWith('#')) {
-          e.preventDefault();
-          const targetEl = document.querySelector(targetId);
-          if (targetEl) {
-            lenis.scrollTo(targetEl, { offset: -80 });
-          }
-        }
-      });
-    });
-
-    // Simple reveal animations on scroll using IntersectionObserver (since we don't need heavy ScrollTrigger scripts now)
-    const animateOnScroll = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          gsap.to(entry.target, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power2.out'
-          });
-          animateOnScroll.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    // Target elements to animate on scroll
-    document.querySelectorAll('section, .stat-item, .category-card').forEach(el => {
-      // Set initial styles for animation
-      gsap.set(el, { opacity: 0, y: 30 });
-      animateOnScroll.observe(el);
-    });
   }
 
 
   // ==========================================
-  // 4. EVENT CAROUSEL NAVIGATION
-  // ==========================================
-  const track = document.getElementById('event-carousel-track');
-  const prevBtn = document.getElementById('carousel-prev-btn');
-  const nextBtn = document.getElementById('carousel-next-btn');
-  
-  if (track && prevBtn && nextBtn) {
-    let currentTranslate = 0;
-    const cardStep = 352; // Card width + gap
-    
-    nextBtn.addEventListener('click', () => {
-      const maxScroll = track.scrollWidth - track.parentElement.clientWidth;
-      if (Math.abs(currentTranslate) < maxScroll) {
-        currentTranslate -= cardStep;
-        if (Math.abs(currentTranslate) > maxScroll) {
-          currentTranslate = -maxScroll;
-        }
-        track.style.transform = `translateX(${currentTranslate}px)`;
-      }
-    });
-
-    prevBtn.addEventListener('click', () => {
-      if (currentTranslate < 0) {
-        currentTranslate += cardStep;
-        if (currentTranslate > 0) {
-          currentTranslate = 0;
-        }
-        track.style.transform = `translateX(${currentTranslate}px)`;
-      }
-    });
-  }
-
-  // ==========================================
-  // 5. GSAP LOOPING WORDS (HERO)
+  // 4. GSAP LOOPING WORDS (HERO)
   // ==========================================
   const wordList = document.querySelector('[data-looping-words-list]');
   const edgeElement = document.querySelector('[data-looping-words-selector]');
   
   if (wordList && edgeElement) {
-    const totalWords = wordList.children.length; // 5 unique words
+    const totalWords = wordList.children.length;
     const wordHeight = 100 / totalWords;
     let currentIndex = 0;
 
     function updateEdgeWidth() {
-      // The original JS targets the word at `currentIndex + 1` for width calculation,
-      // as that is effectively the word centered in the viewport after the list has shifted.
       const centerWordIndex = (currentIndex + 1) % totalWords;
       const centerWord = wordList.children[centerWordIndex];
 
@@ -227,15 +254,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const textEl = centerWord.querySelector('.looping-words__p');
         const centerWordWidth = textEl ? textEl.getBoundingClientRect().width : centerWord.getBoundingClientRect().width;
         const listWidth = wordList.getBoundingClientRect().width;
-        const percentageWidth = (centerWordWidth / listWidth) * 100;
+        if (listWidth > 0) {
+          const percentageWidth = (centerWordWidth / listWidth) * 100;
+          gsap.to(edgeElement, {
+            width: `${percentageWidth}%`,
+            duration: 0.5,
+            ease: 'expo.out',
+          });
+        }
 
-        gsap.to(edgeElement, {
-          width: `${percentageWidth}%`,
-          duration: 0.5,
-          ease: 'expo.out',
-        });
-
-        // Toggle the active class to highlight only the centered word
         Array.from(wordList.children).forEach((li, idx) => {
           if (idx === centerWordIndex) {
             li.classList.add('is-active');
@@ -246,66 +273,57 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    window.recalcLoopingWords = updateEdgeWidth;
+    window.addEventListener('resize', updateEdgeWidth);
+
     function moveWords() {
-      currentIndex++; // Increment the local currentIndex for the next word.
+      currentIndex++;
 
       gsap.to(wordList, {
         yPercent: -wordHeight * currentIndex,
         duration: 1.2,
         ease: 'elastic.out(1, 0.85)',
-        onStart: updateEdgeWidth, // Update selector width at start of scroll.
+        onStart: updateEdgeWidth,
         onComplete: function() {
-          // seamless looping effect: move first child to end, adjust index, and snap
           if (currentIndex >= totalWords - 3) {
             wordList.appendChild(wordList.children[0]);
-            currentIndex--; // Adjust index for the shifted element
-            gsap.set(wordList, { yPercent: -wordHeight * currentIndex }); // Snap instantly
+            currentIndex--;
+            gsap.set(wordList, { yPercent: -wordHeight * currentIndex });
           }
         },
       });
     }
 
-    // Initial call to set edge width on page load
-    setTimeout(updateEdgeWidth, 150);
+    setTimeout(updateEdgeWidth, 200);
 
-    // Timeline repeating infinitely
     const loopingTimeline = gsap.timeline({ repeat: -1, delay: 1 });
     loopingTimeline
       .call(moveWords)
-      .to({}, { duration: 2 }); // 2-second pause between cycles
+      .to({}, { duration: 2 });
   }
 
+
   // ==========================================
-  // 6. ABOUT US STATS COUNTER ANIMATION
+  // 5. ABOUT US STATS COUNTER ANIMATION
   // ==========================================
   const statGrid = document.querySelector('.about-stat-grid');
   if (statGrid) {
-    const statItems = [
-      { el: statGrid.querySelector('.stat-item:nth-child(1) h3'), target: 13, suffix: '+' },
-      { el: statGrid.querySelector('.stat-item:nth-child(2) h3'), target: 1200, suffix: '+', format: true },
-      { el: statGrid.querySelector('.stat-item:nth-child(3) h3'), target: 45, suffix: '+' }
-    ];
-
+    const statEls = statGrid.querySelectorAll('.stat-item h3[data-target]');
     const statsObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          statItems.forEach(item => {
-            if (!item.el) return;
+          statEls.forEach(el => {
+            const targetVal = parseInt(el.getAttribute('data-target'), 10) || 0;
+            const suffix = el.getAttribute('data-suffix') || '+';
             const data = { val: 0 };
-            
-            // Set initial state to 0+
-            item.el.textContent = "0" + item.suffix;
+            el.textContent = '0' + suffix;
 
             gsap.to(data, {
-              val: item.target,
-              duration: 2.5,
+              val: targetVal,
+              duration: 2.2,
               ease: 'power2.out',
               onUpdate: () => {
-                let displayVal = Math.floor(data.val);
-                if (item.format) {
-                  displayVal = displayVal.toLocaleString(); // Add commas, e.g. 1,200
-                }
-                item.el.textContent = displayVal + item.suffix;
+                el.textContent = Math.floor(data.val) + suffix;
               }
             });
           });
@@ -315,6 +333,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.15 });
 
     statsObserver.observe(statGrid);
+  }
+
+
+  // ==========================================
+  // 6. SUBMISSIONS FAQ ACCORDION & GUIDELINES PDF UPLOAD
+  // ==========================================
+  document.querySelectorAll('.faq-question').forEach((questionEl) => {
+    questionEl.addEventListener('click', () => {
+      const parentItem = questionEl.closest('.faq-item');
+      if (parentItem) {
+        parentItem.classList.toggle('active');
+      }
+    });
+  });
+
+  const uploadPdfInput = document.getElementById('upload-guidelines-pdf');
+  const downloadPdfBtn = document.getElementById('btn-download-guidelines-pdf');
+  const downloadPdfText = document.getElementById('guidelines-pdf-btn-text');
+
+  if (uploadPdfInput && downloadPdfBtn) {
+    uploadPdfInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        const fileUrl = URL.createObjectURL(file);
+        downloadPdfBtn.href = fileUrl;
+        downloadPdfBtn.setAttribute('download', file.name);
+        if (downloadPdfText) {
+          downloadPdfText.textContent = `Download: ${file.name}`;
+        }
+      }
+    });
+  }
+
+
+  // ==========================================
+  // 7. FORMS HANDLING (SUBMISSIONS, OUTREACH, SPONSORSHIP)
+  // ==========================================
+  // Outreach "Other (please specify)" auto-focus
+  const otherCheckbox = document.getElementById('collab-other-checkbox');
+  const otherInput = document.getElementById('outreach-other-specify');
+  if (otherCheckbox && otherInput) {
+    otherCheckbox.addEventListener('change', () => {
+      if (otherCheckbox.checked) {
+        otherInput.required = true;
+        otherInput.focus();
+      } else {
+        otherInput.required = false;
+      }
+    });
+    otherInput.addEventListener('input', () => {
+      if (otherInput.value.trim().length > 0) {
+        otherCheckbox.checked = true;
+      }
+    });
+  }
+
+  // Custom 20-Field Film Submission Form
+  const filmSubForm = document.getElementById('custom-film-submission-form');
+  const filmSubFeedback = document.getElementById('film-submission-feedback');
+  if (filmSubForm && filmSubFeedback) {
+    filmSubForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const filmTitle = document.getElementById('sub-film-name')?.value || 'Your film';
+      const category = document.getElementById('sub-category')?.value || 'selected';
+      filmSubFeedback.textContent = `Thank you! "${filmTitle}" has been successfully registered for FirstCut 2027 Take 13 (${category} Category).`;
+      filmSubFeedback.classList.add('visible');
+      filmSubForm.reset();
+    });
+  }
+
+  // Outreach Form
+  const outreachForm = document.getElementById('outreach-form');
+  const outreachFeedback = document.getElementById('outreach-form-feedback');
+  if (outreachForm && outreachFeedback) {
+    outreachForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      outreachFeedback.textContent = 'Thank you for your interest in collaborating with FirstCut Take 13! Our Outreach team will contact you shortly.';
+      outreachFeedback.classList.add('visible');
+      outreachForm.reset();
+    });
+  }
+
+  // Sponsorship Form
+  const sponsorForm = document.getElementById('sponsor-form');
+  const sponsorFeedback = document.getElementById('sponsor-form-feedback');
+  if (sponsorForm && sponsorFeedback) {
+    sponsorForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      sponsorFeedback.textContent = 'Thank you! Your sponsorship inquiry for FirstCut Take 13 has been received. Our Sponsorship team will reach out soon.';
+      sponsorFeedback.classList.add('visible');
+      sponsorForm.reset();
+    });
   }
 
 });

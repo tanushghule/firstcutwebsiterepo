@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FIRSTCUT Take 13 | India's Premier Student Film Festival</title>
+  <title>FirstCut Take 13 | India's Premier Student Film Festival</title>
   
-  <!-- Meta Tags for SEO (PRD Marketing requirement) -->
-  <meta name="description" content="Welcome to FIRSTCUT, India's premier international student-led film festival. Championing creative freedom and innovative storytelling from emerging filmmakers globally. Celebrating Student Cinema.">
-  <meta name="keywords" content="FIRSTCUT, student film festival, international film festival, India film festival, student filmmakers, short films, FLAME University, Celebrating Student Cinema">
+  <!-- Meta Tags for SEO -->
+  <meta name="description" content="Welcome to FirstCut, India's premier international student-led film festival organized by FLAME University, Pune. Celebrating Student Cinema.">
+  <meta name="keywords" content="FirstCut, student film festival, international film festival, India film festival, student filmmakers, short films, FLAME University, Celebrating Student Cinema">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,12 +15,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="styles.css?v=1.0.1">
+  <link rel="stylesheet" href="styles.css?v=2.0.0">
 </head>
 <body>
 
-  <!-- Custom Cursor -->
-  <div id="custom-cursor"></div>
+  <!-- Custom Cinema Viewfinder Cursor -->
+  <div id="custom-cursor">
+    <div class="cursor-core"></div>
+    <div class="cursor-ring">
+      <span class="cursor-tick tick-tl"></span>
+      <span class="cursor-tick tick-tr"></span>
+      <span class="cursor-tick tick-bl"></span>
+      <span class="cursor-tick tick-br"></span>
+    </div>
+  </div>
 
   <!-- Momoka Rectangle Reveal Panels -->
   <div id="reveal-overlay">
@@ -31,766 +39,1011 @@
     <div class="reveal-panel"></div>
   </div>
 
-  <!-- FIRSTCUT Logo Loader Screen (Uses logo.png) -->
+  <!-- FirstCut Logo Loader Screen (Uses white-background logo.png with Take 13) -->
   <div id="logo-loader">
     <div class="loader-logo-container">
-      <img class="loader-logo" src="logo.png" alt="FIRSTCUT Logo">
-      <div class="loader-text">FIRSTCUT</div>
+      <img class="loader-logo" src="logo.png" alt="FirstCut Take 13 Logo">
+      <div class="loader-text"><span class="brand-fc">FirstCut</span> Take 13</div>
+      <div class="loader-subtext">Celebrating Student Cinema</div>
     </div>
   </div>
 
   <!-- Main Website Container (Revealed after transition) -->
   <div id="main-website">
     
-    <!-- Stockholm Film Festival Style Header -->
-    <header class="stockholm-header">
-      <div class="header-left">
-        <img class="header-logo" src="logo.png" alt="FIRSTCUT Logo">
-        <a href="#" class="header-title" id="logo-text-link">FLAME <span>FIRSTCUT</span></a>
+    <!-- Sticky Top Header Bar -->
+    <header class="stockholm-header" id="site-header">
+      <div class="header-main-row">
+        <div class="header-left">
+          <a href="#home" class="logo-badge-link" data-page-target="home" aria-label="FirstCut Home">
+            <img class="header-logo" src="logo.png" alt="FirstCut Take 13 Logo">
+          </a>
+          <a href="#home" class="header-title" id="logo-text-link" data-page-target="home">FLAME <span class="brand-fc">FirstCut</span></a>
+        </div>
+
+        <nav class="header-nav" id="desktop-nav" aria-label="Department Pages Navigation">
+          <a href="#home" class="nav-link active" data-page-target="home">Home</a>
+          <a href="#submissions" class="nav-link" data-page-target="submissions">Submissions</a>
+          <a href="#outreach" class="nav-link" data-page-target="outreach">Outreach</a>
+          <a href="#sponsorship" class="nav-link" data-page-target="sponsorship">Sponsorship</a>
+          <a href="#team" class="nav-link" data-page-target="team">Meet the Team</a>
+        </nav>
+
+        <div class="header-right">
+          <a href="#submissions" class="btn-member" id="nav-register-btn" data-page-target="submissions">Submit Now</a>
+          <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle Menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
-      <nav class="header-nav">
-        <a href="#about-section" class="nav-link">About</a>
-        <a href="#submit-section" class="nav-link">Submissions</a>
-        <a href="#outreach-section" class="nav-link">Collaborate</a>
-        <a href="#sponsorship-section" class="nav-link">Sponsors</a>
-        <a href="#hospitality-section" class="nav-link">Food Stalls</a>
-        <a href="#recap-section" class="nav-link">Recap</a>
-        <a href="#partners-section" class="nav-link">Partners</a>
+
+      <!-- Mobile Quick-Switch Department Bar (Always accessible on phones) -->
+      <nav class="mobile-dept-bar" aria-label="Mobile Department Navigation">
+        <a href="#home" class="mobile-nav-pill active" data-page-target="home">Home</a>
+        <a href="#submissions" class="mobile-nav-pill" data-page-target="submissions">Submissions</a>
+        <a href="#outreach" class="mobile-nav-pill" data-page-target="outreach">Outreach</a>
+        <a href="#sponsorship" class="mobile-nav-pill" data-page-target="sponsorship">Sponsorship</a>
+        <a href="#team" class="mobile-nav-pill" data-page-target="team">Meet the Team</a>
       </nav>
-      <div class="header-right">
-        <a href="#submit-section" class="btn-member" id="nav-register-btn">Submit Now</a>
-        <a href="#" class="lang-selector" id="nav-lang-btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          EN
-        </a>
-      </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="hero-section">
-      <div class="hero-video-bg">
-        <video autoplay muted loop playsinline>
-          <source src="hero-bg.mp4" type="video/mp4">
-        </video>
-        <div class="hero-video-overlay"></div>
-      </div>
-      <div class="hero-subtitle">FLAME FIRSTCUT TAKE 13</div>
-      <h1 class="hero-title">
-        <span>CHAMPIONING STUDENT&nbsp;</span>
-        <div class="looping-words">
-          <div class="looping-words__containers">
-            <ul data-looping-words-list="" class="looping-words__list">
-              <li class="looping-words__list"><p class="looping-words__p">CINEMA</p></li>
-              <li class="looping-words__list"><p class="looping-words__p">STORIES</p></li>
-              <li class="looping-words__list"><p class="looping-words__p">GENIUS</p></li>
-              <li class="looping-words__list"><p class="looping-words__p">VOICES</p></li>
-              <li class="looping-words__list"><p class="looping-words__p">FUTURES</p></li>
-            </ul>
-          </div>
-          <div data-looping-words-selector="" class="looping-words__selector">
-            <div class="looping-words__edge"></div>
-            <div class="looping-words__edge is--2"></div>
-            <div class="looping-words__edge is--3"></div>
-            <div class="looping-words__edge is--4"></div>
-          </div>
-        </div>
-      </h1>
+    <!-- =====================================================================
+         PAGE 1: HOME (Shorter, punchy, and easy to understand)
+         ===================================================================== -->
+    <div class="dept-page active" id="page-home" data-page="home">
       
-      <div class="hero-grid">
-        <div class="hero-description">
-          <p>Welcome to <strong>FIRSTCUT</strong>, India's premier international student film festival. Operating as a launching pad, we champion creative freedom and innovative storytelling from emerging student filmmakers globally, providing a space to connect with industry professionals and reach audiences around the world.</p>
+      <!-- Hero Section -->
+      <section id="hero-section">
+        <div class="hero-video-bg">
+          <video autoplay muted loop playsinline>
+            <source src="hero-bg.mp4" type="video/mp4">
+          </video>
+          <div class="hero-video-overlay"></div>
         </div>
-        <div class="hero-cta-box">
-          <h3>The Main Event is Here</h3>
-          <p>Don't miss the culmination of this cinematic journey. Screenings, interactions, and awards are waiting for you.</p>
-          <a href="#submit-section" class="btn-primary" id="hero-register-btn">Register / Submit Now</a>
-        </div>
-      </div>
-
-      <!-- Image Strip -->
-      <div class="hero-image-strip">
-        <div class="strip-item">
-          <img src="images/strip1.jpg" alt="Cinematic Film Still 1">
-          <div class="strip-overlay">
-            <h4>Experimental Cinema</h4>
-            <p>Pushing boundaries of film</p>
-          </div>
-        </div>
-        <div class="strip-item">
-          <img src="images/strip2.jpg" alt="Cinematic Film Still 2">
-          <div class="strip-overlay">
-            <h4>International Shorts</h4>
-            <p>From 45+ countries</p>
-          </div>
-        </div>
-        <div class="strip-item">
-          <img src="images/strip3.jpg" alt="Cinematic Film Still 3">
-          <div class="strip-overlay">
-            <h4>Industry Panels</h4>
-            <p>Interact with experts</p>
-          </div>
-        </div>
-        <div class="strip-item">
-          <img src="images/strip4.jpg" alt="Cinematic Film Still 4">
-          <div class="strip-overlay">
-            <h4>Awards Night</h4>
-            <p>Celebrating student genius</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Us Section -->
-    <section id="about-section">
-      <div class="split-layout">
-        <div class="split-image-container">
-          <img src="images/about.jpg" alt="About FIRSTCUT festival screening audience">
-        </div>
-        <div>
-          <div class="section-tag">About Us</div>
-          <h2 class="section-title">This is FIRSTCUT.</h2>
-          <p class="about-text">
-            From a small idea on campus, FIRSTCUT has grown into India’s largest student-run film festival. It provides young filmmakers with a space to share their work, connect with industry professionals, and reach audiences around the world. Run entirely by students, for students, FIRSTCUT gives every story a chance to be seen and celebrated.
-          </p>
-          
-          <div class="about-stat-grid">
-            <div class="stat-item">
-              <h3>13+</h3>
-              <p>Editions Completed</p>
+        <div class="hero-subtitle">FLAME <span class="brand-fc">FirstCut</span> Take 13</div>
+        <h1 class="hero-title">
+          <span class="hero-title-prefix">CHAMPIONING STUDENT&nbsp;</span>
+          <div class="looping-words">
+            <div class="looping-words__containers">
+              <ul data-looping-words-list="" class="looping-words__list">
+                <li class="looping-words__list"><p class="looping-words__p">CINEMA</p></li>
+                <li class="looping-words__list"><p class="looping-words__p">STORIES</p></li>
+                <li class="looping-words__list"><p class="looping-words__p">GENIUS</p></li>
+                <li class="looping-words__list"><p class="looping-words__p">VOICES</p></li>
+                <li class="looping-words__list"><p class="looping-words__p">FUTURES</p></li>
+              </ul>
             </div>
-            <div class="stat-item">
-              <h3>1200+</h3>
-              <p>Submissions Annually</p>
-            </div>
-            <div class="stat-item">
-              <h3>45+</h3>
-              <p>Countries Reached</p>
+            <div data-looping-words-selector="" class="looping-words__selector">
+              <div class="looping-words__edge"></div>
+              <div class="looping-words__edge is--2"></div>
+              <div class="looping-words__edge is--3"></div>
+              <div class="looping-words__edge is--4"></div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Guests Section -->
-    <section id="guests-section">
-      <div class="guests-layout">
-        <div class="guests-text-container">
-          <div class="section-tag">Jury & Guests</div>
-          <h2 class="section-title">Guests from<br>around the world</h2>
-          <p class="about-text">
-            Every year, the festival hosts a wide range of directors, actors, producers and screenwriters—from Oscar-winning veterans to the next generation of visionaries. It's where conversations start, careers take off and audiences are introduced to the best and latest films, before anyone else. You might be mingling with a Cannes winner in the foyer, sitting next to an arthouse director in the cinema seats, or asking a question directly to a Golden Globe nominee during a Face2Face conversation. The festival is more than film - it's a place where the cultural world meets.
-          </p>
-        </div>
-        <div class="guests-image-container">
-          <img src="images/guests.jpg" alt="Guest speaker addressing audience at film festival panel">
-        </div>
-      </div>
-    </section>
-
-    <!-- Events Section -->
-    <section id="events-section">
-      <!-- Scrolling Marquee Band -->
-      <div class="marquee-container">
-        <div class="marquee-track">
-          <span>FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp;</span>
-          <span>FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp; FLAME FIRSTCUT TAKE 13 &nbsp;&bull;&nbsp;</span>
-        </div>
-      </div>
-
-      <div class="events-header-block">
-        <div>
-          <div class="section-tag">Festival Highlights</div>
-          <h2 class="section-title">This is the Festival</h2>
-        </div>
-        <div class="events-subtitle">
-          Face2Faces, Red Carpets, parties, Industry Days and of course lots of film. Immerse yourself in the magic of the festival and discover all that awaits you below!
-        </div>
-      </div>
-
-      <!-- Carousel -->
-      <div class="carousel-outer">
-        <div class="carousel-track-container">
-          <div class="carousel-track" id="event-carousel-track">
-            <!-- Card 1 -->
-            <div class="event-card">
-              <div class="event-card-image">
-                <img src="images/event_awards.jpg" alt="Awards Event">
-              </div>
-              <div class="event-card-content">
-                <div class="event-card-tag">Ceremony</div>
-                <h3 class="event-card-title">Awards Gala</h3>
-                <p class="event-card-desc">Recognizing the absolute best in student filmmaking across Fiction, Non-Fiction, Animation, and Nano categories.</p>
-              </div>
-            </div>
-            <!-- Card 2 -->
-            <div class="event-card">
-              <div class="event-card-image">
-                <img src="images/event_face2face.jpg" alt="Face2Face Sessions">
-              </div>
-              <div class="event-card-content">
-                <div class="event-card-tag">Q&A</div>
-                <h3 class="event-card-title">Face2Face Sessions</h3>
-                <p class="event-card-desc">Interactive discussions with student creators and renowned jury members straight after the screenings.</p>
-              </div>
-            </div>
-            <!-- Card 3 -->
-            <div class="event-card">
-              <div class="event-card-image">
-                <img src="images/event_masterclass.jpg" alt="Panel Discussions">
-              </div>
-              <div class="event-card-content">
-                <div class="event-card-tag">Education</div>
-                <h3 class="event-card-title">Masterclasses</h3>
-                <p class="event-card-desc">Hands-on technical workshops led by seasoned industry cinematographers, editors, and directors.</p>
-              </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="event-card">
-              <div class="event-card-image">
-                <img src="images/event_redcarpet.jpg" alt="Red Carpet">
-              </div>
-              <div class="event-card-content">
-                <div class="event-card-tag">Social</div>
-                <h3 class="event-card-title">Red Carpet Opening</h3>
-                <p class="event-card-desc">Walk the red carpet and celebrate the opening of Take 13 alongside international delegates and guests.</p>
-              </div>
-            </div>
+        </h1>
+        
+        <div class="hero-grid">
+          <div class="hero-description">
+            <p>Welcome to <strong><span class="brand-fc">FirstCut</span></strong>, one of India’s premier international student film festivals, organized by FLAME University, Pune. We provide a dynamic platform for young filmmakers globally—featuring free film submissions, live jury screenings, ₹30,000 category awards, and industry conversations.</p>
+          </div>
+          <div class="hero-cta-box">
+            <h3>Take 13 Submissions Open</h3>
+            <p>Opening Date: <strong>21 Oct 2026</strong> &bull; Final Deadline: <strong>10 Jan 2027</strong>. Entry &amp; attendance are 100% free.</p>
+            <a href="#submissions" class="btn-primary" id="hero-register-btn" data-page-target="submissions">Register / Submit Now</a>
           </div>
         </div>
 
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="carousel-prev-btn" aria-label="Previous">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          </button>
-          <button class="carousel-btn" id="carousel-next-btn" aria-label="Next">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Submit a Film / Categories / Regi Section -->
-    <section id="submit-section">
-      <div class="section-tag">Submissions</div>
-      <h2 class="section-title">Submit A Film</h2>
-
-      <div class="submit-banner">
-        <img src="images/submit_banner.jpg" alt="Film production equipment set shadow">
-      </div>
-
-      <div class="submit-grid">
-        <div>
-          <p class="submit-desc">
-            Film submissions for the 13th FIRSTCUT International Student Film Festival are now officially open. We put much effort into watching all submitted films and regard this as highly important work. We invite student filmmakers globally to step forward and submit their vision.
-          </p>
-
-          <div class="submit-buttons">
-            <a href="https://filmfreeway.com" target="_blank" class="btn-submit" id="btn-submit-freeway">
-              <span>Submit on FilmFreeway</span>
-              <span class="btn-arrow">&rarr;</span>
-            </a>
-            <a href="https://filmfest.com" target="_blank" class="btn-submit" id="btn-submit-fest">
-              <span>Submit on Film Fest</span>
-              <span class="btn-arrow">&rarr;</span>
-            </a>
-            <a href="https://google.com/forms" target="_blank" class="btn-submit" id="btn-submit-gform">
-              <span>Submit via Google Form</span>
-              <span class="btn-arrow">&rarr;</span>
-            </a>
+        <!-- Image Strip -->
+        <div class="hero-image-strip">
+          <div class="strip-item">
+            <img src="images/strip1.jpg" alt="Cinematic Film Still 1">
+            <div class="strip-overlay">
+              <h4>Experimental Cinema</h4>
+              <p>Pushing boundaries of film</p>
+            </div>
           </div>
-        </div>
-
-        <div class="submit-info">
-          <h3>Dates for Take 13</h3>
-          <div class="deadline-list">
-            <div class="deadline-item">
-              <span>Earlybird Deadline</span>
-              <span>March 23, 2026</span>
+          <div class="strip-item">
+            <img src="images/strip2.jpg" alt="Cinematic Film Still 2">
+            <div class="strip-overlay">
+              <h4>International Shorts</h4>
+              <p>From 75+ countries</p>
             </div>
-            <div class="deadline-item">
-              <span>Regular Deadline</span>
-              <span>July 9, 2026</span>
+          </div>
+          <div class="strip-item">
+            <img src="images/strip3.jpg" alt="Cinematic Film Still 3">
+            <div class="strip-overlay">
+              <h4>Industry Panels</h4>
+              <p>Interact with experts</p>
             </div>
-            <div class="deadline-item">
-              <span>Late Deadline</span>
-              <span>August 18, 2026</span>
-            </div>
-            <div class="deadline-item">
-              <span>Final Deadline</span>
-              <span>September 15, 2026</span>
+          </div>
+          <div class="strip-item">
+            <img src="images/strip4.jpg" alt="Cinematic Film Still 4">
+            <div class="strip-overlay">
+              <h4>Awards Night</h4>
+              <p>Celebrating student genius</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-
-
-      <!-- Submission Categories -->
-      <div class="categories-container">
-        <h2 class="section-title">Submission Categories</h2>
-        <div class="categories-grid">
-          <div class="category-card">
-            <div class="cat-header">
-              <h4 class="cat-title">Fiction</h4>
-              <span class="cat-limit">Max 20 Mins</span>
-            </div>
-            <p class="cat-desc">
-              Fiction films often explore themes of human emotion, relationships, or imagination, using elements like dialogue, mise-en-scène, and dramatic structure. At FIRSTCUT, fiction shorts can be experimental or traditional, ranging from realistic portrayals of life to fantastical narratives, but must not exceed 20 minutes.
-            </p>
+      <!-- About Us Section (Concise & Clear) -->
+      <section id="about-section">
+        <div class="split-layout">
+          <div class="split-image-container">
+            <img src="images/about.jpg" alt="About FirstCut festival screening audience">
           </div>
-          <div class="category-card">
-            <div class="cat-header">
-              <h4 class="cat-title">Non Fiction</h4>
-              <span class="cat-limit">Max 40 Mins</span>
-            </div>
-            <p class="cat-desc">
-              Non-fiction films include documentaries, biographical portraits, investigative works, or essay films. At FIRSTCUT, the non-fiction category provides filmmakers up to 40 minutes to capture truth-based stories whether shedding light on social issues, exploring cultural contexts, or offering personal perspectives grounded in reality.
-            </p>
-          </div>
-          <div class="category-card">
-            <div class="cat-header">
-              <h4 class="cat-title">Animation</h4>
-              <span class="cat-limit">Max 10 Mins</span>
-            </div>
-            <p class="cat-desc">
-              Animation films use frame-by-frame techniques to create the illusion of motion, employing styles such as hand-drawn, stop-motion, 2D digital, or 3D computer graphics. At FIRSTCUT, animated films must stay within 10 minutes, demonstrating how unique visual language can captivate, entertain, or even educate.
-            </p>
-          </div>
-          <div class="category-card">
-            <div class="cat-header">
-              <h4 class="cat-title">Nano</h4>
-              <span class="cat-limit">Max 2 Mins</span>
-            </div>
-            <p class="cat-desc">
-              The Nano category challenges filmmakers to tell compelling stories within an ultra-short format of just 2 minutes. These films can belong to any genre (fiction, non-fiction, or animation) but must rely on concise storytelling, striking visuals, and precise editing to create impact. Nano films highlight brevity as an art form, proving that a story doesn’t need to be long to be powerful.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRD: REGISTRATIONS FAQ (Non-Technical CMS Editable FAQ Section) -->
-      <div class="faq-container">
-        <h2 class="section-title">Submissions FAQ</h2>
-        <div class="faq-list">
-          <div class="faq-item">
-            <div class="faq-question">
-              <span>Can I submit a film that has already been screened at another festival?</span>
-              <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              Yes, we accept films that have been screened elsewhere, provided the filmmaker holds all intellectual property rights and the film was completed within the eligible eligibility window (completed after January 1, 2024).
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <span>Do my films require subtitles?</span>
-              <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              Yes! All films with dialogue in languages other than English must have burnt-in English subtitles or an attached `.srt` subtitle file. Subtitle compliance is automatically scanned during vetting.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <span>Are there entry fees for student submissions?</span>
-              <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              Submissions via Google Forms and direct college outreach channels are free of charge. Submissions through third-party platforms (FilmFreeway, FilmFest Platform) may incur nominal platform processing fees.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <span>Is my submission format checked automatically?</span>
-              <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-              Yes. Our backend runs automated format and length validation. Submissions exceeding runtimes (Fiction: 20m, Non-Fiction: 40m, Animation: 10m, Nano: 2m) will trigger automatic compliance flags, and filmmakers will receive an automated follow-up notification.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRD: OUTREACH COLLABORATE WITH US SECTION -->
-    <section id="outreach-section">
-      <div class="section-tag">Outreach</div>
-      <h2 class="section-title">Collaborate With Us</h2>
-      
-      <div class="outreach-intro">
-        <p>The Outreach committee is dedicated to expanding FIRSTCUT's network across international colleges, student bodies, film clubs, media schools, and cultural institutions. Connect your institution to India's largest student film festival.</p>
-      </div>
-
-      <div class="outreach-layout">
-        <div class="outreach-brochure-card">
           <div>
-            <h3>Digital Outreach brochure</h3>
-            <p>Download the official Take 13 Outreach Brochure covering our historical reach, campus engagement initiatives, networking schedules, and university partnership models.</p>
+            <div class="section-tag">About Us</div>
+            <h2 class="section-title">This is <span class="brand-fc">FirstCut</span>.</h2>
+            <p class="about-text">
+              Organized by FLAME University, Pune, <span class="brand-fc">FirstCut</span> has grown into one of India’s premier student-run international film festivals. Run entirely by students, for students, we champion complete creative freedom across Fiction, Non-Fiction, Animation, and our signature 2-minute Nano category.
+            </p>
+            
+            <div class="about-stat-grid">
+              <div class="stat-item">
+                <h3 data-target="13" data-suffix="+">13+</h3>
+                <p>Editions</p>
+              </div>
+              <div class="stat-item">
+                <h3 data-target="700" data-suffix="+">700+</h3>
+                <p>Take 12 Submissions</p>
+              </div>
+              <div class="stat-item">
+                <h3 data-target="75" data-suffix="+">75+</h3>
+                <p>Countries Reached</p>
+              </div>
+            </div>
           </div>
-          <a href="#" class="btn-download" id="btn-download-brochure">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Download Brochure PDF
+        </div>
+      </section>
+
+      <!-- Events / Highlights Section -->
+      <section id="events-section">
+        <div class="marquee-container">
+          <div class="marquee-track">
+            <span>FLAME <span class="brand-fc">FirstCut</span> TAKE 13 &nbsp;&bull;&nbsp; CELEBRATING STUDENT CINEMA &nbsp;&bull;&nbsp; FLAME <span class="brand-fc">FirstCut</span> TAKE 13 &nbsp;&bull;&nbsp; CELEBRATING STUDENT CINEMA &nbsp;&bull;&nbsp;</span>
+            <span>FLAME <span class="brand-fc">FirstCut</span> TAKE 13 &nbsp;&bull;&nbsp; CELEBRATING STUDENT CINEMA &nbsp;&bull;&nbsp; FLAME <span class="brand-fc">FirstCut</span> TAKE 13 &nbsp;&bull;&nbsp; CELEBRATING STUDENT CINEMA &nbsp;&bull;&nbsp;</span>
+          </div>
+        </div>
+
+        <div class="events-header-block">
+          <div>
+            <div class="section-tag">Festival Highlights</div>
+            <h2 class="section-title">This is the Festival</h2>
+          </div>
+          <div class="events-subtitle">
+            Face2Faces, Red Carpets, parties, Industry Days and of course lots of film. Immerse yourself in the magic of the festival and discover all that awaits you below!
+          </div>
+        </div>
+
+        <div class="carousel-outer">
+          <div class="carousel-track-container">
+            <div class="carousel-track" id="event-carousel-track">
+              <div class="event-card">
+                <div class="event-card-image">
+                  <img src="images/event_awards.jpg" alt="Awards Event">
+                </div>
+                <div class="event-card-content">
+                  <div class="event-card-tag">Ceremony</div>
+                  <h3 class="event-card-title">Awards Gala</h3>
+                  <p class="event-card-desc">Recognizing top student filmmakers with certificates and ₹30,000 cash prizes per category.</p>
+                </div>
+              </div>
+              <div class="event-card">
+                <div class="event-card-image">
+                  <img src="images/event_face2face.jpg" alt="Face2Face Sessions">
+                </div>
+                <div class="event-card-content">
+                  <div class="event-card-tag">Q&amp;A</div>
+                  <h3 class="event-card-title">Face2Face Sessions</h3>
+                  <p class="event-card-desc">Interactive discussions with student creators and renowned jury members right after screenings.</p>
+                </div>
+              </div>
+              <div class="event-card">
+                <div class="event-card-image">
+                  <img src="images/event_masterclass.jpg" alt="Panel Discussions">
+                </div>
+                <div class="event-card-content">
+                  <div class="event-card-tag">Education</div>
+                  <h3 class="event-card-title">Masterclasses</h3>
+                  <p class="event-card-desc">Hands-on workshops led by acclaimed industry cinematographers, editors, and directors.</p>
+                </div>
+              </div>
+              <div class="event-card">
+                <div class="event-card-image">
+                  <img src="images/event_redcarpet.jpg" alt="Red Carpet">
+                </div>
+                <div class="event-card-content">
+                  <div class="event-card-tag">Social</div>
+                  <h3 class="event-card-title">Red Carpet Opening</h3>
+                  <p class="event-card-desc">Celebrate the opening of Take 13 alongside student delegates, jury, and guests.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Guests Section -->
+      <section id="guests-section">
+        <div class="guests-layout">
+          <div class="guests-text-container">
+            <div class="section-tag">Jury &amp; Guests</div>
+            <h2 class="section-title">Guests from<br>around the world</h2>
+            <p class="about-text">
+              Every year, <span class="brand-fc">FirstCut</span> hosts acclaimed directors, actors, producers, and screenwriters from the Indian and international film industry. Shortlisted films are screened for a live audience and evaluated by our distinguished jury, followed by engaging panel discussions and talks.
+            </p>
+          </div>
+          <div class="guests-image-container">
+            <img src="images/guests.jpg" alt="Guest speaker addressing audience at film festival panel">
+          </div>
+        </div>
+      </section>
+
+      <!-- Recap Movie Section -->
+      <section id="recap-section">
+        <div class="section-tag">Aftermovie</div>
+        <h2 class="section-title">Highlights from the past editions</h2>
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/n30kE1BvBGo?enablejsapi=1" title="FirstCut Film Festival Recap" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <!-- Quick Department Portals Navigation Grid -->
+      <section id="departments-overview-section">
+        <div class="section-tag">Explore <span class="brand-fc">FirstCut</span></div>
+        <h2 class="section-title">Festival Departments</h2>
+        <div class="dept-cards-grid">
+          <a href="#submissions" class="dept-portal-card" data-page-target="submissions">
+            <span class="dept-portal-num">01</span>
+            <h3>Submissions</h3>
+            <p>Submit your film for free via our website portal or FilmFreeway, explore categories, and read Take 13 rules.</p>
+            <span class="dept-portal-cta">Open Submissions Page &rarr;</span>
+          </a>
+          <a href="#outreach" class="dept-portal-card" data-page-target="outreach">
+            <span class="dept-portal-num">02</span>
+            <h3>Outreach</h3>
+            <p>Partner your university, film club, or organization with <span class="brand-fc">FirstCut</span> Take 13.</p>
+            <span class="dept-portal-cta">Open Outreach Page &rarr;</span>
+          </a>
+          <a href="#sponsorship" class="dept-portal-card" data-page-target="sponsorship">
+            <span class="dept-portal-num">03</span>
+            <h3>Sponsorship</h3>
+            <p>Connect your brand with 5,000+ college attendees and young creators across India.</p>
+            <span class="dept-portal-cta">Open Sponsorship Page &rarr;</span>
+          </a>
+          <a href="#team" class="dept-portal-card" data-page-target="team">
+            <span class="dept-portal-num">04</span>
+            <h3>Meet the Team</h3>
+            <p>Meet the student organizing committee and department heads powering <span class="brand-fc">FirstCut</span> Take 13.</p>
+            <span class="dept-portal-cta">Open Team Page &rarr;</span>
           </a>
         </div>
+      </section>
 
-        <div class="form-box">
-          <h3>Inbound Interest Form</h3>
-          <form id="outreach-form">
-            <div class="form-group">
-              <label for="outreach-college">Institution / College Name</label>
-              <input type="text" id="outreach-college" class="form-control" placeholder="e.g. FLAME University" required>
-            </div>
-            <div class="form-group">
-              <label for="outreach-city">City</label>
-              <input type="text" id="outreach-city" class="form-control" placeholder="e.g. Pune" required>
-            </div>
-            <div class="form-group">
-              <label for="outreach-name">Contact Person Name</label>
-              <input type="text" id="outreach-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
-            </div>
-            <div class="form-group">
-              <label for="outreach-email">Contact Email Address</label>
-              <input type="email" id="outreach-email" class="form-control" placeholder="e.g. sharma@univ.edu" required>
-            </div>
-            <div class="form-group">
-              <label>Collaboration Interest</label>
-              <div class="checkbox-group">
-                <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Participant Outreach"> Participant Outreach</label>
-                <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Media Partner"> Media Partner</label>
-                <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Campus Ambassador"> Campus Ambassador</label>
-                <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Film Club Tie-up"> Film Club Tie-up</label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Does your institution have a media/film department?</label>
-              <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="media-dept" value="Yes" required> Yes</label>
-                <label class="radio-label"><input type="radio" name="media-dept" value="No"> No</label>
-                <label class="radio-label"><input type="radio" name="media-dept" value="Both/Student Council"> Student Council</label>
-              </div>
-            </div>
-            <button type="submit" class="btn-primary" style="margin-top: 1rem;">Submit Outreach Form</button>
-          </form>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 2: SUBMISSIONS DEPARTMENT PAGE
+         ===================================================================== -->
+    <div class="dept-page" id="page-submissions" data-page="submissions">
+      <section id="submit-section">
+        <div class="section-tag">Submissions</div>
+        <h2 class="section-title">Submit A Film</h2>
+
+        <div class="submit-banner">
+          <img src="images/submit_banner.jpg" alt="Film production equipment set shadow">
         </div>
-      </div>
 
-      <!-- Associated Institutions scroller -->
-      <div class="colleges-scroller">
-        <h4>Our Associated Network</h4>
-        <div class="colleges-marquee">
-          <div class="colleges-track">
-            FLAME UNIVERSITY &nbsp;&bull;&nbsp; KC COLLEGE PUNE &nbsp;&bull;&nbsp; ST. XAVIER'S MUMBAI &nbsp;&bull;&nbsp; FTII &nbsp;&bull;&nbsp; SRFTI KOLKATA &nbsp;&bull;&nbsp; CHRIST UNIVERSITY BENGALURU &nbsp;&bull;&nbsp; FLAME UNIVERSITY &nbsp;&bull;&nbsp; KC COLLEGE PUNE &nbsp;&bull;&nbsp; ST. XAVIER'S MUMBAI &nbsp;&bull;&nbsp; FTII &nbsp;&bull;&nbsp; SRFTI KOLKATA &nbsp;&bull;&nbsp; CHRIST UNIVERSITY BENGALURU &nbsp;&bull;&nbsp;
+        <div class="submit-grid">
+          <div>
+            <p class="submit-desc">
+              Film submissions for <span class="brand-fc">FirstCut</span> 2027 Take 13 are now officially open! Much effort goes into watching and reviewing all submitted films. We invite student filmmakers from around the world to step forward and submit their work.
+            </p>
+
+            <div class="submit-buttons">
+              <a href="#film-submission-form-box" class="btn-submit btn-submit-primary" id="btn-scroll-portal-form">
+                <span>Submit via <span class="brand-fc">FirstCut</span> Website Portal Form</span>
+                <span class="btn-arrow">&darr;</span>
+              </a>
+              <a href="https://filmfreeway.com" target="_blank" rel="noopener" class="btn-submit" id="btn-submit-freeway">
+                <span>Submit on FilmFreeway</span>
+                <span class="btn-arrow">&rarr;</span>
+              </a>
+            </div>
+            <p class="submit-platform-note">
+              * Note: Submit via <span class="brand-fc">FirstCut</span>’s website form below OR the FilmFreeway page. Please submit on <strong>1 platform only</strong>. Submissions are <strong>FREE of charge</strong>.
+            </p>
+          </div>
+
+          <div class="submit-info">
+            <h3>Dates for Take 13</h3>
+            <div class="deadline-list">
+              <div class="deadline-item">
+                <span>Opening Date</span>
+                <span>Tentative: 21 Oct 2026</span>
+              </div>
+              <div class="deadline-item">
+                <span>Final Deadline</span>
+                <span>10 Jan 2027</span>
+              </div>
+            </div>
+            <div class="award-highlight-box">
+              <h4>Awards &amp; Entry</h4>
+              <p>Winners in each category receive a certificate and a cash prize of <strong>INR 30,000</strong>. Both film submissions and attending the festival are <strong>FREE</strong>.</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- PRD: SPONSORSHIP PARTNER WITH US SECTION -->
-    <section id="sponsorship-section">
-      <div class="section-tag">Sponsorship</div>
-      <h2 class="section-title">Partner With Us</h2>
-      
-      <div class="outreach-intro">
-        <p>FIRSTCUT is a highly targeted branding opportunity. Connect your brand with over 5,000+ premium on-ground college audience members, international filmmakers, and student creative networks across India.</p>
-      </div>
+        <!-- Submission Categories (Reduced Content) -->
+        <div class="categories-container">
+          <h2 class="section-title">Submission Categories</h2>
+          <div class="categories-grid">
+            <div class="category-card">
+              <div class="cat-header">
+                <h4 class="cat-title">Fiction</h4>
+                <span class="cat-limit">Max 20 Mins</span>
+              </div>
+              <p class="cat-desc">
+                Fiction films explore human emotions, relationships, and imagination through characters and storytelling. From realistic portrayals to fantastical narratives, they bring creative stories to life.
+              </p>
+            </div>
+            <div class="category-card">
+              <div class="cat-header">
+                <h4 class="cat-title">Non-Fiction</h4>
+                <span class="cat-limit">Max 40 Mins</span>
+              </div>
+              <p class="cat-desc">
+                Non-fiction films explore real stories through documentaries, biographies, investigations, and essay films. They offer perspectives on social issues, cultural contexts, and real-life experiences.
+              </p>
+            </div>
+            <div class="category-card">
+              <div class="cat-header">
+                <h4 class="cat-title">Animation</h4>
+                <span class="cat-limit">Max 10 Mins</span>
+              </div>
+              <p class="cat-desc">
+                Animation films bring stories to life through hand-drawn, stop-motion, 2D digital, or 3D techniques. They use creative visuals and movement to entertain, inspire, or inform.
+              </p>
+            </div>
+            <div class="category-card">
+              <div class="cat-header">
+                <h4 class="cat-title">Nano</h4>
+                <span class="cat-limit">Max 2 Mins</span>
+              </div>
+              <p class="cat-desc">
+                Nano films challenge filmmakers to tell compelling stories in just two minutes. Any genre is welcome, with concise storytelling, striking visuals, and creative editing making every second count.
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <!-- Visibility Benefits Grid -->
-      <h3 style="font-family: var(--font-header); font-size: 1.8rem; font-weight: 700; text-transform: uppercase; text-align: center; margin-top: 3rem;">Sponsorship Visibility Benefits</h3>
-      <div class="benefits-grid">
-        <div class="benefit-card">
-          <svg class="benefit-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          <h4>Social Media Outreach</h4>
-          <p>Strategic, creative brand placements and features across our official Instagram, LinkedIn, and YouTube channels.</p>
-        </div>
-        <div class="benefit-card">
-          <svg class="benefit-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <h4>On-Ground Branding</h4>
-          <p>Banners, standees, backdrops, and video promotions at our main theater screens and central FLAME campus hubs.</p>
-        </div>
-        <div class="benefit-card">
-          <svg class="benefit-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"/></svg>
-          <h4>Sampling & Activations</h4>
-          <p>Set up interactive food, retail, or tech stalls in the student courtyard during the festival days for maximum direct reach.</p>
-        </div>
-      </div>
+        <!-- Custom On-Website Film Submission Form (All 20 Requested Fields) -->
+        <div class="portal-form-container" id="film-submission-form-box">
+          <div class="portal-form-header">
+            <div class="section-tag">Official Portal</div>
+            <h2 class="section-title">Film Submission Form</h2>
+            <p class="about-text">Complete the form below to submit your film directly to <span class="brand-fc">FirstCut</span> 2027 Take 13. Valid Student IDs are mandatory for key crew members.</p>
+          </div>
 
-      <div class="outreach-layout">
-        <div class="form-box">
-          <h3>Sponsor Registration Form</h3>
-          <form id="sponsor-form">
-            <div class="form-group">
-              <label for="sponsor-brand">Brand / Company Name</label>
-              <input type="text" id="sponsor-brand" class="form-control" placeholder="e.g. Nikon India" required>
-            </div>
-            <div class="form-group">
-              <label for="sponsor-name">Contact Person Name</label>
-              <input type="text" id="sponsor-name" class="form-control" placeholder="e.g. Shreya Sen" required>
-            </div>
-            <div class="form-group">
-              <label for="sponsor-email">Corporate Email Address</label>
-              <input type="email" id="sponsor-email" class="form-control" placeholder="e.g. corporate@nikon.in" required>
-            </div>
-            <div class="form-group">
-              <label>Sponsorship Tier Interest</label>
-              <div class="checkbox-group">
-                <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="Title Sponsor"> Title Sponsor</label>
-                <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="Co-Sponsor"> Co-Sponsor</label>
-                <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="Category Sponsor"> Category Partner</label>
-                <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="In-Kind Partner"> In-Kind Partner</label>
+          <form id="custom-film-submission-form" class="film-portal-form">
+            <div class="portal-form-grid">
+              <!-- 1. Name of the film -->
+              <div class="form-group">
+                <label for="sub-film-name">1. Name of the film *</label>
+                <input type="text" id="sub-film-name" name="filmName" class="form-control" placeholder="Enter film title" required>
+              </div>
+
+              <!-- 2. Name of the submitter -->
+              <div class="form-group">
+                <label for="sub-submitter-name">2. Name of the submitter *</label>
+                <input type="text" id="sub-submitter-name" name="submitterName" class="form-control" placeholder="Enter your full name" required>
+              </div>
+
+              <!-- 3. University/College of Submitter -->
+              <div class="form-group">
+                <label for="sub-university">3. University/College of Submitter *</label>
+                <input type="text" id="sub-university" name="university" class="form-control" placeholder="e.g. FLAME University, FTII" required>
+              </div>
+
+              <!-- 4. Email Address of the Submitter -->
+              <div class="form-group">
+                <label for="sub-email">4. Email Address of the Submitter *</label>
+                <input type="email" id="sub-email" name="email" class="form-control" placeholder="e.g. filmmaker@university.edu" required>
+              </div>
+
+              <!-- 5. Mobile No. of the Submitter (include the area code) -->
+              <div class="form-group">
+                <label for="sub-mobile">5. Mobile No. of the Submitter (include the area code) *</label>
+                <input type="tel" id="sub-mobile" name="mobile" class="form-control" placeholder="e.g. +91 98765 43210" required>
+              </div>
+
+              <!-- 6. Country/City of Origin -->
+              <div class="form-group">
+                <label for="sub-origin">6. Country/City of Origin *</label>
+                <input type="text" id="sub-origin" name="origin" class="form-control" placeholder="e.g. Pune, India" required>
+              </div>
+
+              <!-- 7. Film Category -->
+              <div class="form-group">
+                <label for="sub-category">7. Film Category *</label>
+                <select id="sub-category" name="category" class="form-control" required>
+                  <option value="">Select Film Category</option>
+                  <option value="Fiction">Fiction (Max 20 Mins)</option>
+                  <option value="Non-Fiction">Non-Fiction (Max 40 Mins)</option>
+                  <option value="Animation">Animation (Max 10 Mins)</option>
+                  <option value="Nano">Nano (Max 2 Mins)</option>
+                </select>
+              </div>
+
+              <!-- 8. Language of the film (English subtitles are mandatory) -->
+              <div class="form-group">
+                <label for="sub-language">8. Language of the film (English subtitles are mandatory) *</label>
+                <input type="text" id="sub-language" name="language" class="form-control" placeholder="e.g. Hindi / English (with English subtitles)" required>
+              </div>
+
+              <!-- 9. Completion Date of the film -->
+              <div class="form-group">
+                <label for="sub-completion-date">9. Completion Date of the film *</label>
+                <input type="date" id="sub-completion-date" name="completionDate" class="form-control" required>
+              </div>
+
+              <!-- 10. Name of Director(s) -->
+              <div class="form-group">
+                <label for="sub-director-name">10. Name of Director(s) *</label>
+                <input type="text" id="sub-director-name" name="directorName" class="form-control" placeholder="Full name(s) of Director(s)" required>
+              </div>
+
+              <!-- 11. Student ID of Director(s) -->
+              <div class="form-group">
+                <label for="sub-director-id">11. Student ID of Director(s) (ID Number / Drive Link) *</label>
+                <input type="text" id="sub-director-id" name="directorId" class="form-control" placeholder="Student ID No. or Google Drive link to ID card" required>
+              </div>
+
+              <!-- 12. Name of Cinematographer(s) -->
+              <div class="form-group">
+                <label for="sub-cinematographer-name">12. Name of Cinematographer(s) *</label>
+                <input type="text" id="sub-cinematographer-name" name="cinematographerName" class="form-control" placeholder="Full name(s) of Cinematographer(s)" required>
+              </div>
+
+              <!-- 13. Student ID of Cinematographer(s) -->
+              <div class="form-group">
+                <label for="sub-cinematographer-id">13. Student ID of Cinematographer(s) *</label>
+                <input type="text" id="sub-cinematographer-id" name="cinematographerId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
+              </div>
+
+              <!-- 14. Name of Editor(s) -->
+              <div class="form-group">
+                <label for="sub-editor-name">14. Name of Editor(s) *</label>
+                <input type="text" id="sub-editor-name" name="editorName" class="form-control" placeholder="Full name(s) of Editor(s)" required>
+              </div>
+
+              <!-- 15. Student ID of Editor(s) -->
+              <div class="form-group">
+                <label for="sub-editor-id">15. Student ID of Editor(s) *</label>
+                <input type="text" id="sub-editor-id" name="editorId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
+              </div>
+
+              <!-- 16. Name of Scriptwriter(s) -->
+              <div class="form-group">
+                <label for="sub-scriptwriter-name">16. Name of Scriptwriter(s) *</label>
+                <input type="text" id="sub-scriptwriter-name" name="scriptwriterName" class="form-control" placeholder="Full name(s) of Scriptwriter(s)" required>
+              </div>
+
+              <!-- 17. Student ID of Scriptwriter(s) -->
+              <div class="form-group">
+                <label for="sub-scriptwriter-id">17. Student ID of Scriptwriter(s) *</label>
+                <input type="text" id="sub-scriptwriter-id" name="scriptwriterId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
+              </div>
+
+              <!-- 18. Password (only for Vimeo, otherwise write NA) -->
+              <div class="form-group">
+                <label for="sub-password">18. Password (only for Vimeo, otherwise write NA) *</label>
+                <input type="text" id="sub-password" name="vimeoPassword" class="form-control" placeholder="Enter Vimeo password or NA" value="NA" required>
+              </div>
+
+              <!-- 19. Submission Link -->
+              <div class="form-group form-group-full">
+                <label for="sub-link">19. Submission Link (Downloadable Google Drive, Vimeo, or Hidden YouTube link) *</label>
+                <input type="url" id="sub-link" name="submissionLink" class="form-control" placeholder="https://drive.google.com/... or https://vimeo.com/..." required>
+              </div>
+
+              <!-- 20. Anything else you'd like to tell us? -->
+              <div class="form-group form-group-full">
+                <label for="sub-notes">20. Anything else you'd like to tell us?</label>
+                <textarea id="sub-notes" name="additionalNotes" class="form-control" rows="3" placeholder="Optional notes, festival screening history, or special remarks..."></textarea>
               </div>
             </div>
-            <div class="form-group">
-              <label for="sponsor-budget">Estimated Budget Range (Optional)</label>
-              <select id="sponsor-budget" class="form-control">
-                <option value="">Select Range</option>
-                <option value="Under 1L">Under INR 1 Lakh</option>
-                <option value="1L-3L">INR 1 Lakh - 3 Lakh</option>
-                <option value="3L-5L">INR 3 Lakh - 5 Lakh</option>
-                <option value="Above 5L">Above INR 5 Lakh</option>
-              </select>
-            </div>
-            <button type="submit" class="btn-primary" style="margin-top: 1rem;">Submit Sponsorship Request</button>
+
+            <button type="submit" class="btn-primary btn-portal-submit" id="btn-submit-film-portal">Submit Film to <span class="brand-fc">FirstCut</span> Take 13</button>
+            <div id="film-submission-feedback" class="form-feedback-msg" role="status" aria-live="polite"></div>
           </form>
         </div>
 
-        <div class="outreach-brochure-card">
-          <div>
-            <h3>Sponsorship Deck & Media Kit</h3>
-            <p>Download the official FIRSTCUT Take 13 Partnership Presentation detailing user demographics, engagement channels, pricing structures, and customizable tier benefits.</p>
+        <!-- Expanded FAQ & Official Guidelines Section + PDF Download/Upload Option -->
+        <div class="faq-container" id="guidelines-faq-section">
+          <div class="faq-header-row">
+            <div>
+              <div class="section-tag">Rules &amp; Information</div>
+              <h2 class="section-title">Submissions FAQ &amp; Guidelines</h2>
+            </div>
+            <div class="guidelines-pdf-actions">
+              <a href="FirstCut-Take-13-Guidelines.pdf" download="FirstCut-2027-Take-13-Guidelines.pdf" class="btn-download" id="btn-download-guidelines-pdf">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span id="guidelines-pdf-btn-text">Download Complete Guidelines (PDF)</span>
+              </a>
+              <label for="upload-guidelines-pdf" class="btn-upload-pdf" title="Attach or replace the complete guidelines PDF">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span>Update Guidelines PDF</span>
+                <input type="file" id="upload-guidelines-pdf" accept="application/pdf" style="display: none;">
+              </label>
+            </div>
           </div>
-          <a href="#" class="btn-download" id="btn-download-deck">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Download Sponsorship Deck
-          </a>
-        </div>
-      </div>
-    </section>
 
-    <!-- PRD: HOSPITALITY DIGITAL FOOD ORDERING SYSTEM (Interactive Client Mockup) -->
-    <section id="hospitality-section">
+          <div class="faq-list">
+            <!-- FAQ 1: About FirstCut 2027 Take 13 -->
+            <div class="faq-item active">
+              <div class="faq-question">
+                <span>About <span class="brand-fc">FirstCut</span> 2027 Take 13</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">
+                <p>Welcome to <strong><span class="brand-fc">FirstCut</span></strong>, one of India’s premier international student film festivals, organized by FLAME University, Pune.</p>
+                <p><span class="brand-fc">FirstCut</span> provides a dynamic platform for young filmmakers across the globe, encouraging them to explore film as a medium of growth and change. In 2026, <span class="brand-fc">FirstCut</span> Take 12 received <strong>700+ submissions</strong> from students representing <strong>75+ countries</strong>.</p>
+                <p>At the final event, shortlisted films will be screened for a live audience and evaluated by a distinguished jury from the Indian film industry. The screenings will be followed by engaging panel discussions and talks with renowned film personalities.</p>
+                <p>We believe creative freedom is essential, which is why participants have complete freedom in choosing their themes and styles. In addition to categories in fiction, animation, and non-fiction, <span class="brand-fc">FirstCut</span> offers the unique <strong>"Nano"</strong> film category, challenging students to create super short films.</p>
+              </div>
+            </div>
+
+            <!-- FAQ 2: Awards & Free Entry -->
+            <div class="faq-item active">
+              <div class="faq-question">
+                <span>Awards, Prizes &amp; Entry Fees</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">
+                <p><strong>Award:</strong> Winners in each category will receive a certificate and a cash prize of <strong>INR 30,000</strong>. Transaction charges will apply to international winners.</p>
+                <p><strong>Please Note:</strong></p>
+                <ul>
+                  <li>Submissions to <span class="brand-fc">FirstCut</span> are <strong>FREE of charge</strong>.</li>
+                  <li>Attending the event is <strong>FREE and open to all</strong>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- FAQ 3: Eligibility & Category Time Limits -->
+            <div class="faq-item active">
+              <div class="faq-question">
+                <span>Eligibility, Student IDs &amp; Category Time Limits</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">
+                <ul>
+                  <li><strong>Multiple Submissions:</strong> Students can submit multiple films across various categories.</li>
+                  <li><strong>Student ID:</strong> Submission of <strong>VALID STUDENT IDs IS MANDATORY</strong> at the time of film submission.</li>
+                  <li><strong>Category Time Limits:</strong>
+                    <ul>
+                      <li><strong>Fiction:</strong> 20 minutes</li>
+                      <li><strong>Non-Fiction:</strong> 40 minutes</li>
+                      <li><strong>Animation:</strong> 10 minutes</li>
+                      <li><strong>Nano:</strong> 2 minutes</li>
+                    </ul>
+                  </li>
+                  <li><strong>Eligibility for Crew:</strong> Directors, cinematographers, editors, scriptwriters, and sound designers must be current undergraduate or master’s students or recent graduates (graduated within the past year — 2026). Actors and other crew members do not need to be students. There’s no limit on the number of students from the same institution.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- FAQ 4: Production Guidelines & Completion Dates -->
+            <div class="faq-item active">
+              <div class="faq-question">
+                <span>Production Guidelines, Subtitles &amp; Completion Dates</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">
+                <ul>
+                  <li>Films must be original, including all content like music, visuals, and scripts. Copyrighted material is not accepted.</li>
+                  <li>Projection-quality picture and sound are preferred.</li>
+                  <li><strong>All films, including those in English, MUST have English subtitles.</strong></li>
+                  <li>The film’s content must adhere to legal standards (no obscenity, defamation, copyright infringement, or incitement of communal disharmony). The jury will make final decisions on content.</li>
+                  <li><strong>Completion Dates:</strong> Fiction, Non-Fiction, and Nano films must be completed on or after <strong>January 30, 2026</strong>. Animation films must be completed on or after <strong>January 30, 2025</strong>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- FAQ 5: Submission Guidelines -->
+            <div class="faq-item active">
+              <div class="faq-question">
+                <span>Submission Platforms &amp; Accepted Link Formats</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">
+                <ul>
+                  <li>Submit via <strong><span class="brand-fc">FirstCut</span>’s website</strong> or the <strong>FilmFreeway page</strong>. <strong>Submit on 1 platform only.</strong></li>
+                  <li>Films must be submitted as downloadable links via <strong>Google Drive, Vimeo, or Hidden YouTube</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 3: OUTREACH DEPARTMENT PAGE
+         ===================================================================== -->
+    <div class="dept-page" id="page-outreach" data-page="outreach">
+      <section id="outreach-section">
+        <div class="section-tag">Outreach</div>
+        <h2 class="section-title">Collaborate With Us</h2>
+        
+        <div class="outreach-intro">
+          <p>The Outreach committee is dedicated to expanding <span class="brand-fc">FirstCut</span>'s network across international colleges, student bodies, film clubs, media schools, industry professionals, and cultural institutions. Connect your institution to India's premier student film festival.</p>
+        </div>
+
+        <div class="outreach-layout">
+          <div class="outreach-brochure-card">
+            <div>
+              <h3>Digital Outreach Brochure</h3>
+              <p>Download the official Take 13 Outreach Brochure covering our historical reach, campus engagement initiatives, networking schedules, and university partnership models.</p>
+            </div>
+            <a href="FirstCut-Take-13-Guidelines.pdf" download class="btn-download" id="btn-download-brochure">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download Brochure PDF
+            </a>
+          </div>
+
+          <div class="form-box">
+            <h3>Inbound Interest Form</h3>
+            <form id="outreach-form">
+              <div class="form-group">
+                <label for="outreach-college">Institution / College / Organization Name</label>
+                <input type="text" id="outreach-college" class="form-control" placeholder="e.g. FLAME University" required>
+              </div>
+              <div class="form-group">
+                <label for="outreach-city">City</label>
+                <input type="text" id="outreach-city" class="form-control" placeholder="e.g. Pune" required>
+              </div>
+              <div class="form-group">
+                <label for="outreach-name">Contact Person Name</label>
+                <input type="text" id="outreach-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+              </div>
+              <div class="form-group">
+                <label for="outreach-email">Contact Email Address</label>
+                <input type="email" id="outreach-email" class="form-control" placeholder="e.g. sharma@univ.edu" required>
+              </div>
+              <div class="form-group">
+                <label>Collaboration Interest</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Participant Outreach"> Participant Outreach</label>
+                  <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Media Partner"> Media Partner</label>
+                  <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Campus Ambassador"> Campus Ambassador</label>
+                  <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Film Club Tie-up"> Film Club Tie-up</label>
+                  <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Industry Professional"> Industry Professional</label>
+                  <label class="checkbox-label"><input type="checkbox" name="collab-type" value="Other" id="collab-other-checkbox"> Other (please specify):</label>
+                </div>
+                <div class="other-specify-wrapper" id="collab-other-wrapper">
+                  <input type="text" id="outreach-other-specify" class="form-control" placeholder="Please specify your collaboration interest...">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Does your institution have a media/film department?</label>
+                <div class="radio-group">
+                  <label class="radio-label"><input type="radio" name="media-dept" value="Yes" required> Yes</label>
+                  <label class="radio-label"><input type="radio" name="media-dept" value="No"> No</label>
+                  <label class="radio-label"><input type="radio" name="media-dept" value="Both/Student Council"> Student Council</label>
+                </div>
+              </div>
+              <button type="submit" class="btn-primary" style="margin-top: 1rem;">Submit Outreach Form</button>
+              <div id="outreach-form-feedback" class="form-feedback-msg" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Associated Institutions scroller (Hidden until permission is acquired) -->
+        <div class="colleges-scroller" style="display: none !important;" aria-hidden="true">
+          <h4>Our Associated Network</h4>
+          <div class="colleges-marquee">
+            <div class="colleges-track">
+              FLAME UNIVERSITY &nbsp;&bull;&nbsp; KC COLLEGE PUNE &nbsp;&bull;&nbsp; ST. XAVIER'S MUMBAI &nbsp;&bull;&nbsp; FTII &nbsp;&bull;&nbsp; SRFTI KOLKATA &nbsp;&bull;&nbsp; CHRIST UNIVERSITY BENGALURU
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 4: SPONSORSHIP & PARTNERS DEPARTMENT PAGE
+         ===================================================================== -->
+    <div class="dept-page" id="page-sponsorship" data-page="sponsorship">
+      <section id="sponsorship-section">
+        <div class="section-tag">Sponsorship</div>
+        <h2 class="section-title">Partner With Us</h2>
+        
+        <div class="outreach-intro">
+          <p><span class="brand-fc">FirstCut</span> is a highly targeted branding opportunity. Connect your brand with over 5,000+ premium on-ground college audience members, international filmmakers, and student creative networks across India.</p>
+        </div>
+
+        <!-- Visibility Benefits Grid -->
+        <h3 class="sub-section-heading">Sponsorship Visibility Benefits</h3>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <svg class="benefit-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            <h4>Social Media Outreach</h4>
+            <p>Strategic, creative brand placements and features across our official Instagram, LinkedIn, and YouTube channels.</p>
+          </div>
+          <div class="benefit-card">
+            <svg class="benefit-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <h4>On-Ground Branding</h4>
+            <p>Banners, standees, backdrops, and video promotions at our main theater screens and central FLAME campus hubs.</p>
+          </div>
+          <div class="benefit-card">
+            <svg class="benefit-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"/></svg>
+            <h4>Sampling &amp; Activations</h4>
+            <p>Set up interactive food, retail, or tech stalls in the student courtyard during the festival days for maximum direct reach.</p>
+          </div>
+        </div>
+
+        <div class="outreach-layout">
+          <div class="form-box">
+            <h3>Sponsor Registration Form</h3>
+            <form id="sponsor-form">
+              <div class="form-group">
+                <label for="sponsor-brand">Brand / Company Name</label>
+                <input type="text" id="sponsor-brand" class="form-control" placeholder="e.g. Nikon India" required>
+              </div>
+              <div class="form-group">
+                <label for="sponsor-name">Contact Person Name</label>
+                <input type="text" id="sponsor-name" class="form-control" placeholder="e.g. Shreya Sen" required>
+              </div>
+              <div class="form-group">
+                <label for="sponsor-email">Corporate Email Address</label>
+                <input type="email" id="sponsor-email" class="form-control" placeholder="e.g. corporate@nikon.in" required>
+              </div>
+              <div class="form-group">
+                <label>Sponsorship Tier Interest</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="Title Sponsor"> Title Sponsor</label>
+                  <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="Co-Sponsor"> Co-Sponsor</label>
+                  <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="Category Sponsor"> Category Partner</label>
+                  <label class="checkbox-label"><input type="checkbox" name="sponsor-type" value="In-Kind Partner"> In-Kind Partner</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="sponsor-budget">Estimated Budget Range (Optional)</label>
+                <select id="sponsor-budget" class="form-control">
+                  <option value="">Select Range</option>
+                  <option value="Under 1L">Under INR 1 Lakh</option>
+                  <option value="1L-3L">INR 1 Lakh - 3 Lakh</option>
+                  <option value="3L-5L">INR 3 Lakh - 5 Lakh</option>
+                  <option value="Above 5L">Above INR 5 Lakh</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary" style="margin-top: 1rem;">Submit Sponsorship Request</button>
+              <div id="sponsor-form-feedback" class="form-feedback-msg" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <div class="outreach-brochure-card">
+            <div>
+              <h3>Sponsorship Deck &amp; Media Kit</h3>
+              <p>Download the official <span class="brand-fc">FirstCut</span> Take 13 Partnership Presentation detailing user demographics, engagement channels, pricing structures, and customizable tier benefits.</p>
+            </div>
+            <a href="firstcut brand kit.pdf" download class="btn-download" id="btn-download-deck">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download Sponsorship Deck
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partners / Logos Section -->
+      <section id="partners-section">
+        <div class="partners-block">
+          <h3 class="partners-title">Main Contributors</h3>
+          <div class="logos-grid">
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="10" width="130" height="30" rx="3"></rect><text x="25" y="30" font-family="sans-serif" font-weight="bold" font-size="14" fill="currentColor" stroke="none">FLAME UNIV</text></svg>
+            </div>
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10 H80 V40 H20 Z M80 20 H130 M80 30 H130" stroke-width="3"></path><text x="90" y="15" font-family="sans-serif" font-size="8" fill="currentColor" stroke="none">FILMINST.</text></svg>
+            </div>
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><circle cx="40" cy="25" r="15"></circle><path d="M40 10 L40 40 M25 25 L55 25"></path><text x="70" y="28" font-family="sans-serif" font-weight="bold" font-size="10" fill="currentColor" stroke="none">CREATIVE EUR</text></svg>
+            </div>
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 25 C20 15 35 15 35 25 C35 35 50 35 50 25" stroke-width="3"></path><text x="60" y="28" font-family="sans-serif" font-weight="bold" font-size="10" fill="currentColor" stroke="none">STOCKHOLM</text></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="partners-block">
+          <h3 class="partners-title">Main Partners</h3>
+          <div class="logos-grid">
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="currentColor"><path d="M15 10 L60 10 L50 25 L85 25 L35 42 L42 27 L25 27 Z"></path><text x="65" y="32" font-family="sans-serif" font-weight="extrabold" font-size="18">Razorpay</text></svg>
+            </div>
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="3"><polygon points="10,10 60,10 50,40 10,40"></polygon><text x="70" y="32" font-family="sans-serif" font-weight="black" font-size="20" fill="currentColor" stroke="none">Nikon</text></svg>
+            </div>
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><circle cx="25" cy="25" r="12"></circle><path d="M37 25 L130 25 M60 15 L70 25 L60 35 M90 15 L100 25 L90 35"></path></svg>
+            </div>
+            <div class="logo-item">
+              <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><rect x="15" y="10" width="30" height="30" rx="3"></rect><line x1="22" y1="20" x2="38" y2="20"></line><line x1="22" y1="27" x2="38" y2="27"></line><text x="55" y="29" font-family="sans-serif" font-weight="bold" font-size="14" fill="currentColor" stroke="none">Google</text></svg>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =====================================================================
+         PAGE 5: MEET THE TEAM PAGE
+         ===================================================================== -->
+    <div class="dept-page" id="page-team" data-page="team">
+      <section id="team-section">
+        <div class="section-tag">Organizing Committee</div>
+        <h2 class="section-title">Meet The Team</h2>
+        <div class="outreach-intro">
+          <p>Run entirely by students at FLAME University, Pune, <span class="brand-fc">FirstCut</span> Take 13 is brought to life by dedicated committees working across curation, outreach, sponsorship, design, production, and hospitality.</p>
+        </div>
+
+        <!-- Team Department Cards Grid -->
+        <div class="team-departments-grid">
+          <div class="team-member-card">
+            <div class="team-card-avatar">
+              <img src="images/team1.jpg" alt="Festival Core Committee">
+            </div>
+            <div class="team-card-info">
+              <span class="team-dept-badge">Core Committee</span>
+              <h3>Festival Direction &amp; Core</h3>
+              <p>Leading the overall vision, programming schedule, jury coordination, and executive operations for <span class="brand-fc">FirstCut</span> Take 13.</p>
+            </div>
+          </div>
+
+          <div class="team-member-card">
+            <div class="team-card-avatar">
+              <img src="images/team2.jpg" alt="Submissions and Curation Team">
+            </div>
+            <div class="team-card-info">
+              <span class="team-dept-badge">Registrations &amp; Jury</span>
+              <h3>Submissions &amp; Curation</h3>
+              <p>Reviewing 700+ international film entries, verifying eligibility &amp; subtitles, and coordinating with the industry jury panel.</p>
+            </div>
+          </div>
+
+          <div class="team-member-card">
+            <div class="team-card-avatar">
+              <img src="images/team3.jpg" alt="Outreach and PR Team">
+            </div>
+            <div class="team-card-info">
+              <span class="team-dept-badge">Relations</span>
+              <h3>Outreach &amp; Collaborations</h3>
+              <p>Connecting universities, film schools, student ambassadors, and cultural organizations across 75+ countries.</p>
+            </div>
+          </div>
+
+          <div class="team-member-card">
+            <div class="team-card-avatar">
+              <img src="images/team4.jpg" alt="Sponsorship and Finance Team">
+            </div>
+            <div class="team-card-info">
+              <span class="team-dept-badge">Partnerships</span>
+              <h3>Sponsorship &amp; Finance</h3>
+              <p>Building strategic brand alliances, managing prize sponsorships, and curating on-ground festival activations.</p>
+            </div>
+          </div>
+
+          <div class="team-member-card">
+            <div class="team-card-avatar">
+              <img src="images/team5.jpg" alt="Marketing, Design and Production Team">
+            </div>
+            <div class="team-card-info">
+              <span class="team-dept-badge">Creative &amp; Tech</span>
+              <h3>Design, Media &amp; Production</h3>
+              <p>Crafting the visual identity, digital portal, theatre projection standards, live sound, and stage production.</p>
+            </div>
+          </div>
+
+          <div class="team-member-card">
+            <div class="team-card-avatar">
+              <img src="images/about.jpg" alt="Hospitality and Logistics Team">
+            </div>
+            <div class="team-card-info">
+              <span class="team-dept-badge">On-Ground Experience</span>
+              <h3>Hospitality &amp; Logistics</h3>
+              <p>Managing guest travel, filmmaker delegates, campus stalls, red carpet experiences, and venue operations at FLAME University.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contributions and Collaborations Links -->
+      <section id="contributions-section">
+        <div class="contributions-layout">
+          <div>
+            <div class="contributions-links">
+              <a href="#outreach" class="menu-link-item" id="contrib-link-media" data-page-target="outreach">
+                Press &amp; Media
+                <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
+              </a>
+              <a href="#outreach" class="menu-link-item" id="contrib-link-careers" data-page-target="outreach">
+                Collaborate With Us
+                <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
+              </a>
+              <a href="#submissions" class="menu-link-item" id="contrib-link-submit" data-page-target="submissions">
+                Submit a Film
+                <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
+              </a>
+            </div>
+
+            <div class="social-links-block">
+              <h4>Follow Us</h4>
+              <div class="social-links-grid">
+                <a href="https://instagram.com/flame_firstcut" target="_blank" rel="noopener" class="social-link" id="soc-instagram">Instagram</a>
+                <a href="https://letterboxd.com" target="_blank" rel="noopener" class="social-link" id="soc-letterboxd">Letterboxd</a>
+                <a href="https://facebook.com" target="_blank" rel="noopener" class="social-link" id="soc-facebook">Facebook</a>
+                <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link" id="soc-youtube">YouTube</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="team-circles-container">
+            <div class="team-circle team-circle-1">
+              <img src="images/team1.jpg" alt="Student Team Member 1">
+            </div>
+            <div class="team-circle team-circle-2">
+              <img src="images/team2.jpg" alt="Student Team Member 2">
+            </div>
+            <div class="team-circle team-circle-3">
+              <img src="images/team3.jpg" alt="Student Team Member 3">
+            </div>
+            <div class="team-circle team-circle-4">
+              <img src="images/team4.jpg" alt="Student Team Member 4">
+            </div>
+            <div class="team-circle team-circle-5">
+              <img src="images/team5.jpg" alt="Student Team Member 5">
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =====================================================================
+         HIDDEN: HOSPITALITY DIGITAL FOOD ORDERING SUB-PAGE (#3: Hidden)
+         ===================================================================== -->
+    <section id="hospitality-section" style="display: none !important;" aria-hidden="true">
       <div class="section-tag">Hospitality</div>
       <h2 class="section-title">A Digital Ordering</h2>
-      
-      <div class="outreach-intro">
-        <p>Skip the physical coupon queues. Order food stalls menu items directly from the FIRSTCUT portal, track preparation stages in real-time, and pick up when ready.</p>
-      </div>
-
-      <div class="hospitality-grid">
-        <div class="food-menu-container">
-          <h3>Festival Stall Menu</h3>
-          <div class="menu-list">
-            <!-- Item 1 -->
-            <div class="menu-item-row" data-name="Cinema Popcorn" data-price="80">
-              <div class="menu-item-details">
-                <div class="menu-item-title">Cinema Popcorn</div>
-                <div class="menu-item-desc">Classic salted cinema-style popcorn tub. Perfect for long screenings.</div>
-              </div>
-              <div class="menu-item-action">
-                <span class="menu-item-price">INR 80</span>
-                <button class="btn-add-item" aria-label="Add Popcorn">+</button>
-              </div>
-            </div>
-            <!-- Item 2 -->
-            <div class="menu-item-row" data-name="FIRSTCUT Cold Coffee" data-price="100">
-              <div class="menu-item-details">
-                <div class="menu-item-title">FIRSTCUT Cold Coffee</div>
-                <div class="menu-item-desc">Creamy ice cold coffee brewed specifically to beat the afternoon heat.</div>
-              </div>
-              <div class="menu-item-action">
-                <span class="menu-item-price">INR 100</span>
-                <button class="btn-add-item" aria-label="Add Coffee">+</button>
-              </div>
-            </div>
-            <!-- Item 3 -->
-            <div class="menu-item-row" data-name="Classic Nachos" data-price="120">
-              <div class="menu-item-details">
-                <div class="menu-item-title">Classic Nachos</div>
-                <div class="menu-item-desc">Tortilla chips served with warm cheese sauce and jalapeño slices.</div>
-              </div>
-              <div class="menu-item-action">
-                <span class="menu-item-price">INR 120</span>
-                <button class="btn-add-item" aria-label="Add Nachos">+</button>
-              </div>
-            </div>
-            <!-- Item 4 -->
-            <div class="menu-item-row" data-name="Festival Veg Burger" data-price="140">
-              <div class="menu-item-details">
-                <div class="menu-item-title">Festival Veg Burger</div>
-                <div class="menu-item-desc">Spicy potato patty with crisp lettuce, tomatoes, and chef's special sauce.</div>
-              </div>
-              <div class="menu-item-action">
-                <span class="menu-item-price">INR 140</span>
-                <button class="btn-add-item" aria-label="Add Burger">+</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="food-cart-box">
-            <h3>Your Order Stalls Cart</h3>
-            <div class="cart-items-list" id="cart-list">
-              <div class="cart-row empty-msg">No items added to cart. Add items from the menu.</div>
-            </div>
-            <div class="cart-total-row">
-              <span>Total Price</span>
-              <span class="cart-total-price" id="cart-total">INR 0</span>
-            </div>
-            <button class="btn-primary" id="btn-place-food-order" style="width: 100%;" disabled>Place Order</button>
-            
-            <!-- Real-time Order Stage Tracker -->
-            <div class="order-tracker-box" id="food-order-tracker">
-              <div class="tracker-title">Live Status: <span id="tracker-status-text" style="color: var(--color-yellow-base);">Placed</span></div>
-              <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem;">Token Number: <strong id="tracker-token-id" style="color: #fff;">#FC-701</strong></p>
-              
-              <div class="tracker-steps">
-                <div class="tracker-progress-line" id="tracker-progress-line"></div>
-                <!-- Step 1 -->
-                <div class="step-node active" id="step-node-placed">
-                  <div class="step-dot">1</div>
-                  <div class="step-label">Placed</div>
-                </div>
-                <!-- Step 2 -->
-                <div class="step-node" id="step-node-preparing">
-                  <div class="step-dot">2</div>
-                  <div class="step-label">Preparing</div>
-                </div>
-                <!-- Step 3 -->
-                <div class="step-node" id="step-node-ready">
-                  <div class="step-dot">3</div>
-                  <div class="step-label">Ready</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- Recap Movie Section -->
-    <section id="recap-section">
-      <div class="section-tag">Aftermovie</div>
-      <h2 class="section-title">Highlights from the past editions</h2>
-      <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/n30kE1BvBGo?enablejsapi=1" title="FIRSTCUT Film Festival Recap" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </section>
-
-    <!-- Contributions and Collaborations Section -->
-    <section id="contributions-section">
-      <div class="contributions-layout">
-        <div>
-          <div class="contributions-links">
-            <a href="#outreach-section" class="menu-link-item" id="contrib-link-media">
-              Press & Media
-              <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
-            </a>
-            <a href="#outreach-section" class="menu-link-item" id="contrib-link-careers">
-              Join the Team
-              <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
-            </a>
-            <a href="#submit-section" class="menu-link-item" id="contrib-link-submit">
-              Submit a Film
-              <svg viewBox="0 0 24 24"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z"/></svg>
-            </a>
-          </div>
-
-          <div class="social-links-block">
-            <h4>Follow Us</h4>
-            <div class="social-links-grid">
-              <a href="https://instagram.com/flame_firstcut" target="_blank" class="social-link" id="soc-instagram">Instagram</a>
-              <a href="https://letterboxd.com" target="_blank" class="social-link" id="soc-letterboxd">Letterboxd</a>
-              <a href="https://facebook.com" target="_blank" class="social-link" id="soc-facebook">Facebook</a>
-              <a href="https://youtube.com" target="_blank" class="social-link" id="soc-youtube">Youtube</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="team-circles-container">
-          <div class="team-circle team-circle-1">
-            <img src="images/team1.jpg" alt="Student Team Member 1">
-          </div>
-          <div class="team-circle team-circle-2">
-            <img src="images/team2.jpg" alt="Student Team Member 2">
-          </div>
-          <div class="team-circle team-circle-3">
-            <img src="images/team3.jpg" alt="Student Team Member 3">
-          </div>
-          <div class="team-circle team-circle-4">
-            <img src="images/team4.jpg" alt="Student Team Member 4">
-          </div>
-          <div class="team-circle team-circle-5">
-            <img src="images/team5.jpg" alt="Student Team Member 5">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Partners / Logos Section -->
-    <section id="partners-section">
-      <div class="partners-block">
-        <h3 class="partners-title">Main Contributors</h3>
-        <div class="logos-grid">
-          <!-- FLAME University -->
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="10" width="130" height="30" rx="3"></rect><text x="25" y="30" font-family="sans-serif" font-weight="bold" font-size="14" fill="currentColor" stroke="none">FLAME UNIV</text></svg>
-          </div>
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10 H80 V40 H20 Z M80 20 H130 M80 30 H130" stroke-width="3"></path><text x="90" y="15" font-family="sans-serif" font-size="8" fill="currentColor" stroke="none">FILMINST.</text></svg>
-          </div>
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><circle cx="40" cy="25" r="15"></circle><path d="M40 10 L40 40 M25 25 L55 25"></path><text x="70" y="28" font-family="sans-serif" font-weight="bold" font-size="10" fill="currentColor" stroke="none">CREATIVE EUR</text></svg>
-          </div>
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 25 C20 15 35 15 35 25 C35 35 50 35 50 25" stroke-width="3"></path><text x="60" y="28" font-family="sans-serif" font-weight="bold" font-size="10" fill="currentColor" stroke="none">STOCKHOLM</text></svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="partners-block">
-        <h3 class="partners-title">Main Partners</h3>
-        <div class="logos-grid">
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="currentColor"><path d="M15 10 L60 10 L50 25 L85 25 L35 42 L42 27 L25 27 Z"></path><text x="65" y="32" font-family="sans-serif" font-weight="extrabold" font-size="18">Razorpay</text></svg>
-          </div>
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="3"><polygon points="10,10 60,10 50,40 10,40"></polygon><text x="70" y="32" font-family="sans-serif" font-weight="black" font-size="20" fill="currentColor" stroke="none">Nikon</text></svg>
-          </div>
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><circle cx="25" cy="25" r="12"></circle><path d="M37 25 L130 25 M60 15 L70 25 L60 35 M90 15 L100 25 L90 35"></path></svg>
-          </div>
-          <div class="logo-item">
-            <svg viewBox="0 0 150 50" fill="none" stroke="currentColor" stroke-width="2"><rect x="15" y="10" width="30" height="30" rx="3"></rect><line x1="22" y1="20" x2="38" y2="20"></line><line x1="22" y1="27" x2="38" y2="27"></line><text x="55" y="29" font-family="sans-serif" font-weight="bold" font-size="14" fill="currentColor" stroke="none">Google</text></svg>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Razorpay-Style Footer -->
+    <!-- Razorpay-Style Footer (Visible across all pages) -->
     <footer class="razorpay-footer">
       <div class="footer-top">
         <div class="footer-tagline">
-          Championing Creative Freedom.<br>Built by students. For the world.
+          Celebrating Student Cinema
         </div>
         <div>
-          <a href="#submit-section" class="btn-footer-cta" id="footer-submit-btn">Submit a Film</a>
+          <a href="#submissions" class="btn-footer-cta" id="footer-submit-btn" data-page-target="submissions">Submit a Film</a>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div class="footer-copyright">
-          Copyright &copy; FIRSTCUT Take 13. FLAME UNIVERSITY.
+          Copyright &copy; <span class="brand-fc">FirstCut</span> Take 13. FLAME University.
         </div>
         <div class="footer-links">
-          <a href="https://instagram.com/flame_firstcut" target="_blank" id="foot-instagram">Instagram</a>
-          <a href="https://letterboxd.com" target="_blank" id="foot-letterboxd">Letterboxd</a>
-          <a href="https://youtube.com" target="_blank" id="foot-youtube">YouTube</a>
-          <a href="https://flame.edu.in" target="_blank" id="foot-flame">FLAME UNIVERSITY</a>
+          <a href="https://instagram.com/flame_firstcut" target="_blank" rel="noopener" id="foot-instagram">Instagram</a>
+          <a href="https://letterboxd.com" target="_blank" rel="noopener" id="foot-letterboxd">Letterboxd</a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" id="foot-youtube">YouTube</a>
+          <a href="https://flame.edu.in" target="_blank" rel="noopener" id="foot-flame">FLAME University</a>
         </div>
       </div>
 
       <div class="footer-giant-text">
-        /FIRSTCUT
+        /<span class="brand-fc">FirstCut</span>
       </div>
     </footer>
 
@@ -800,9 +1053,8 @@
   <!-- GSAP Core -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <!-- Lenis Smooth Scroll -->
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/sliced/lenis.min.js"></script>
-  
-  <!-- Main Script -->
-  <script src="app.js?v=1.0.1"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+  <!-- Main Application Script -->
+  <script src="app.js?v=2.0.0"></script>
 </body>
 </html>
