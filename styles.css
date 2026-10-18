@@ -473,6 +473,29 @@ a {
   margin-bottom: 1.5rem;
 }
 
+.section-header-with-doodle {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-bottom: 1.5px solid rgba(245, 196, 81, 0.35);
+  padding-bottom: 1rem;
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+.corner-cat-doodle {
+  flex-shrink: 0;
+  margin-bottom: -1.1rem;
+  pointer-events: none;
+}
+
+.corner-cat-doodle svg {
+  width: 210px;
+  height: 70px;
+  display: block;
+}
+
 /* Warm Serif Section Heading (Matches 'Our Menu' in Reference Image) */
 .section-title {
   font-family: var(--font-serif);
@@ -1818,14 +1841,13 @@ a {
     margin-left: 10px;
   }
 
-  .header-mascot-illustration {
-    left: 63%;
-    bottom: -4px;
+  .corner-cat-doodle svg {
+    width: 125px;
+    height: 42px;
   }
 
-  .peeking-cat-svg {
-    width: 155px;
-    height: 54px;
+  .corner-cat-doodle {
+    margin-bottom: -0.95rem;
   }
 
   .action-btn-label {
