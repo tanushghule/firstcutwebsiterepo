@@ -742,8 +742,9 @@
 
               <!-- 11. Student ID of Director(s) -->
               <div class="form-group">
-                <label for="sub-director-id">11. Student ID of Director(s) (ID Number / Drive Link) *</label>
-                <input type="text" id="sub-director-id" name="directorId" class="form-control" placeholder="Student ID No. or Google Drive link to ID card" required>
+                <label for="sub-director-id-file">11. Student ID of Director(s) — upload the card (image or PDF), or paste a link *</label>
+                <input type="file" id="sub-director-id-file" class="form-control" accept="image/*,application/pdf">
+                <input type="url" id="sub-director-id" name="directorId" class="form-control" placeholder="or paste a link to the ID card">
               </div>
 
               <!-- 12. Name of Cinematographer(s) -->
@@ -754,8 +755,9 @@
 
               <!-- 13. Student ID of Cinematographer(s) -->
               <div class="form-group">
-                <label for="sub-cinematographer-id">13. Student ID of Cinematographer(s) *</label>
-                <input type="text" id="sub-cinematographer-id" name="cinematographerId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
+                <label for="sub-cinematographer-id-file">13. Student ID of Cinematographer(s) — upload the card (image or PDF), or paste a link *</label>
+                <input type="file" id="sub-cinematographer-id-file" class="form-control" accept="image/*,application/pdf">
+                <input type="url" id="sub-cinematographer-id" name="cinematographerId" class="form-control" placeholder="or paste a link to the ID card">
               </div>
 
               <!-- 14. Name of Editor(s) -->
@@ -766,8 +768,9 @@
 
               <!-- 15. Student ID of Editor(s) -->
               <div class="form-group">
-                <label for="sub-editor-id">15. Student ID of Editor(s) *</label>
-                <input type="text" id="sub-editor-id" name="editorId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
+                <label for="sub-editor-id-file">15. Student ID of Editor(s) — upload the card (image or PDF), or paste a link *</label>
+                <input type="file" id="sub-editor-id-file" class="form-control" accept="image/*,application/pdf">
+                <input type="url" id="sub-editor-id" name="editorId" class="form-control" placeholder="or paste a link to the ID card">
               </div>
 
               <!-- 16. Name of Scriptwriter(s) -->
@@ -778,20 +781,22 @@
 
               <!-- 17. Student ID of Scriptwriter(s) -->
               <div class="form-group">
-                <label for="sub-scriptwriter-id">17. Student ID of Scriptwriter(s) *</label>
-                <input type="text" id="sub-scriptwriter-id" name="scriptwriterId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
+                <label for="sub-scriptwriter-id-file">17. Student ID of Scriptwriter(s) — upload the card (image or PDF), or paste a link *</label>
+                <input type="file" id="sub-scriptwriter-id-file" class="form-control" accept="image/*,application/pdf">
+                <input type="url" id="sub-scriptwriter-id" name="scriptwriterId" class="form-control" placeholder="or paste a link to the ID card">
               </div>
 
               <!-- 18. Password (only for Vimeo, otherwise write NA) -->
-              <div class="form-group">
-                <label for="sub-password">18. Password (only for Vimeo, otherwise write NA) *</label>
-                <input type="text" id="sub-password" name="vimeoPassword" class="form-control" placeholder="Enter Vimeo password or NA" value="NA" required>
+              <div class="form-group" id="sub-password-group" style="display: none;">
+                <label for="sub-password">18. Password (only for Vimeo links; leave empty otherwise)</label>
+                <input type="text" id="sub-password" name="vimeoPassword" class="form-control" placeholder="Vimeo password">
               </div>
 
               <!-- 19. Submission Link -->
               <div class="form-group form-group-full">
-                <label for="sub-link">19. Submission Link (Downloadable Google Drive, Vimeo, or Hidden YouTube link) *</label>
-                <input type="url" id="sub-link" name="submissionLink" class="form-control" placeholder="https://drive.google.com/... or https://vimeo.com/..." required>
+                <label for="sub-film-file">19. Your film — upload the file, or paste a Google Drive, Vimeo or hidden YouTube link *</label>
+                <input type="file" id="sub-film-file" class="form-control" accept="video/*">
+                <input type="url" id="sub-link" name="submissionLink" class="form-control" placeholder="or paste a link: https://drive.google.com/... or https://vimeo.com/...">
               </div>
 
               <!-- 20. Anything else you'd like to tell us? -->
@@ -1401,6 +1406,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <!-- Main Application Script -->
-  <script src="app.js?v=3.0.0"></script>
+  <script src="upload.js?v=1.0.0"></script>
+  <script src="app.js?v=3.1.0"></script>
 </body>
 </html>

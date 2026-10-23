@@ -328,43 +328,159 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Custom 20-Field Film Submission Form Handler
+  // Custom 20-Field Film Submission Form Handler: sends the entry to the
+  // FirstCut service (upload.js) and says "registered" only once every file
+  // is stored on the server.
   const filmForm = document.getElementById("custom-film-submission-form");
   const filmFeedback = document.getElementById("film-submission-feedback");
+  const ROLES = ["director", "cinematographer", "editor", "scriptwriter"];
+  const TEXT_FIELDS = ["film-name", "submitter-name", "university", "email", "mobile", "origin", "category",
+    "language", "completion-date", "director-name", "cinematographer-name", "editor-name", "scriptwriter-name", "notes"];
+  const byId = (id) => document.getElementById(id);
+  const showFeedback = (el, ...parts) => {
+    el.replaceChildren(...parts);
+    el.classList.add("visible");
+  };
+
+  // The Vimeo password only matters when the film is a link.
+  const filmFile = byId("sub-film-file");
+  const filmLink = byId("sub-link");
+  const passwordGroup = byId("sub-password-group");
+  const syncPassword = () => {
+    if (passwordGroup) passwordGroup.style.display = filmLink.value.trim() && !filmFile.files.length ? "" : "none";
+  };
+  if (filmFile && filmLink) {
+    filmFile.addEventListener("change", syncPassword);
+    filmLink.addEventListener("input", syncPassword);
+  }
+
+  // item turns a file input + link input pair into the API's upload-or-link shape.
+  function item(fileInput, linkInput, password) {
+    const file = fileInput.files[0];
+    if (file) return { file, body: { mode: "upload", filename: file.name, size: file.size } };
+    const url = linkInput.value.trim();
+    if (url) return { body: { mode: "link", url, password: password || "" } };
+    return null;
+  }
+
+  // The server names the input each problem belongs to; show it right under it.
+  const ERROR_INPUT = { screener: "sub-film-file" };
+  ROLES.forEach((r) => { ERROR_INPUT[r + "-id"] = `sub-${r}-id-file`; });
+  function showFieldErrors(errors) {
+    filmForm.querySelectorAll(".fc-field-error").forEach((n) => n.remove());
+    for (const [key, msg] of Object.entries(errors)) {
+      const input = byId(ERROR_INPUT[key] || "sub-" + key);
+      const group = input && input.closest(".form-group");
+      if (!group) continue;
+      const note = document.createElement("span");
+      note.className = "fc-field-error";
+      note.style.cssText = "color:#f39a8b;font-size:.82rem";
+      note.textContent = msg;
+      group.append(note);
+    }
+  }
+
   if (filmForm && filmFeedback) {
-    filmForm.addEventListener("submit", (e) => {
+    filmForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const filmTitle = document.getElementById("sub-film-name")?.value || "Your film";
-      filmFeedback.textContent = `✓ "${filmTitle}" has been registered for FirstCut 2027 Take 13! We have recorded your submission details.`;
-      filmFeedback.classList.add("visible");
-      filmForm.reset();
+      if (!window.FirstCutUpload) {
+        // upload.js didn't load: never fall back to the browser's own submit,
+        // which would put the filmmaker's details in the URL.
+        showFeedback(filmFeedback, "Couldn't load the uploader — please reload the page.");
+        return;
+      }
+      const fields = {};
+      TEXT_FIELDS.forEach((k) => { fields[k] = (byId("sub-" + k)?.value || "").trim(); });
+      const errors = {};
+      const screener = item(filmFile, filmLink, byId("sub-password")?.value.trim());
+      if (!screener) errors.screener = "Upload your film or paste a link to it.";
+      const ids = {};
+      for (const r of ROLES) {
+        ids[r] = item(byId(`sub-${r}-id-file`), byId(`sub-${r}-id`));
+        if (!ids[r]) errors[r + "-id"] = "Upload the ID card or paste a link to it.";
+      }
+      showFieldErrors(errors);
+      if (Object.keys(errors).length) {
+        showFeedback(filmFeedback, "Please fix the highlighted fields.");
+        return;
+      }
+
+      const files = { screener: screener.file };
+      const idBodies = {};
+      ROLES.forEach((r) => { files[r] = ids[r].file; idBodies[r] = ids[r].body; });
+      const button = byId("btn-submit-film-portal");
+      button.disabled = true;
+      showFeedback(filmFeedback, "Sending your details…");
+      try {
+        const res = await window.FirstCutUpload.submit(
+          { fields, screener: screener.body, ids: idBodies },
+          files,
+          (text) => showFeedback(filmFeedback, text),
+        );
+        const link = Object.assign(document.createElement("a"), { href: res.manage_url, textContent: res.manage_url });
+        showFeedback(filmFeedback,
+          `✓ "${fields["film-name"]}" is registered. Tracking ID: ${res.tracking_id}. Your manage link: `, link,
+          " — save this link, it's also in your email.");
+        filmForm.reset();
+        syncPassword();
+      } catch (err) {
+        if (err.fieldErrors) {
+          showFieldErrors(err.fieldErrors);
+          showFeedback(filmFeedback, err.fieldErrors.form || err.message);
+        } else if (err.existing) {
+          const link = Object.assign(document.createElement("a"), { href: err.manageUrl, textContent: err.manageUrl });
+          showFeedback(filmFeedback, "We've already received this submission. To finish uploading or change anything, use your manage link: ", link);
+        } else if (err.manageUrl) {
+          const link = Object.assign(document.createElement("a"), { href: err.manageUrl, textContent: err.manageUrl });
+          showFeedback(filmFeedback, "Your details are saved but the upload didn't finish. Use the manage link to resume: ", link);
+        } else {
+          showFeedback(filmFeedback, err.message || "Couldn't submit — please try again.");
+        }
+      } finally {
+        button.disabled = false;
+      }
     });
   }
 
-  // Outreach Form Handler
-  const outreachForm = document.getElementById("outreach-form");
-  const outreachFeedback = document.getElementById("outreach-form-feedback");
-  if (outreachForm && outreachFeedback) {
-    outreachForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      outreachFeedback.textContent =
-        "✓ Thank you! Your collaboration interest has been sent to the FirstCut Outreach team.";
-      outreachFeedback.classList.add("visible");
-      outreachForm.reset();
-      if (otherWrapper) otherWrapper.classList.remove("visible");
-    });
+  // formFields reads a form's named inputs; checkbox groups become one
+  // comma-separated answer.
+  function formFields(form) {
+    const out = {};
+    for (const el of form.elements) {
+      const key = el.name || el.id;
+      if (!key || el.type === "submit" || el.type === "button") continue;
+      if (el.type === "checkbox" || el.type === "radio") {
+        if (el.checked) out[key] = out[key] ? `${out[key]}, ${el.value}` : el.value;
+      } else if (el.value.trim()) {
+        out[key] = el.value.trim();
+      }
+    }
+    return out;
   }
 
-  // Sponsorship Form Handler
-  const sponsorForm = document.getElementById("sponsor-form");
-  const sponsorFeedback = document.getElementById("sponsor-form-feedback");
-  if (sponsorForm && sponsorFeedback) {
-    sponsorForm.addEventListener("submit", (e) => {
+  // Outreach and sponsor forms are stored by the FirstCut service; the thank-you
+  // shows only once it confirms.
+  function wireInquiry(form, feedback, kind, thanks, after) {
+    if (!form || !feedback) return;
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      sponsorFeedback.textContent =
-        "✓ Thank you! Our Sponsorship & Finance team will contact your brand shortly.";
-      sponsorFeedback.classList.add("visible");
-      sponsorForm.reset();
+      let ok = false;
+      try {
+        const res = await fetch(`/api/inquiries/${kind}`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formFields(form)),
+        });
+        ok = res.status === 201;
+      } catch (err) { /* network error: falls through to the retry message */ }
+      showFeedback(feedback, ok ? thanks : "Couldn't send — please try again.");
+      if (ok) {
+        form.reset();
+        if (after) after();
+      }
     });
   }
+  wireInquiry(byId("outreach-form"), byId("outreach-form-feedback"), "outreach",
+    "✓ Thank you! Your collaboration interest has been sent to the FirstCut Outreach team.",
+    () => otherWrapper && otherWrapper.classList.remove("visible"));
+  wireInquiry(byId("sponsor-form"), byId("sponsor-form-feedback"), "sponsor",
+    "✓ Thank you! Our Sponsorship & Finance team will contact your brand shortly.");
 });
