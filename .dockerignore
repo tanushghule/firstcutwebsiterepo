@@ -1,0 +1,12 @@
+# Dev-only folders: keep them out of the public site
+.git
+.gitignore
+components
+demos
+scratch
+TEMPLATES
+package.json
+package-lock.json
+node_modules
+Dockerfile
+.dockerignore

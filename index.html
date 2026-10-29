@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="styles.css?v=3.0.0">
+  <link rel="stylesheet" href="styles.css?v=3.1.1">
 </head>
 <body>
 
@@ -660,7 +660,7 @@
           <div class="portal-form-header">
             <span class="pill-badge-subtle">Official Portal</span>
             <h2 class="section-title" style="margin-top: 8px;">Film Submission Form</h2>
-            <p class="section-subtitle-muted">Complete all 20 fields below to submit your film directly to <span class="brand-fc">FirstCut</span> 2027 Take 13.</p>
+            <p class="section-subtitle-muted">Four short steps. Everything you type and upload is saved as you go, so you can come back to it.</p>
           </div>
 
           <!-- Warm Amber Callout Box (Just like 'This is a stall pickup order' in the Reference Mockup!) -->
@@ -672,138 +672,145 @@
             </div>
           </div>
 
-          <form id="custom-film-submission-form" class="film-portal-form">
-            <div class="portal-form-grid">
-              <!-- 1. Name of the film -->
-              <div class="form-group">
-                <label for="sub-film-name">1. Name of the film *</label>
-                <input type="text" id="sub-film-name" name="filmName" class="form-control" placeholder="Enter film title" required>
-              </div>
-
-              <!-- 2. Name of the submitter -->
-              <div class="form-group">
-                <label for="sub-submitter-name">2. Name of the submitter *</label>
-                <input type="text" id="sub-submitter-name" name="submitterName" class="form-control" placeholder="Enter your full name" required>
-              </div>
-
-              <!-- 3. University/College of Submitter -->
-              <div class="form-group">
-                <label for="sub-university">3. University/College of Submitter *</label>
-                <input type="text" id="sub-university" name="university" class="form-control" placeholder="e.g. FLAME University, FTII" required>
-              </div>
-
-              <!-- 4. Email Address of the Submitter -->
-              <div class="form-group">
-                <label for="sub-email">4. Email Address of the Submitter *</label>
-                <input type="email" id="sub-email" name="email" class="form-control" placeholder="e.g. filmmaker@university.edu" required>
-              </div>
-
-              <!-- 5. Mobile No. of the Submitter (include the area code) -->
-              <div class="form-group">
-                <label for="sub-mobile">5. Mobile No. of the Submitter (include the area code) *</label>
-                <input type="tel" id="sub-mobile" name="mobile" class="form-control" placeholder="e.g. +91 98765 43210" required>
-              </div>
-
-              <!-- 6. Country/City of Origin -->
-              <div class="form-group">
-                <label for="sub-origin">6. Country/City of Origin *</label>
-                <input type="text" id="sub-origin" name="origin" class="form-control" placeholder="e.g. Pune, India" required>
-              </div>
-
-              <!-- 7. Film Category -->
-              <div class="form-group">
-                <label for="sub-category">7. Film Category *</label>
-                <select id="sub-category" name="category" class="form-control" required>
-                  <option value="">Select Film Category</option>
-                  <option value="Fiction">Fiction (Max 20 Mins)</option>
-                  <option value="Non-Fiction">Non-Fiction (Max 40 Mins)</option>
-                  <option value="Animation">Animation (Max 10 Mins)</option>
-                  <option value="Nano">Nano (Max 2 Mins)</option>
-                </select>
-              </div>
-
-              <!-- 8. Language of the film (English subtitles are mandatory) -->
-              <div class="form-group">
-                <label for="sub-language">8. Language of the film (English subtitles are mandatory) *</label>
-                <input type="text" id="sub-language" name="language" class="form-control" placeholder="e.g. Hindi / English (with English subtitles)" required>
-              </div>
-
-              <!-- 9. Completion Date of the film -->
-              <div class="form-group">
-                <label for="sub-completion-date">9. Completion Date of the film *</label>
-                <input type="date" id="sub-completion-date" name="completionDate" class="form-control" required>
-              </div>
-
-              <!-- 10. Name of Director(s) -->
-              <div class="form-group">
-                <label for="sub-director-name">10. Name of Director(s) *</label>
-                <input type="text" id="sub-director-name" name="directorName" class="form-control" placeholder="Full name(s) of Director(s)" required>
-              </div>
-
-              <!-- 11. Student ID of Director(s) -->
-              <div class="form-group">
-                <label for="sub-director-id">11. Student ID of Director(s) (ID Number / Drive Link) *</label>
-                <input type="text" id="sub-director-id" name="directorId" class="form-control" placeholder="Student ID No. or Google Drive link to ID card" required>
-              </div>
-
-              <!-- 12. Name of Cinematographer(s) -->
-              <div class="form-group">
-                <label for="sub-cinematographer-name">12. Name of Cinematographer(s) *</label>
-                <input type="text" id="sub-cinematographer-name" name="cinematographerName" class="form-control" placeholder="Full name(s) of Cinematographer(s)" required>
-              </div>
-
-              <!-- 13. Student ID of Cinematographer(s) -->
-              <div class="form-group">
-                <label for="sub-cinematographer-id">13. Student ID of Cinematographer(s) *</label>
-                <input type="text" id="sub-cinematographer-id" name="cinematographerId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
-              </div>
-
-              <!-- 14. Name of Editor(s) -->
-              <div class="form-group">
-                <label for="sub-editor-name">14. Name of Editor(s) *</label>
-                <input type="text" id="sub-editor-name" name="editorName" class="form-control" placeholder="Full name(s) of Editor(s)" required>
-              </div>
-
-              <!-- 15. Student ID of Editor(s) -->
-              <div class="form-group">
-                <label for="sub-editor-id">15. Student ID of Editor(s) *</label>
-                <input type="text" id="sub-editor-id" name="editorId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
-              </div>
-
-              <!-- 16. Name of Scriptwriter(s) -->
-              <div class="form-group">
-                <label for="sub-scriptwriter-name">16. Name of Scriptwriter(s) *</label>
-                <input type="text" id="sub-scriptwriter-name" name="scriptwriterName" class="form-control" placeholder="Full name(s) of Scriptwriter(s)" required>
-              </div>
-
-              <!-- 17. Student ID of Scriptwriter(s) -->
-              <div class="form-group">
-                <label for="sub-scriptwriter-id">17. Student ID of Scriptwriter(s) *</label>
-                <input type="text" id="sub-scriptwriter-id" name="scriptwriterId" class="form-control" placeholder="Student ID No. or Drive link to ID card" required>
-              </div>
-
-              <!-- 18. Password (only for Vimeo, otherwise write NA) -->
-              <div class="form-group">
-                <label for="sub-password">18. Password (only for Vimeo, otherwise write NA) *</label>
-                <input type="text" id="sub-password" name="vimeoPassword" class="form-control" placeholder="Enter Vimeo password or NA" value="NA" required>
-              </div>
-
-              <!-- 19. Submission Link -->
-              <div class="form-group form-group-full">
-                <label for="sub-link">19. Submission Link (Downloadable Google Drive, Vimeo, or Hidden YouTube link) *</label>
-                <input type="url" id="sub-link" name="submissionLink" class="form-control" placeholder="https://drive.google.com/... or https://vimeo.com/..." required>
-              </div>
-
-              <!-- 20. Anything else you'd like to tell us? -->
-              <div class="form-group form-group-full">
-                <label for="sub-notes">20. Anything else you'd like to tell us?</label>
-                <textarea id="sub-notes" name="additionalNotes" class="form-control" rows="3" placeholder="Optional notes, festival screening history, or special remarks..."></textarea>
-              </div>
+          <form id="custom-film-submission-form" class="film-portal-form fc-wizard" novalidate>
+            <div class="fc-resume-note" id="fc-resume-note" hidden>
+              <span>Welcome back — we kept your answers and files.</span>
+              <button type="button" class="fc-text-btn" id="fc-start-over">Start over</button>
             </div>
 
-            <button type="submit" class="btn-gold-full btn-portal-submit" id="btn-submit-film-portal">Submit Film to <span class="brand-fc">FirstCut</span> Take 13</button>
+            <ol class="fc-stepper" aria-label="Submission steps">
+              <li data-step="1"><button type="button"><span class="fc-step-num">1</span><span class="fc-step-name">You</span></button></li>
+              <li data-step="2"><button type="button"><span class="fc-step-num">2</span><span class="fc-step-name">Your film</span></button></li>
+              <li data-step="3"><button type="button"><span class="fc-step-num">3</span><span class="fc-step-name">Crew &amp; IDs</span></button></li>
+              <li data-step="4"><button type="button"><span class="fc-step-num">4</span><span class="fc-step-name">Upload &amp; submit</span></button></li>
+            </ol>
+
+            <fieldset class="fc-step" data-step="1">
+              <legend class="fc-step-title">Tell us about you</legend>
+              <p class="fc-step-hint">So we know who to write to about this film.</p>
+              <div class="portal-form-grid">
+              <div class="form-group">
+                <label for="sub-submitter-name">Your name</label>
+                <input type="text" id="sub-submitter-name" class="form-control" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="sub-university">University / college</label>
+                <input type="text" id="sub-university" class="form-control" placeholder="e.g. FLAME University, FTII" required>
+              </div>
+              <div class="form-group">
+                <label for="sub-email">Email</label>
+                <input type="email" id="sub-email" class="form-control" placeholder="e.g. filmmaker@university.edu" required>
+              </div>
+              <div class="form-group">
+                <label for="sub-mobile">Mobile number</label>
+                <input type="tel" id="sub-mobile" class="form-control" placeholder="e.g. +91 98765 43210" required>
+              </div>
+              <div class="form-group">
+                <label for="sub-origin">Where are you from?</label>
+                <input type="text" id="sub-origin" class="form-control" placeholder="e.g. Pune, India" required>
+              </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="fc-step" data-step="2" hidden>
+              <legend class="fc-step-title">About your film</legend>
+              <p class="fc-step-hint">All films need English subtitles, including films in English.</p>
+              <div class="portal-form-grid">
+              <div class="form-group">
+                <label for="sub-film-name">Name of the film</label>
+                <input type="text" id="sub-film-name" class="form-control" placeholder="Film title" required>
+              </div>
+              <div class="form-group">
+                <label for="sub-category">Category</label>
+                <select id="sub-category" class="form-control" required>
+                  <option value="">Choose a category</option>
+                  <option value="Fiction">Fiction (max 20 min)</option>
+                  <option value="Non-Fiction">Non-Fiction (max 40 min)</option>
+                  <option value="Animation">Animation (max 10 min)</option>
+                  <option value="Nano">Nano (max 2 min)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="sub-language">Language</label>
+                <input type="text" id="sub-language" class="form-control" placeholder="e.g. Hindi, with English subtitles" required>
+              </div>
+              <div class="form-group">
+                <label for="sub-completion-date">Completion date</label>
+                <input type="date" id="sub-completion-date" class="form-control" placeholder="" required>
+              </div>
+              <div class="form-group form-group-full">
+                <label for="sub-notes">Anything else you'd like to tell us? <span class="fc-optional">optional</span></label>
+                <textarea id="sub-notes" class="form-control" rows="3" placeholder="Screening history, special remarks…"></textarea>
+              </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="fc-step" data-step="3" hidden>
+              <legend class="fc-step-title">Crew &amp; student IDs</legend>
+              <p class="fc-step-hint">Each ID must show the current year or the 2026 graduating batch. Files upload as soon as you choose them.</p>
+              <div class="fc-crew-grid">
+              <div class="fc-crew-card" data-role="director">
+                <span class="fc-crew-role">Director</span>
+                <div class="form-group">
+                  <label for="sub-director-name">Full name(s)</label>
+                  <input type="text" id="sub-director-name" class="form-control" placeholder="As on the student ID" required>
+                </div>
+                <div class="fc-file-slot" data-kind="id" data-role="director" data-label="Student ID card"></div>
+              </div>
+              <div class="fc-crew-card" data-role="cinematographer">
+                <span class="fc-crew-role">Cinematographer</span>
+                <div class="form-group">
+                  <label for="sub-cinematographer-name">Full name(s)</label>
+                  <input type="text" id="sub-cinematographer-name" class="form-control" placeholder="As on the student ID" required>
+                </div>
+                <div class="fc-file-slot" data-kind="id" data-role="cinematographer" data-label="Student ID card"></div>
+              </div>
+              <div class="fc-crew-card" data-role="editor">
+                <span class="fc-crew-role">Editor</span>
+                <div class="form-group">
+                  <label for="sub-editor-name">Full name(s)</label>
+                  <input type="text" id="sub-editor-name" class="form-control" placeholder="As on the student ID" required>
+                </div>
+                <div class="fc-file-slot" data-kind="id" data-role="editor" data-label="Student ID card"></div>
+              </div>
+              <div class="fc-crew-card" data-role="scriptwriter">
+                <span class="fc-crew-role">Scriptwriter</span>
+                <div class="form-group">
+                  <label for="sub-scriptwriter-name">Full name(s)</label>
+                  <input type="text" id="sub-scriptwriter-name" class="form-control" placeholder="As on the student ID" required>
+                </div>
+                <div class="fc-file-slot" data-kind="id" data-role="scriptwriter" data-label="Student ID card"></div>
+              </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="fc-step" data-step="4" hidden>
+              <legend class="fc-step-title">Your film</legend>
+              <p class="fc-step-hint">Upload the file (up to 4 GB), or share a Google Drive, Vimeo or unlisted YouTube link.</p>
+              <div class="fc-file-slot fc-file-slot-film" data-kind="screener" data-label="Film"></div>
+              <p class="fc-step-hint">Have English subtitles as a separate file? Add it here (.srt or .vtt). Skip this if they're already in the film.</p>
+              <div class="fc-file-slot" data-kind="subtitles" data-label="English subtitles (optional)"></div>
+              <div class="fc-summary" id="fc-summary"></div>
+            </fieldset>
+
+            <div class="fc-step-nav">
+              <button type="button" class="pill-stepper-btn" id="fc-back" hidden>&larr; Back</button>
+              <span class="fc-saved" id="fc-saved" aria-live="polite"></span>
+              <button type="button" class="btn-gold-pill" id="fc-next">Continue &rarr;</button>
+              <button type="submit" class="btn-gold-pill" id="btn-submit-film-portal" hidden>Submit film</button>
+            </div>
             <div id="film-submission-feedback" class="form-feedback-msg" role="status" aria-live="polite"></div>
           </form>
+
+          <div class="fc-done" id="fc-done" hidden>
+            <div class="fc-done-mark" aria-hidden="true">&#10003;</div>
+            <h3 class="fc-step-title" id="fc-done-title">Your film is registered</h3>
+            <p class="fc-step-hint">Tracking ID</p>
+            <p class="fc-done-id" id="fc-done-id"></p>
+            <p class="fc-step-hint">Your private manage link (also in your email). Use it to check progress or fix anything we flag:</p>
+            <div class="fc-done-link"><a id="fc-done-link" href="#"></a><button type="button" class="pill-stepper-btn" id="fc-copy-link">Copy</button></div>
+            <button type="button" class="fc-text-btn" id="fc-another">Submit another film</button>
+          </div>
         </div>
 
         <!-- Expanded FAQ & Official Guidelines Section + PDF Download/Upload Option -->
@@ -1401,6 +1408,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <!-- Main Application Script -->
-  <script src="app.js?v=3.0.0"></script>
+  <script src="upload.js?v=2.1.0"></script>
+  <script src="wizard.js?v=1.0.2"></script>
+  <script src="app.js?v=3.2.0"></script>
 </body>
 </html>

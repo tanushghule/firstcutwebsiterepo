@@ -328,43 +328,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Custom 20-Field Film Submission Form Handler
-  const filmForm = document.getElementById("custom-film-submission-form");
-  const filmFeedback = document.getElementById("film-submission-feedback");
-  if (filmForm && filmFeedback) {
-    filmForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const filmTitle = document.getElementById("sub-film-name")?.value || "Your film";
-      filmFeedback.textContent = `✓ "${filmTitle}" has been registered for FirstCut 2027 Take 13! We have recorded your submission details.`;
-      filmFeedback.classList.add("visible");
-      filmForm.reset();
-    });
+  // The film submission form lives in wizard.js.
+  const byId = (id) => document.getElementById(id);
+  const showFeedback = (el, ...parts) => {
+    el.replaceChildren(...parts);
+    el.classList.add("visible");
+  };
+
+  // formFields reads a form's named inputs; checkbox groups become one
+  // comma-separated answer.
+  function formFields(form) {
+    const out = {};
+    for (const el of form.elements) {
+      const key = el.name || el.id;
+      if (!key || el.type === "submit" || el.type === "button") continue;
+      if (el.type === "checkbox" || el.type === "radio") {
+        if (el.checked) out[key] = out[key] ? `${out[key]}, ${el.value}` : el.value;
+      } else if (el.value.trim()) {
+        out[key] = el.value.trim();
+      }
+    }
+    return out;
   }
 
-  // Outreach Form Handler
-  const outreachForm = document.getElementById("outreach-form");
-  const outreachFeedback = document.getElementById("outreach-form-feedback");
-  if (outreachForm && outreachFeedback) {
-    outreachForm.addEventListener("submit", (e) => {
+  // Outreach and sponsor forms are stored by the FirstCut service; the thank-you
+  // shows only once it confirms.
+  function wireInquiry(form, feedback, kind, thanks, after) {
+    if (!form || !feedback) return;
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      outreachFeedback.textContent =
-        "✓ Thank you! Your collaboration interest has been sent to the FirstCut Outreach team.";
-      outreachFeedback.classList.add("visible");
-      outreachForm.reset();
-      if (otherWrapper) otherWrapper.classList.remove("visible");
+      let ok = false;
+      try {
+        const res = await fetch(`/api/inquiries/${kind}`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formFields(form)),
+        });
+        ok = res.status === 201;
+      } catch (err) { /* network error: falls through to the retry message */ }
+      showFeedback(feedback, ok ? thanks : "Couldn't send — please try again.");
+      if (ok) {
+        form.reset();
+        if (after) after();
+      }
     });
   }
-
-  // Sponsorship Form Handler
-  const sponsorForm = document.getElementById("sponsor-form");
-  const sponsorFeedback = document.getElementById("sponsor-form-feedback");
-  if (sponsorForm && sponsorFeedback) {
-    sponsorForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      sponsorFeedback.textContent =
-        "✓ Thank you! Our Sponsorship & Finance team will contact your brand shortly.";
-      sponsorFeedback.classList.add("visible");
-      sponsorForm.reset();
-    });
-  }
+  wireInquiry(byId("outreach-form"), byId("outreach-form-feedback"), "outreach",
+    "✓ Thank you! Your collaboration interest has been sent to the FirstCut Outreach team.",
+    () => otherWrapper && otherWrapper.classList.remove("visible"));
+  wireInquiry(byId("sponsor-form"), byId("sponsor-form-feedback"), "sponsor",
+    "✓ Thank you! Our Sponsorship & Finance team will contact your brand shortly.");
 });
