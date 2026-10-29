@@ -42,9 +42,10 @@
   const keyOf = (input) => input.id.slice(4);
   const stepOf = (node) => Number(node.closest('.fc-step').dataset.step);
 
-  // File fields: four IDs on step 3, the film on step 4.
+  // File fields: four IDs on step 3, the film and optional subtitles on step 4.
   const files = {};
-  const fileKey = (kind, role) => (kind === 'screener' ? 'screener' : `${role}-id`);
+  const fileKey = (kind, role) => (kind === 'id' ? `${role}-id` : kind);
+  const isID = (k) => k.endsWith('-id');
   form.querySelectorAll('.fc-file-slot').forEach((slot) => {
     const f = new FileField({
       kind: slot.dataset.kind, role: slot.dataset.role || '', label: slot.dataset.label,
@@ -83,7 +84,7 @@
       input.closest('.form-group').append(Object.assign(document.createElement('span'), { className: 'fc-error', textContent: msg }));
       return stepOf(input);
     }
-    if (files[key]) { files[key].showError(msg); return key === 'screener' ? 4 : 3; }
+    if (files[key]) { files[key].showError(msg); return isID(key) ? 3 : 4; }
     say(msg);
     return current;
   }
@@ -119,7 +120,7 @@
     const bad = mine.find((i) => !i.checkValidity());
     if (bad) { bad.reportValidity(); return; }
     if (current === 3) {
-      const missing = Object.entries(files).filter(([k, f]) => k !== 'screener' && ['empty', 'problem'].includes(f.status()));
+      const missing = Object.entries(files).filter(([k, f]) => isID(k) && ['empty', 'problem'].includes(f.status()));
       if (missing.length) { missing.forEach(([, f]) => f.showError('Upload the ID card or paste a link.')); return; }
     }
     const next = $('fc-next');
@@ -147,7 +148,7 @@
         return [label, value];
       });
       if (n === 3) {
-        Object.entries(files).filter(([k]) => k !== 'screener').forEach(([k, f]) => {
+        Object.entries(files).filter(([k]) => isID(k)).forEach(([k, f]) => {
           const it = f.item;
           rows.push([`${k[0].toUpperCase()}${k.slice(1).replace('-id', '')}'s ID`, f.status() === 'uploading' ? 'Uploading…' : it ? it.filename || it.link : 'Missing']);
         });
@@ -243,7 +244,7 @@
     inputs.forEach((i) => { if (r.json.fields[keyOf(i)]) i.value = r.json.fields[keyOf(i)]; });
     r.json.items.forEach((it) => { const f = files[fileKey(it.kind, it.role)]; if (f) f.set(it); });
     const ok = (n) => inputs.filter((i) => stepOf(i) === n).every((i) => i.checkValidity());
-    const idsOk = Object.entries(files).every(([k, f]) => k === 'screener' || ['ready', 'paused'].includes(f.status()));
+    const idsOk = Object.entries(files).every(([k, f]) => !isID(k) || ['ready', 'paused'].includes(f.status()));
     let n = 1;
     while (n < 4 && ok(n) && (n !== 3 || idsOk)) n++;
     reached = n;

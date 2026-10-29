@@ -15,7 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="styles.css?v=3.1.0">
+  <link rel="stylesheet" href="styles.css?v=3.1.1">
 </head>
 <body>
 
@@ -788,6 +788,8 @@
               <legend class="fc-step-title">Your film</legend>
               <p class="fc-step-hint">Upload the file (up to 4 GB), or share a Google Drive, Vimeo or unlisted YouTube link.</p>
               <div class="fc-file-slot fc-file-slot-film" data-kind="screener" data-label="Film"></div>
+              <p class="fc-step-hint">Have English subtitles as a separate file? Add it here (.srt or .vtt). Skip this if they're already in the film.</p>
+              <div class="fc-file-slot" data-kind="subtitles" data-label="English subtitles (optional)"></div>
               <div class="fc-summary" id="fc-summary"></div>
             </fieldset>
 
@@ -1406,8 +1408,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
   <!-- Main Application Script -->
-  <script src="upload.js?v=2.0.0"></script>
-  <script src="wizard.js?v=1.0.1"></script>
+  <script src="upload.js?v=2.1.0"></script>
+  <script src="wizard.js?v=1.0.2"></script>
   <script src="app.js?v=3.2.0"></script>
 </body>
 </html>

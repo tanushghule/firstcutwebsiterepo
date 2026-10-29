@@ -99,12 +99,19 @@
 
   /* FileField: one film or ID. It shows what the filmmaker gave us (file name,
      size, when, status) and uploads a chosen file at once, in the background.
-       opts: {kind: 'screener'|'id', role, label, getToken: async () => token,
+       opts: {kind: 'screener'|'id'|'subtitles', role, label, getToken: async () => token,
               readOnly, onChange}
        field.set(item)       show what the server has (item from GET /api/manage)
        field.status()        'empty' | 'uploading' | 'ready' | 'paused' | 'problem'
        field.settled()       resolves when no upload is running
        field.showError(msg)  a problem from the server (e.g. on submit) */
+  // What each kind of file takes; the server enforces the same.
+  const LIMITS = {
+    screener: { max: 4 * 1024 ** 3, tooBig: 'Films can be up to 4 GB.', accept: 'video/*', sub: 'video, up to 4 GB' },
+    id: { max: 20 * 1024 ** 2, tooBig: 'ID files can be up to 20 MB.', accept: 'image/*,application/pdf', sub: 'photo or PDF, up to 20 MB' },
+    subtitles: { max: 2 * 1024 ** 2, tooBig: 'Subtitle files can be up to 2 MB.', accept: '.srt,.vtt', sub: '.srt or .vtt, up to 2 MB', noLink: true },
+  };
+
   class FileField {
     constructor(opts) {
       this.o = opts;
@@ -135,9 +142,8 @@
 
     async useFile(file) {
       if (!file) return;
-      const isFilm = this.o.kind === 'screener';
-      const max = isFilm ? 4 * 1024 ** 3 : 20 * 1024 ** 2;
-      if (file.size > max) { this.showError(isFilm ? 'Films can be up to 4 GB.' : 'ID files can be up to 20 MB.'); return; }
+      const { max, tooBig } = LIMITS[this.o.kind] || LIMITS.id;
+      if (file.size > max) { this.showError(tooBig); return; }
       this.error = '';
       this.local = { name: file.name, size: file.size, pct: 0 };
       this.changed();
@@ -200,13 +206,14 @@
         setTimeout(() => url.focus(), 0);
         return box;
       }
-      const input = el('input', { type: 'file', className: 'fc-file-input', accept: isFilm ? 'video/*' : 'image/*,application/pdf' });
-      input.id = `fc-file-${this.o.role || 'film'}`;
+      const lim = LIMITS[this.o.kind] || LIMITS.id;
+      const input = el('input', { type: 'file', className: 'fc-file-input', accept: lim.accept });
+      input.id = `fc-file-${this.o.role || (this.o.kind === 'screener' ? 'film' : this.o.kind)}`;
       input.addEventListener('change', () => this.useFile(input.files[0]));
       const drop = el('label', { className: 'fc-drop', htmlFor: input.id }, [
         icon('up'),
         el('span', { className: 'fc-drop-main', textContent: this.status() === 'paused' ? 'Choose the same file to continue' : 'Choose a file' }),
-        el('span', { className: 'fc-drop-sub', textContent: isFilm ? 'or drag it here · video, up to 4 GB' : 'or drag it here · photo or PDF, up to 20 MB' }),
+        el('span', { className: 'fc-drop-sub', textContent: `or drag it here · ${lim.sub}` }),
         input,
       ]);
       ['dragenter', 'dragover'].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('is-over'); }));
@@ -214,7 +221,8 @@
       drop.addEventListener('drop', (e) => { e.preventDefault(); this.useFile(e.dataTransfer.files[0]); });
       const linkBtn = el('button', { type: 'button', className: 'fc-text-btn', textContent: 'Paste a link instead' });
       linkBtn.addEventListener('click', () => { this.linkMode = true; this.render(); });
-      box.append(drop, linkBtn);
+      box.append(drop);
+      if (!lim.noLink) box.append(linkBtn);
       if (this.item && this.editing) {
         const cancel = el('button', { type: 'button', className: 'fc-text-btn', textContent: 'Keep the current one' });
         cancel.addEventListener('click', () => { this.editing = false; this.render(); });

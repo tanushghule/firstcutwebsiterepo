@@ -1,4 +1,5 @@
 :root {
+  color-scheme: dark; /* native controls match: the date picker's calendar icon is black otherwise */
   /* Reference Mockup Warm Dark & Buttery Gold Palette */
   --color-black: #0D0C0A;
   --color-bg-elevated: #141210;
