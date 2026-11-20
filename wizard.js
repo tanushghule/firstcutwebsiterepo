@@ -77,11 +77,15 @@
   stepper.forEach((li) => li.querySelector('button').addEventListener('click', () => show(Number(li.dataset.step))));
   $('fc-back').addEventListener('click', () => show(current - 1));
 
-  function clearErrors() { form.querySelectorAll('.form-group .fc-error').forEach((n) => n.remove()); }
+  function clearErrors() { form.querySelectorAll('.form-group .fc-error').forEach((n) => n.remove()); form.querySelectorAll('[aria-invalid]').forEach((i) => { i.removeAttribute('aria-invalid'); i.removeAttribute('aria-describedby'); }); }
   function fieldError(key, msg) {
     const input = $('sub-' + key);
     if (input) {
-      input.closest('.form-group').append(Object.assign(document.createElement('span'), { className: 'fc-error', textContent: msg }));
+      const err = Object.assign(document.createElement('span'), { className: 'fc-error', textContent: msg, id: 'err-' + input.id });
+      err.setAttribute('role', 'alert');
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', err.id);
+      input.closest('.form-group').append(err);
       return stepOf(input);
     }
     if (files[key]) { files[key].showError(msg); return isID(key) ? 3 : 4; }
