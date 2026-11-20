@@ -500,6 +500,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = label; }
 
       if (status === 201) {
+        // Tracking: tells Tag Manager an enquiry was sent. No personal details are included.
+        try { (window.dataLayer = window.dataLayer || []).push({ event: "form_submit_success", form_type: kind }); } catch (e) { /* tracking must never break the form */ }
         showFeedback(feedback, thanks);
         form.reset();
         if (after) after();
