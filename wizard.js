@@ -204,6 +204,8 @@
   });
 
   function done(res) {
+    // Tracking: tells Tag Manager a film was submitted. No names, emails or film details are sent.
+    try { (window.dataLayer = window.dataLayer || []).push({ event: 'form_submit_success', form_type: 'film_submission' }); } catch (e) { /* tracking must never break the form */ }
     saved.clear();
     token = null;
     form.hidden = true;
