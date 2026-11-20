@@ -1,0 +1,26 @@
+# Optional server settings for firstcutflame.com. NOT used until someone copies this to
+# /etc/nginx/conf.d/default.conf in the container (for example with a Dockerfile line:
+#   COPY nginx.conf.example /etc/nginx/conf.d/default.conf ).
+# Ask whoever hosts the site before switching: if /api/ is routed to a backend by nginx or
+# by Cloudflare, keep that routing. This file only serves the static site.
+server {
+  listen 80;
+  server_name _;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  # Branded 404 page for wrong addresses
+  error_page 404 /404.html;
+  location = /404.html { internal; }
+
+  # /submissions/, /outreach/, /sponsorship/, /team/ are real folders with their own index.html
+  location / { try_files $uri $uri/ =404; }
+
+  # Compression
+  gzip on;
+  gzip_types text/css application/javascript application/json image/svg+xml text/xml;
+
+  # Caching for images and video. CSS and JS use ?v= numbers, so they can cache for a week.
+  location ~* \.(jpg|jpeg|png|webp|svg|ico|mp4)$ { expires 30d; add_header Cache-Control "public"; }
+  location ~* \.(css|js)$ { expires 7d; add_header Cache-Control "public"; }
+}

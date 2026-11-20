@@ -53,7 +53,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const mainWebsite = document.getElementById("main-website");
   const revealPanels = document.querySelectorAll(".reveal-panel");
 
-  if (typeof gsap !== "undefined" && loader && mainWebsite) {
+  let seenIntro = false;
+  try { seenIntro = sessionStorage.getItem("fc_intro_seen") === "1"; sessionStorage.setItem("fc_intro_seen", "1"); } catch (e) { /* private mode */ }
+  const reducedIntro = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if ((seenIntro || reducedIntro) && loader && mainWebsite) {
+    // Return visit or reduced motion: no loading animation
+    loader.style.display = "none";
+    revealPanels.forEach((p) => { p.style.display = "none"; });
+    mainWebsite.style.visibility = "visible";
+    mainWebsite.style.opacity = "1";
+  } else if (typeof gsap !== "undefined" && loader && mainWebsite) {
     const tl = gsap.timeline();
     tl.fromTo(
       ".loader-logo-container",
@@ -100,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentIndex = 0;
 
     setInterval(() => {
+      if (window.fcMotionPaused) return;
       currentIndex = (currentIndex + 1) % words.length;
       gsap.to(wordList, {
         yPercent: -100 * currentIndex / words.length,
@@ -118,7 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   const drawerCloseBtn = document.getElementById("drawer-close-btn");
 
-  function switchDepartmentPage(targetPage, updateHash = true) {
+  const PAGE_META = {
+    home: { title: "FirstCut Take 13 | India's Largest Student Film Festival", desc: "FirstCut is India's largest international student-run film festival, organized by FLAME University, Pune. Free entry. Submit your short film for Take 13.", url: "https://firstcutflame.com/" },
+    submissions: { title: "Submit Your Film | FirstCut Take 13 Student Film Festival", desc: "Submit your student short film free to FirstCut Take 13 at FLAME University, Pune. Fiction, Non-Fiction, Animation and Nano categories. Deadline 10 Jan 2027.", url: "https://firstcutflame.com/submissions/" },
+    outreach: { title: "Collaborate With Us | FirstCut Outreach, Colleges and Film Clubs", desc: "Partner with FirstCut Take 13. Colleges, film clubs, media schools and industry collaborators can reach the FirstCut outreach team here.", url: "https://firstcutflame.com/outreach/" },
+    sponsorship: { title: "Sponsor FirstCut Take 13 | Partner With India's Student Film Festival", desc: "Connect your brand with FirstCut Take 13, a student film festival at FLAME University, Pune. Social media, on-ground branding, activations and award sponsorships.", url: "https://firstcutflame.com/sponsorship/" },
+    team: { title: "Meet the Team | FirstCut Take 13 Film Festival Committee", desc: "Meet the student team behind FirstCut Take 13, India's largest student-run film festival at FLAME University, Pune.", url: "https://firstcutflame.com/team/" }
+  };
+
+  function switchDepartmentPage(targetPage, updateHash = true, anchor = "") {
     const pageName = validPages.includes(targetPage) ? targetPage : "home";
 
     pageContainers.forEach((section) => {
@@ -135,8 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach((link) => {
         if (link.dataset.pageTarget === pageName) {
           link.classList.add("active");
+          link.setAttribute("aria-current", "page");
         } else {
           link.classList.remove("active");
+          link.removeAttribute("aria-current");
         }
       });
 
@@ -147,11 +168,41 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileMenuBtn.setAttribute("aria-expanded", "false");
     }
 
+    // Real, crawlable URLs: /submissions/, /outreach/, /sponsorship/, /team/ (home is /)
+    const meta = PAGE_META[pageName];
+    if (meta) {
+      document.title = meta.title;
+      const setMeta = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+      setMeta('meta[name="description"]', "content", meta.desc);
+      setMeta('link[rel="canonical"]', "href", meta.url);
+      setMeta('meta[property="og:title"]', "content", meta.title);
+      setMeta('meta[property="og:description"]', "content", meta.desc);
+      setMeta('meta[property="og:url"]', "content", meta.url);
+      setMeta('meta[name="twitter:title"]', "content", meta.title);
+      setMeta('meta[name="twitter:description"]', "content", meta.desc);
+    }
     if (updateHash) {
-      history.replaceState(null, "", `#${pageName}`);
+      const path = pageName === "home" ? "/" : `/${pageName}/`;
+      if (window.location.pathname !== path || window.location.hash) {
+        history.pushState({ page: pageName }, "", path);
+      }
     }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const anchorEl = anchor ? document.getElementById(anchor) : null;
+    if (anchorEl) {
+      setTimeout(() => anchorEl.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Move focus to the new page heading so screen readers hear the change
+    if (updateHash && !anchorEl) {
+      const heading = document.querySelector(`#page-${pageName} h1`);
+      if (heading) {
+        heading.setAttribute("tabindex", "-1");
+        heading.focus({ preventScroll: true });
+      }
+    }
   }
 
   // Bind all elements with data-page-target
@@ -161,7 +212,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetPage = targetEl.getAttribute("data-page-target");
       if (targetPage && validPages.includes(targetPage)) {
         e.preventDefault();
-        switchDepartmentPage(targetPage, true);
+        const hashPart = (targetEl.getAttribute("href") || "").split("#")[1] || "";
+        switchDepartmentPage(targetPage, true, hashPart);
       }
     }
   });
@@ -186,18 +238,51 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Handle initial URL hash
+  // Initial page: real path first (/team/), legacy #hash links still work
+  const pathPage = window.location.pathname.replace(/\/+$/, "").replace(/^\//, "").toLowerCase();
   const initialHash = window.location.hash.replace("#", "").trim().toLowerCase();
-  if (validPages.includes(initialHash)) {
+  if (validPages.includes(pathPage) && pathPage !== "home") {
+    switchDepartmentPage(pathPage, false, initialHash && !validPages.includes(initialHash) ? initialHash : "");
+  } else if (validPages.includes(initialHash)) {
     switchDepartmentPage(initialHash, false);
+    history.replaceState({ page: initialHash }, "", initialHash === "home" ? "/" : `/${initialHash}/`);
   }
+
+  // Mark the starting page as current for assistive tech
+  document.querySelectorAll(".nav-link.active, .bottom-nav-item.active, .drawer-link.active").forEach((l) => l.setAttribute("aria-current", "page"));
+
+  // Back/forward buttons
+  window.addEventListener("popstate", () => {
+    const p = window.location.pathname.replace(/\/+$/, "").replace(/^\//, "").toLowerCase();
+    switchDepartmentPage(validPages.includes(p) ? p : "home", false);
+  });
 
   window.addEventListener("hashchange", () => {
     const hash = window.location.hash.replace("#", "").trim().toLowerCase();
     if (validPages.includes(hash)) {
-      switchDepartmentPage(hash, false);
+      switchDepartmentPage(hash, true);
     }
   });
+
+  // Pause button for the background video and the rotating headline word
+  const motionBtn = document.getElementById("motion-toggle");
+  const heroVideo = document.querySelector("#hero-section video");
+  if (motionBtn) {
+    motionBtn.addEventListener("click", () => {
+      window.fcMotionPaused = !window.fcMotionPaused;
+      motionBtn.setAttribute("aria-pressed", String(window.fcMotionPaused));
+      motionBtn.textContent = window.fcMotionPaused ? "Play motion" : "Pause motion";
+      motionBtn.setAttribute("aria-label", `${motionBtn.textContent}: background video and moving headline`);
+      if (heroVideo) { window.fcMotionPaused ? heroVideo.pause() : heroVideo.play().catch(() => {}); }
+    });
+    if (heroVideo && heroVideo.paused && !window.fcMotionPaused) {
+      // Video was paused by the reduced-motion or data-saver script
+      window.fcMotionPaused = true;
+      motionBtn.setAttribute("aria-pressed", "true");
+      motionBtn.textContent = "Play motion";
+      motionBtn.setAttribute("aria-label", "Play motion: background video and moving headline");
+    }
+  }
 
   /* ==========================================================================
      5. INTERACTIVE PILL TABS FILTERING (Home, Submission Categories, Team)
@@ -353,27 +438,122 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Outreach and sponsor forms are stored by the FirstCut service; the thank-you
   // shows only once it confirms.
-  function wireInquiry(form, feedback, kind, thanks, after) {
+  function fieldMessage(el) {
+    if (el.validity.valueMissing) return "This field is required.";
+    if (el.validity.typeMismatch && el.type === "email") return "Enter a valid email address, like name@college.edu.";
+    if (el.validity.typeMismatch || el.validity.patternMismatch) return "Check the format of this field.";
+    return "Please check this field.";
+  }
+  function clearInquiryErrors(form) {
+    form.querySelectorAll(".fc-error").forEach((n) => n.remove());
+    form.querySelectorAll("[aria-invalid]").forEach((i) => { i.removeAttribute("aria-invalid"); i.removeAttribute("aria-describedby"); });
+  }
+  function showInquiryError(el, msg) {
+    const group = el.closest(".form-group") || el.parentElement;
+    const err = document.createElement("span");
+    err.className = "fc-error";
+    err.id = `err-${el.id || el.name}`;
+    err.setAttribute("role", "alert");
+    err.textContent = msg;
+    el.setAttribute("aria-invalid", "true");
+    el.setAttribute("aria-describedby", err.id);
+    group.append(err);
+  }
+
+  // Outreach and sponsor forms are stored by the FirstCut service; the thank-you
+  // shows only once it confirms.
+  function wireInquiry(form, feedback, kind, thanks, contactEmail, after) {
     if (!form || !feedback) return;
+    form.noValidate = true;
+    const submitBtn = form.querySelector('[type="submit"]');
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      let ok = false;
+      if (form.dataset.sending === "1") return;
+      clearInquiryErrors(form);
+      feedback.classList.remove("visible");
+
+      // Check every field and say exactly which ones need attention
+      const invalid = [...form.elements].filter((el) => el.willValidate && el.type !== "submit" && !el.checkValidity());
+      if (invalid.length) {
+        invalid.forEach((el) => showInquiryError(el, fieldMessage(el)));
+        showFeedback(feedback, `Please fix ${invalid.length} ${invalid.length === 1 ? "field" : "fields"} marked above, then send again.`);
+        invalid[0].focus();
+        return;
+      }
+
+      form.dataset.sending = "1";
+      const label = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Sending…"; }
+      showFeedback(feedback, "Sending your details…");
+
+      let status = 0;
+      let body = null;
       try {
         const res = await fetch(`/api/inquiries/${kind}`, {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formFields(form)),
         });
-        ok = res.status === 201;
-      } catch (err) { /* network error: falls through to the retry message */ }
-      showFeedback(feedback, ok ? thanks : "Couldn't send — please try again.");
-      if (ok) {
+        status = res.status;
+        try { body = await res.json(); } catch (err) { /* no JSON body */ }
+      } catch (err) { status = 0; }
+
+      form.dataset.sending = "0";
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = label; }
+
+      if (status === 201) {
+        showFeedback(feedback, thanks);
         form.reset();
         if (after) after();
+        return;
+      }
+      // Field-level errors from the service, if it sent any
+      if (status === 400 || status === 422) {
+        const errs = (body && body.errors) || {};
+        let shown = 0;
+        Object.entries(errs).forEach(([key, msg]) => {
+          const el = form.elements[key] || byId(key);
+          if (el && typeof msg === "string") { showInquiryError(el, msg); shown++; }
+        });
+        showFeedback(feedback, shown ? "Please fix the fields marked above, then send again." : "We couldn't accept those details. Please check each field and try again.");
+        return;
+      }
+      if (status === 429) {
+        showFeedback(feedback, "Too many attempts. Please wait a minute and send again. Your answers are still here.");
+      } else if (status >= 500) {
+        showFeedback(feedback, `Our server had a problem. Your answers are still here. Try again in a minute, or email ${contactEmail}.`);
+      } else {
+        showFeedback(feedback, `We couldn't reach the server. Check your connection and try again, or email ${contactEmail}. Your answers are still here.`);
       }
     });
   }
   wireInquiry(byId("outreach-form"), byId("outreach-form-feedback"), "outreach",
     "✓ Thank you! Your collaboration interest has been sent to the FirstCut Outreach team.",
+    "outreach.firstcut@flame.edu.in",
     () => otherWrapper && otherWrapper.classList.remove("visible"));
   wireInquiry(byId("sponsor-form"), byId("sponsor-form-feedback"), "sponsor",
-    "✓ Thank you! Our Sponsorship & Finance team will contact your brand shortly.");
+    "✓ Thank you! Our Sponsorship & Finance team will contact your brand shortly.",
+    "sponsorships.firstcut@flame.edu.in");
+
+  // Take 13 Events: clamp long text on phones with a "Read more" toggle
+  (function () {
+    const mq = window.matchMedia("(max-width: 640px)");
+    document.querySelectorAll(".fe-card .fe-text").forEach((p, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "fe-more";
+      btn.textContent = "Read more";
+      btn.setAttribute("aria-expanded", "false");
+      p.id = p.id || `fe-text-${i}`;
+      btn.setAttribute("aria-controls", p.id);
+      p.after(btn);
+      btn.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        const open = p.classList.toggle("is-clamped") === false;
+        btn.setAttribute("aria-expanded", String(open));
+        btn.textContent = open ? "Show less" : "Read more";
+      });
+      const apply = () => { if (mq.matches) { p.classList.add("is-clamped"); } else { p.classList.remove("is-clamped"); } };
+      apply();
+      mq.addEventListener && mq.addEventListener("change", apply);
+    });
+  })();
 });
