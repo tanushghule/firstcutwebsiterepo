@@ -377,23 +377,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const pdfUploadInput = document.getElementById("upload-guidelines-pdf");
-  const pdfDownloadBtn = document.getElementById("btn-download-guidelines-pdf");
-  const pdfBtnText = document.getElementById("guidelines-pdf-btn-text");
-
-  if (pdfUploadInput && pdfDownloadBtn) {
-    pdfUploadInput.addEventListener("change", (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (file && file.type === "application/pdf") {
-        const blobUrl = URL.createObjectURL(file);
-        pdfDownloadBtn.href = blobUrl;
-        pdfDownloadBtn.setAttribute("download", file.name);
-        if (pdfBtnText) {
-          pdfBtnText.textContent = `Download: ${file.name}`;
-        }
-      }
-    });
-  }
 
   /* ==========================================================================
      7. OUTREACH "OTHER (PLEASE SPECIFY)" DYNAMIC INPUT & FORM SUBMISSIONS
