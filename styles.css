@@ -2567,3 +2567,23 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
 
 /* Image width/height attributes reserve space; CSS keeps controlling the final size */
 img { height: auto; }
+
+/* Past jury */
+.past-jury { margin: 2.5rem 0 2rem; }
+.jury-cat { font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; color: var(--color-yellow-base); margin: 1.4rem 0 0.8rem; }
+.jury-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+@media (max-width: 720px) { .jury-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; } .jury-grid .tm-name { font-size: 0.75rem; } }
+
+/* Cookie notice and privacy page */
+.cookie-banner { position: fixed; left: 1rem; right: 1rem; bottom: 1rem; z-index: 1200; display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap; max-width: 52rem; margin: 0 auto; padding: 0.9rem 1.1rem; background: #141210; border: 1px solid rgba(245,196,81,0.4); border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,0.7); color: rgba(255,255,255,0.85); font-size: 0.88rem; line-height: 1.5; }
+.cookie-banner[hidden] { display: none; }
+.cookie-banner p { margin: 0; flex: 1 1 18rem; }
+.cookie-banner a { color: var(--color-yellow-base); }
+.cookie-actions { display: flex; gap: 0.6rem; }
+.cookie-btn { min-height: 44px; padding: 0 1.2rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.4); background: transparent; color: #fff; font-weight: 700; cursor: pointer; font-family: inherit; }
+.cookie-btn-primary { background: var(--color-yellow-base); border-color: var(--color-yellow-base); color: #000; }
+@media (max-width: 768px) { .cookie-banner { bottom: 80px; } }
+.privacy-body { max-width: 46rem; margin: 0 auto; color: rgba(255,255,255,0.8); line-height: 1.7; }
+.privacy-body h2 { font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 1.1rem; color: var(--color-yellow-base); margin: 2rem 0 0.5rem; }
+.privacy-body a { color: var(--color-yellow-base); }
+.privacy-body ul { padding-left: 1.2rem; }
