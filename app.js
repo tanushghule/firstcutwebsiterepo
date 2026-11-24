@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================================================
      4. MULTI-PAGE DEPARTMENT ROUTER (Desktop Nav + Mobile Bottom Bar + Drawer)
      ========================================================================== */
-  const validPages = ["home", "submissions", "outreach", "sponsorship", "team"];
+  const validPages = ["home", "submissions", "outreach", "sponsorship", "team", "winners", "privacy"];
   const pageContainers = document.querySelectorAll(".dept-page");
   const drawerBackdrop = document.getElementById("mobile-drawer-backdrop");
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
@@ -134,6 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
     submissions: { title: "Submit Your Film | FirstCut Take 13 Student Film Festival", desc: "Submit your student short film free to FirstCut Take 13 at FLAME University, Pune. Fiction, Non-Fiction, Animation and Nano categories. Deadline 10 Jan 2027.", url: "https://firstcutflame.com/submissions/" },
     outreach: { title: "Collaborate With Us | FirstCut Outreach, Colleges and Film Clubs", desc: "Partner with FirstCut Take 13. Colleges, film clubs, media schools and industry collaborators can reach the FirstCut outreach team here.", url: "https://firstcutflame.com/outreach/" },
     sponsorship: { title: "Sponsor FirstCut Take 13 | Partner With India's Student Film Festival", desc: "Connect your brand with FirstCut Take 13, a student film festival at FLAME University, Pune. Social media, on-ground branding, activations and award sponsorships.", url: "https://firstcutflame.com/sponsorship/" },
+    winners: { title: "Past Winners | FirstCut Student Film Festival Archive", desc: "Past winners of FirstCut, India's largest student-run international film festival at FLAME University, Pune. Archive coming soon.", url: "https://firstcutflame.com/winners/" },
+    privacy: { title: "Privacy Notice | FirstCut Film Festival", desc: "How the FirstCut website uses your information: forms, analytics and cookies. FLAME University, Pune.", url: "https://firstcutflame.com/privacy/" },
     team: { title: "Meet the Team | FirstCut Take 13 Film Festival Committee", desc: "Meet the student team behind FirstCut Take 13, India's largest student-run film festival at FLAME University, Pune.", url: "https://firstcutflame.com/team/" }
   };
 
