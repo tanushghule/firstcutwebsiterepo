@@ -2780,3 +2780,45 @@ html.fc-intro-on, html.fc-intro-on body { overflow: hidden; }
 .photo-grid-strip img:hover {
   filter: grayscale(0%) contrast(1);
 }
+
+
+/* ===================================================================
+   VISUAL HIERARCHY PASS
+   A blur/squint test of the card grid showed two problems:
+   1. The filled yellow "+" discs were among the loudest things on the
+      page, despite carrying the least information. "If everything
+      stands out, nothing stands out" — so they rest as quiet outlines
+      and only fill in on hover, when they are actually actionable.
+   2. Inside a card, the yellow price line out-shouted the white title
+      above it, inverting the card's own hierarchy. The title now leads
+      on size and weight; the price keeps its yellow so the hook still
+      reads, but as the supporting line it is.
+   =================================================================== */
+
+/* 1. Demote the action button at rest */
+.h-card-action-btn {
+  background-color: transparent;
+  color: var(--color-yellow-base);
+  border: 1.5px solid rgba(245, 196, 81, 0.45);
+  box-shadow: none;
+}
+
+.h-item-card:hover .h-card-action-btn,
+.h-card-action-btn:hover,
+.h-card-action-btn:focus-visible {
+  background-color: var(--color-yellow-base);
+  color: #11100E;
+  border-color: var(--color-yellow-base);
+  box-shadow: 0 6px 18px rgba(245, 196, 81, 0.35);
+}
+
+/* 2. Restore title dominance within the card */
+.h-card-title {
+  font-size: 1.26rem;
+  line-height: 1.25;
+}
+
+.h-card-price {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
