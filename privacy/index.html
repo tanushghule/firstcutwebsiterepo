@@ -170,31 +170,62 @@
 <body>
   <!-- Intro slate: plays once per visit, skipped for reduced motion. Click or any key skips it. -->
   <div class="fc-intro" id="fc-intro" aria-hidden="true">
-    <svg class="fc-slate" viewBox="0 0 560 420" focusable="false">
-      <g class="fc-stick">
-        <path d="M10 70 L548 42 L552 90 L14 116 Z" fill="#F4EFE6" stroke="#F4EFE6" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M70 68 L122 65 L96 112 L44 114 Z M178 62 L230 59 L204 107 L152 109 Z M286 56 L338 53 L312 102 L260 104 Z M394 50 L446 47 L420 96 L368 98 Z M500 45 L540 43 L528 91 L476 93 Z" fill="#141210"/>
-        <circle cx="28" cy="93" r="6" fill="#141210"/>
-      </g>
-      <path class="fc-board" d="M20 122 Q14 122 14 130 L16 400 Q16 410 26 410 L536 408 Q546 408 546 398 L544 132 Q544 122 534 122 Z" fill="none" stroke="#F4EFE6" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M20 128 L540 124" stroke="#F4EFE6" stroke-width="3" fill="none"/>
-      <g font-family="Caveat, 'Segoe Print', 'Bradley Hand', cursive" fill="#F4EFE6">
-        <text x="40" y="180" font-size="24" letter-spacing="2">PRODUCTION</text>
-        <text x="350" y="176" font-size="34" text-anchor="middle">FirstCut</text>
-        <path d="M200 188 Q350 184 520 188" stroke="#F4EFE6" stroke-width="2.5" fill="none"/>
-        <text x="40" y="232" font-size="24" letter-spacing="2">DIRECTOR</text>
-        <text x="350" y="228" font-size="32" text-anchor="middle">FLAME University</text>
-        <path d="M180 240 Q350 236 520 240" stroke="#F4EFE6" stroke-width="2.5" fill="none"/>
-        <text x="40" y="284" font-size="24" letter-spacing="2">FEATURE</text>
-        <text x="350" y="280" font-size="32" text-anchor="middle">Student Cinema</text>
-        <path d="M170 292 Q350 288 520 292" stroke="#F4EFE6" stroke-width="2.5" fill="none"/>
-        <text x="100" y="322" font-size="20" text-anchor="middle" letter-spacing="2">DATE</text>
-        <text x="280" y="322" font-size="20" text-anchor="middle" letter-spacing="2">FESTIVAL</text>
-        <text x="460" y="322" font-size="20" text-anchor="middle" letter-spacing="2">TAKE</text>
-        <path d="M18 332 L544 330 M190 332 L192 408 M370 331 L372 408" stroke="#F4EFE6" stroke-width="3" fill="none"/>
-        <text x="100" y="386" font-size="46" text-anchor="middle">2027</text>
-        <text x="280" y="386" font-size="40" text-anchor="middle">9-11 Feb</text>
-        <text x="460" y="386" font-size="48" text-anchor="middle" fill="#F5C451">13</text>
+    <svg class="fc-slate" viewBox="0 0 560 682" focusable="false">
+      <defs>
+        <!-- Chalk: noise-displaces every stroke so nothing reads as a vector line -->
+        <filter id="fc-chalk" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.042" numOctaves="4" seed="7" result="fcNoise"/>
+          <feDisplacementMap in="SourceGraphic" in2="fcNoise" scale="3.4" xChannelSelector="R" yChannelSelector="G" result="fcRough"/>
+          <feGaussianBlur in="fcRough" stdDeviation="0.4"/>
+        </filter>
+        <filter id="fc-chalk-soft" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.055" numOctaves="3" seed="19" result="fcNoise2"/>
+          <feDisplacementMap in="SourceGraphic" in2="fcNoise2" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="fcRough2"/>
+          <feGaussianBlur in="fcRough2" stdDeviation="0.3"/>
+        </filter>
+      </defs>
+
+      <!-- shifted down so the raised clapper stick never clips the viewBox -->
+      <g transform="translate(0,150)" stroke-linecap="round" stroke-linejoin="round">
+
+        <g class="fc-stick" filter="url(#fc-chalk)">
+          <path d="M11 70 Q280 55 547 42 Q551 66 552 90 Q282 102 14 116 Q12 93 11 70 Z" fill="#F4EFE6" stroke="#F4EFE6" stroke-width="2.6"/>
+          <path d="M70 68 L122 65 L96 112 L45 114 Z" fill="#141210"/>
+          <path d="M178 62 L231 59 L203 107 L152 109 Z" fill="#141210"/>
+          <path d="M286 56 L337 53 L313 102 L259 104 Z" fill="#141210"/>
+          <path d="M394 50 L447 47 L419 96 L369 98 Z" fill="#141210"/>
+          <path d="M500 45 L540 43 L528 91 L477 93 Z" fill="#141210"/>
+          <circle cx="28" cy="93" r="6" fill="#141210"/>
+        </g>
+
+        <g filter="url(#fc-chalk)" fill="none" stroke="#F4EFE6">
+          <!-- board edge, drawn twice like a chalk line gone over again -->
+          <path d="M20 122 Q14 123 14.5 131 L16 400 Q16 410 26 410 L536 408 Q546 407 546 398 L544 132 Q543 122 534 122 Z" stroke-width="3.2"/>
+          <path d="M22 125 Q17 127 17.5 133 L19 398 Q19 407 28 407 L534 405 Q543 404 543 397 L541 134 Q540 125 532 125" stroke-width="1.5" opacity="0.5"/>
+          <path d="M21 129 Q280 126 539 124" stroke-width="3"/>
+        </g>
+
+        <g filter="url(#fc-chalk-soft)" font-family="Caveat, 'Segoe Print', 'Bradley Hand', cursive" fill="#F4EFE6">
+          <text x="40" y="180" font-size="24" letter-spacing="2" transform="rotate(-0.8 40 180)">PRODUCTION</text>
+          <text x="350" y="175" font-size="34" text-anchor="middle" transform="rotate(-1.2 350 175)">FirstCut</text>
+          <path d="M200 189 Q276 183 352 187 Q436 191 520 186" stroke="#F4EFE6" stroke-width="2.4" fill="none"/>
+          <text x="40" y="232" font-size="24" letter-spacing="2" transform="rotate(0.6 40 232)">DIRECTOR</text>
+          <text x="350" y="227" font-size="32" text-anchor="middle" transform="rotate(0.9 350 227)">FLAME University</text>
+          <path d="M180 241 Q262 234 346 239 Q434 243 520 238" stroke="#F4EFE6" stroke-width="2.2" fill="none"/>
+          <text x="40" y="284" font-size="24" letter-spacing="2" transform="rotate(-0.5 40 284)">FEATURE</text>
+          <text x="350" y="279" font-size="32" text-anchor="middle" transform="rotate(-1 350 279)">Student Cinema</text>
+          <path d="M170 293 Q256 286 342 291 Q432 295 520 290" stroke="#F4EFE6" stroke-width="2.4" fill="none"/>
+          <text x="100" y="322" font-size="20" text-anchor="middle" letter-spacing="2" transform="rotate(-0.7 100 322)">DATE</text>
+          <text x="280" y="323" font-size="20" text-anchor="middle" letter-spacing="2" transform="rotate(0.5 280 323)">FESTIVAL</text>
+          <text x="460" y="322" font-size="20" text-anchor="middle" letter-spacing="2" transform="rotate(-0.4 460 322)">TAKE</text>
+          <path d="M18 333 Q180 328 352 331 Q450 333 544 329" stroke="#F4EFE6" stroke-width="3" fill="none"/>
+          <path d="M190 334 Q186 370 192 408" stroke="#F4EFE6" stroke-width="2.8" fill="none"/>
+          <path d="M370 333 Q375 370 371 408" stroke="#F4EFE6" stroke-width="2.8" fill="none"/>
+          <text x="100" y="386" font-size="46" text-anchor="middle" transform="rotate(-1.4 100 386)">2027</text>
+          <text x="280" y="387" font-size="40" text-anchor="middle" transform="rotate(0.8 280 387)">9-11 Feb</text>
+          <text x="460" y="386" font-size="48" text-anchor="middle" fill="#F5C451" transform="rotate(-2 460 386)">13</text>
+        </g>
+
       </g>
     </svg>
   </div>

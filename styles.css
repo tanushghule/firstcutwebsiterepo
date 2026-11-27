@@ -2578,8 +2578,11 @@ img { height: auto; }
 /* ===== Intro slate (like ayush-dubey.com): board claps, then lifts away ===== */
 .fc-intro { position: fixed; inset: 0; z-index: 20000; background: #0B0A09; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .65s cubic-bezier(.76,0,.24,1); }
 .fc-intro.is-out { transform: translateY(-100%); }
-.fc-slate { width: min(520px, 82vw); height: auto; animation: fcSlateIn .45s cubic-bezier(.33,1,.68,1) both; }
-.fc-stick { transform-box: view-box; transform-origin: 20px 116px; animation: fcClap .9s cubic-bezier(.5,0,.2,1) .25s both; }
+/* viewBox is 560x682 (150px of headroom above the board, matched below) so the raised
+   clapper stick is never clipped. Cap the height for short/landscape screens. */
+.fc-slate { width: min(470px, 84vw); height: auto; max-height: 86vh; animation: fcSlateIn .45s cubic-bezier(.33,1,.68,1) both; }
+/* hinge sits at (20,116) in board coords, +150 from the translate wrapper */
+.fc-stick { transform-box: view-box; transform-origin: 20px 266px; animation: fcClap .9s cubic-bezier(.5,0,.2,1) .25s both; }
 @keyframes fcSlateIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
 @keyframes fcClap { 0% { transform: rotate(0); } 35% { transform: rotate(-16deg); } 70% { transform: rotate(-16deg); } 82% { transform: rotate(1.5deg); } 100% { transform: rotate(0); } }
 html.fc-intro-on, html.fc-intro-on body { overflow: hidden; }
