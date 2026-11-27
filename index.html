@@ -165,9 +165,86 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="/styles.css?v=3.13.0">
+  <link rel="stylesheet" href="/styles.css?v=3.20.0">
 </head>
 <body>
+  <!-- Intro slate: plays once per visit, skipped for reduced motion. Click or any key skips it. -->
+  <div class="fc-intro" id="fc-intro" aria-hidden="true">
+    <svg class="fc-slate" viewBox="0 0 560 682" focusable="false">
+      <defs>
+        <!-- Chalk: noise-displaces every stroke so nothing reads as a vector line -->
+        <filter id="fc-chalk" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.042" numOctaves="4" seed="7" result="fcNoise"/>
+          <feDisplacementMap in="SourceGraphic" in2="fcNoise" scale="3.4" xChannelSelector="R" yChannelSelector="G" result="fcRough"/>
+          <feGaussianBlur in="fcRough" stdDeviation="0.4"/>
+        </filter>
+        <filter id="fc-chalk-soft" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.055" numOctaves="3" seed="19" result="fcNoise2"/>
+          <feDisplacementMap in="SourceGraphic" in2="fcNoise2" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="fcRough2"/>
+          <feGaussianBlur in="fcRough2" stdDeviation="0.3"/>
+        </filter>
+      </defs>
+
+      <!-- shifted down so the raised clapper stick never clips the viewBox -->
+      <g transform="translate(0,150)" stroke-linecap="round" stroke-linejoin="round">
+
+        <g class="fc-stick" filter="url(#fc-chalk)">
+          <path d="M11 70 Q280 55 547 42 Q551 66 552 90 Q282 102 14 116 Q12 93 11 70 Z" fill="#F4EFE6" stroke="#F4EFE6" stroke-width="2.6"/>
+          <path d="M70 68 L122 65 L96 112 L45 114 Z" fill="#141210"/>
+          <path d="M178 62 L231 59 L203 107 L152 109 Z" fill="#141210"/>
+          <path d="M286 56 L337 53 L313 102 L259 104 Z" fill="#141210"/>
+          <path d="M394 50 L447 47 L419 96 L369 98 Z" fill="#141210"/>
+          <path d="M500 45 L540 43 L528 91 L477 93 Z" fill="#141210"/>
+          <circle cx="28" cy="93" r="6" fill="#141210"/>
+        </g>
+
+        <g filter="url(#fc-chalk)" fill="none" stroke="#F4EFE6">
+          <!-- board edge, drawn twice like a chalk line gone over again -->
+          <path d="M20 122 Q14 123 14.5 131 L16 400 Q16 410 26 410 L536 408 Q546 407 546 398 L544 132 Q543 122 534 122 Z" stroke-width="3.2"/>
+          <path d="M22 125 Q17 127 17.5 133 L19 398 Q19 407 28 407 L534 405 Q543 404 543 397 L541 134 Q540 125 532 125" stroke-width="1.5" opacity="0.5"/>
+          <path d="M21 129 Q280 126 539 124" stroke-width="3"/>
+        </g>
+
+        <g filter="url(#fc-chalk-soft)" font-family="Caveat, 'Segoe Print', 'Bradley Hand', cursive" fill="#F4EFE6">
+          <text x="40" y="180" font-size="24" letter-spacing="2" transform="rotate(-0.8 40 180)">PRODUCTION</text>
+          <text x="350" y="175" font-size="34" text-anchor="middle" transform="rotate(-1.2 350 175)">FirstCut</text>
+          <path d="M200 189 Q276 183 352 187 Q436 191 520 186" stroke="#F4EFE6" stroke-width="2.4" fill="none"/>
+          <text x="40" y="232" font-size="24" letter-spacing="2" transform="rotate(0.6 40 232)">DIRECTOR</text>
+          <text x="350" y="227" font-size="32" text-anchor="middle" transform="rotate(0.9 350 227)">FLAME University</text>
+          <path d="M180 241 Q262 234 346 239 Q434 243 520 238" stroke="#F4EFE6" stroke-width="2.2" fill="none"/>
+          <text x="40" y="284" font-size="24" letter-spacing="2" transform="rotate(-0.5 40 284)">FEATURE</text>
+          <text x="350" y="279" font-size="32" text-anchor="middle" transform="rotate(-1 350 279)">Student Cinema</text>
+          <path d="M170 293 Q256 286 342 291 Q432 295 520 290" stroke="#F4EFE6" stroke-width="2.4" fill="none"/>
+          <text x="100" y="322" font-size="20" text-anchor="middle" letter-spacing="2" transform="rotate(-0.7 100 322)">DATE</text>
+          <text x="280" y="323" font-size="20" text-anchor="middle" letter-spacing="2" transform="rotate(0.5 280 323)">FESTIVAL</text>
+          <text x="460" y="322" font-size="20" text-anchor="middle" letter-spacing="2" transform="rotate(-0.4 460 322)">TAKE</text>
+          <path d="M18 333 Q180 328 352 331 Q450 333 544 329" stroke="#F4EFE6" stroke-width="3" fill="none"/>
+          <path d="M190 334 Q186 370 192 408" stroke="#F4EFE6" stroke-width="2.8" fill="none"/>
+          <path d="M370 333 Q375 370 371 408" stroke="#F4EFE6" stroke-width="2.8" fill="none"/>
+          <text x="100" y="386" font-size="46" text-anchor="middle" transform="rotate(-1.4 100 386)">2027</text>
+          <text x="280" y="387" font-size="40" text-anchor="middle" transform="rotate(0.8 280 387)">9-11 Feb</text>
+          <text x="460" y="386" font-size="48" text-anchor="middle" fill="#F5C451" transform="rotate(-2 460 386)">13</text>
+        </g>
+
+      </g>
+    </svg>
+  </div>
+  <script>
+  (function(){
+    var el=document.getElementById('fc-intro'); if(!el) return;
+    var seen=false; try{seen=sessionStorage.getItem('fc_intro')==='1';}catch(e){}
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(seen||reduce){el.parentNode.removeChild(el);return;}
+    try{sessionStorage.setItem('fc_intro','1');}catch(e){}
+    document.documentElement.classList.add('fc-intro-on');
+    var done=false;
+    function end(){ if(done) return; done=true; el.classList.add('is-out');
+      document.documentElement.classList.remove('fc-intro-on');
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },700); }
+    el.addEventListener('click',end); window.addEventListener('keydown',end,{once:true});
+    setTimeout(end,1900);
+  })();
+  </script>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PVZX9TD4"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -307,7 +384,7 @@
             <p id="hero-desc-p">Welcome to <strong><span class="brand-fc">FirstCut</span></strong>, India’s largest student-run international film festival, headquartered at FLAME University, Pune. With 600+ submissions from 70+ countries in our last take, we are back with our 13th edition and one key mission: celebrating student cinema. We provide a platform that champions young voices and connects global creatives, bridging the gap between student cinema and the world.</p>
             <button type="button" class="hero-more" id="hero-more" aria-expanded="false" aria-controls="hero-desc-p">Read more</button>
             <div class="card-meta-badges" style="margin-top: 14px;">
-              <span class="meta-badge"><span class="badge-dot-box"></span> Free Submissions &amp; Entry</span>
+              <span class="meta-badge"><span class="badge-star">★</span> Free Submissions &amp; Entry</span>
               <span class="meta-badge"><span class="badge-star">★</span> ₹30,000 Prize / Category</span>
               <span class="meta-badge"><span class="badge-star">★</span> 70+ Countries</span>
               <span class="meta-badge"><span class="badge-star">★</span> 9&ndash;11 February 2027, FLAME University, Pune</span>
@@ -412,7 +489,7 @@
                 <div class="h-card-price">Free Entry &bull; ₹30,000 Prize</div>
                 <p class="h-card-desc">Submit your short film in Fiction, Non-Fiction, Animation, or Nano on our website (default) or on FilmFreeway.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Open: 21 Oct 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Open: 21 Oct 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Deadline: 10 Jan 2027 (IST)</span>
                 </div>
               </div>
@@ -429,7 +506,7 @@
                 <div class="h-card-price">70+ Countries &bull; Universities</div>
                 <p class="h-card-desc">Partner your university, film club, media school, or join as an Industry Professional or Campus Ambassador.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> College Tie-ups</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> College Tie-ups</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Industry Pros</span>
                 </div>
               </div>
@@ -446,7 +523,7 @@
                 <div class="h-card-price">3,000+ Campus Footfall</div>
                 <p class="h-card-desc">Connect your brand with student creators through on-ground stalls, theatre branding, and social media outreach.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Custom Tiers</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Custom Tiers</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Media Kit PDF</span>
                 </div>
               </div>
@@ -463,7 +540,7 @@
                 <div class="h-card-price">6 Student Committees</div>
                 <p class="h-card-desc">Meet the student organizing committee and department heads powering <span class="brand-fc">FirstCut</span> Take 13 at FLAME University.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Student-Run</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Student-Run</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> FLAME University</span>
                 </div>
               </div>
@@ -485,7 +562,7 @@
                 <div class="h-card-price">₹30,000 / Category</div>
                 <p class="h-card-desc">Recognizing top student filmmakers with official certificates and cash prizes across all four categories.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Live Ceremony</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Live Ceremony</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> 4 Categories</span>
                 </div>
               </div>
@@ -501,7 +578,7 @@
                 <div class="h-card-price">Live Jury Q&amp;A</div>
                 <p class="h-card-desc">Interactive discussions with student creators and renowned jury members right after live screenings.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Free Entry</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Free Entry</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Open to All</span>
                 </div>
               </div>
@@ -517,7 +594,7 @@
                 <div class="h-card-price">Hands-on Workshops</div>
                 <p class="h-card-desc">Sessions led by acclaimed industry cinematographers, editors, sound designers, and directors.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Certification</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Certification</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Industry Experts</span>
                 </div>
               </div>
@@ -533,7 +610,7 @@
                 <div class="h-card-price">FLAME University, Pune</div>
                 <p class="h-card-desc">Celebrate the opening of Take 13 alongside student delegates, visiting filmmakers, jury, and guests.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Networking</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Networking</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Campus Festival</span>
                 </div>
               </div>
@@ -590,7 +667,7 @@
                   Organized by FLAME University, Pune, <span class="brand-fc">FirstCut</span> has grown into one of India’s largest student-run international film festivals. Run entirely by students, for students, we champion complete creative freedom across Fiction, Non-Fiction, Animation, and our signature 2-minute Nano category.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> 100% Free Submissions</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> 100% Free Submissions</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Celebrating Student Cinema</span>
                 </div>
                 <div class="feature-card-footer">
@@ -615,7 +692,7 @@
                   Every year, <span class="brand-fc">FirstCut</span> hosts acclaimed directors, actors, producers, and screenwriters from the Indian and international film industry. Shortlisted films are screened for a live audience and evaluated by our distinguished jury, followed by engaging panel discussions.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Live Jury Feedback</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Live Jury Feedback</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Panel Discussions</span>
                 </div>
                 <div class="feature-card-footer">
@@ -830,7 +907,7 @@
                   Fiction films explore human emotions, relationships, and imagination through characters and storytelling. From realistic portrayals to fantastical narratives, they bring creative stories to life.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -849,7 +926,7 @@
                   Non-fiction films explore real stories through documentaries, biographies, investigations, and essay films. They offer perspectives on social issues, cultural contexts, and real-life experiences.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -868,7 +945,7 @@
                   Animation films bring stories to life through hand-drawn, stop-motion, 2D digital, or 3D techniques. They use creative visuals and movement to entertain, inspire, or inform.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2025</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2025</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -887,7 +964,7 @@
                   Nano films challenge filmmakers to tell compelling stories in just two minutes. Any genre is welcome, with concise storytelling, striking visuals, and creative editing making every second count.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -1181,7 +1258,7 @@
                 Download the official Take 13 Outreach Brochure covering our historical reach across 70+ countries, campus engagement initiatives, networking schedules, and university partnership models.
               </p>
               <div class="card-meta-badges" style="margin-bottom: 1.5rem;">
-                <span class="meta-badge"><span class="badge-dot-box"></span> University Tie-ups</span>
+                <span class="meta-badge"><span class="badge-star">★</span> University Tie-ups</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Film Clubs &amp; Media</span>
               </div>
             </div>
@@ -1276,7 +1353,7 @@
               <div class="h-card-price">Digital Brand Features</div>
               <p class="h-card-desc">Strategic, creative brand placements and reels across our official Instagram, LinkedIn, and YouTube channels.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> High Engagement</span>
+                <span class="meta-badge"><span class="badge-star">★</span> High Engagement</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Pan-India Reach</span>
               </div>
             </div>
@@ -1292,7 +1369,7 @@
               <div class="h-card-price">Main Theatre &amp; Campus</div>
               <p class="h-card-desc">Banners, standees, red carpet backdrops, and video promotions at our main screening theatres and central FLAME hubs.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> 3,000+ Footfall</span>
+                <span class="meta-badge"><span class="badge-star">★</span> 3,000+ Footfall</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Prime Visibility</span>
               </div>
             </div>
@@ -1308,7 +1385,7 @@
               <div class="h-card-price">Interactive Campus Stalls</div>
               <p class="h-card-desc">Set up interactive food, retail, or experience stalls in the student courtyard during festival days for direct youth reach.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> Live Stalls</span>
+                <span class="meta-badge"><span class="badge-star">★</span> Live Stalls</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Direct Sampling</span>
               </div>
             </div>
@@ -1324,7 +1401,7 @@
               <div class="h-card-price">Title &amp; Co-Sponsor Tiers</div>
               <p class="h-card-desc">Present category awards on stage during the closing ceremony and integrate your brand with student excellence.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> Stage Presence</span>
+                <span class="meta-badge"><span class="badge-star">★</span> Stage Presence</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Custom Packages</span>
               </div>
             </div>
@@ -1389,7 +1466,7 @@
                 Download the official <span class="brand-fc">FirstCut</span> Take 13 Partnership Presentation detailing audience demographics, engagement channels, pricing structures, and tier deliverables.
               </p>
               <div class="card-meta-badges" style="margin-bottom: 1.5rem;">
-                <span class="meta-badge"><span class="badge-dot-box"></span> 3,000+ Attendees</span>
+                <span class="meta-badge"><span class="badge-star">★</span> 3,000+ Attendees</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Official Deck</span>
               </div>
             </div>
@@ -1478,7 +1555,7 @@
 
         <div class="tm-section">
           <h2 class="tm-heading"><i></i>Core Committee <span>(CC) Heads</span></h2>
-          <div class="tm-heads-grid"><article class="tm-card "><div class="tm-photo"><img src="/images/team/pranita-raamakrishna.webp" alt="Pranita Raamakrishna, Events Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Pranita Raamakrishna</h3><span class="tm-role">Events Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/ridddhi-dholakia.webp" alt="Ridddhi Dholakia, Events Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Ridddhi Dholakia</h3><span class="tm-role">Events Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/dhritee-bharadwaj.webp" alt="Dhritee Bhardwaj, Head of Logistics, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Dhritee Bhardwaj</h3><span class="tm-role">Head of Logistics</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/prisha-sagar-mehta.webp" alt="Prisha Sagar Mehta, Head of Decor, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Prisha Sagar Mehta</h3><span class="tm-role">Head of Decor</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/adrija-dattagupta.webp" alt="Adrija Dattagupta, Hospitality Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Adrija Dattagupta</h3><span class="tm-role">Hospitality Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/siyona-swarup.webp" alt="Siyona Swarup, Hospitality Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Siyona Swarup</h3><span class="tm-role">Hospitality Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/shashwat-tripathi.webp" alt="Shashwat Tripathi, Head of Sponsorships, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Shashwat Tripathi</h3><span class="tm-role">Head of Sponsorships</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/samiksha-saravanan.webp" alt="Samiksha Saravanan, Registrations Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Samiksha Saravanan</h3><span class="tm-role">Registrations Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/krttika-mahipal.webp" alt="Krttika Mahipal, Registrations Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Krttika Mahipal</h3><span class="tm-role">Registrations Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/rouchelle-phillips.webp" alt="Rouchelle Phillips, Finance Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Rouchelle Phillips</h3><span class="tm-role">Finance Head</span></div></article><article class="tm-card "><div class="tm-photo"><span class="tm-mono" aria-hidden="true">DA</span></div><div class="tm-cap"><h3 class="tm-name">Dev Amarnani</h3><span class="tm-role">IT</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/ria-raje.webp" alt="Ria Raje, Outreach Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Ria Raje</h3><span class="tm-role">Outreach Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/tvisha-aggrawal.webp" alt="Tvisha Aggrawal, Outreach Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Tvisha Aggrawal</h3><span class="tm-role">Outreach Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/naveli-mehta.webp" alt="Naveli Mehta, Marketing Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Naveli Mehta</h3><span class="tm-role">Marketing Head</span></div></article></div>
+          <div class="tm-heads-grid"><article class="tm-card "><div class="tm-photo"><img src="/images/team/pranita-raamakrishna.webp" alt="Pranita Raamakrishna, Events Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Pranita Raamakrishna</h3><span class="tm-role">Events Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/ridddhi-dholakia.webp" alt="Ridddhi Dholakia, Events Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Ridddhi Dholakia</h3><span class="tm-role">Events Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/dhritee-bharadwaj.webp" alt="Dhritee Bhardwaj, Head of Logistics, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Dhritee Bhardwaj</h3><span class="tm-role">Head of Logistics</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/prisha-sagar-mehta.webp" alt="Prisha Sagar Mehta, Head of Decor, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Prisha Sagar Mehta</h3><span class="tm-role">Head of Decor</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/adrija-dattagupta.webp" alt="Adrija Dattagupta, Hospitality Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Adrija Dattagupta</h3><span class="tm-role">Hospitality Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/siyona-swarup.webp" alt="Siyona Swarup, Hospitality Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Siyona Swarup</h3><span class="tm-role">Hospitality Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/shashwat-tripathi.webp" alt="Shashwat Tripathi, Head of Sponsorships, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Shashwat Tripathi</h3><span class="tm-role">Head of Sponsorships</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/samiksha-saravanan.webp" alt="Samiksha Saravanan, Registrations Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Samiksha Saravanan</h3><span class="tm-role">Registrations Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/krttika-mahipal.webp" alt="Krttika Mahipal, Registrations Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Krttika Mahipal</h3><span class="tm-role">Registrations Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/rouchelle-phillips.webp" alt="Rouchelle Phillips, Finance Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Rouchelle Phillips</h3><span class="tm-role">Finance Head</span></div></article><article class="tm-card "><div class="tm-photo"><span class="tm-mono" aria-hidden="true">DA</span></div><div class="tm-cap"><h3 class="tm-name">Dev Amarnani</h3><span class="tm-role">IT</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/ria-raje.webp" alt="Ria Raje, Outreach Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Ria Raje</h3><span class="tm-role">Outreach Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/tvisha-aggrawal.webp" alt="Tvisha Aggrawal, Outreach Co-Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Tvisha Aggrawal</h3><span class="tm-role">Outreach Co-Head</span></div></article><article class="tm-card "><div class="tm-photo"><img src="/images/team/naveli-mehta.webp" alt="Naveli Mehta, Marketing Head, FirstCut Take 13" loading="lazy" width="800" height="1000"></div><div class="tm-cap"><h3 class="tm-name">Naveli Mehta</h3><span class="tm-role">Marketing Head</span></div></article></div>
         </div>
 
         <div class="tm-section">
@@ -1626,7 +1703,8 @@
   <script src="/upload.js?v=2.1.0"></script>
   <script src="/wizard.js?v=1.0.4"></script>
   <script src="/consent.js?v=1.0.0"></script>
-  <script src="/app.js?v=3.6.0"></script>
+  <script src="/app.js?v=3.7.0"></script>
+  <script src="/reveal.js?v=1.0.1"></script>
 
   <script>
   /* Hero: pause the background video for reduced motion / data saver; phone "Read more" toggle */

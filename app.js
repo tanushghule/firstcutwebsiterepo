@@ -289,25 +289,54 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================================================
      5. INTERACTIVE PILL TABS FILTERING (Home, Submission Categories, Team)
      ========================================================================== */
-  // Home Section Pill Filter
+  // Home Section Pill Filter (tabs)
   const homePills = document.querySelectorAll("[data-home-filter]");
   const homeGroups = document.querySelectorAll("[data-home-group]");
+  const homeBar = document.querySelector(".pill-tabs-bar");
+
+  // A group may be intentionally empty (Member Blogs & Reviews stays out
+  // until it has posts). Never let a tab reveal an empty group.
+  const groupHasContent = (grp) => {
+    const grid = grp.querySelector("#fc-stories-grid");
+    return grid ? grid.children.length > 0 : true;
+  };
+
+  const applyHomeFilter = (filter, userClick) => {
+    homePills.forEach((p) => {
+      const on = p.getAttribute("data-home-filter") === filter;
+      p.classList.toggle("active", on);
+      p.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+
+    homeGroups.forEach((grp) => {
+      const match = filter === "all" || grp.getAttribute("data-home-group") === filter;
+      const show = match && groupHasContent(grp);
+      grp.hidden = !show;
+      grp.style.display = show ? "block" : "none";
+      if (show && userClick) {
+        grp.classList.remove("tab-enter");
+        void grp.offsetWidth;
+        grp.classList.add("tab-enter");
+      }
+    });
+
+    // Switching from a long tab to a short one used to drop the reader into
+    // the footer. Bring the tab bar back to the top if it has scrolled away.
+    if (userClick && homeBar) {
+      const top = homeBar.getBoundingClientRect().top;
+      if (top < 70) {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        window.scrollTo({ top: window.scrollY + top - 90, behavior: reduce ? "auto" : "smooth" });
+      }
+    }
+  };
 
   homePills.forEach((pill) => {
     pill.addEventListener("click", () => {
-      const filter = pill.getAttribute("data-home-filter");
-      homePills.forEach((p) => p.classList.remove("active"));
-      pill.classList.add("active");
-
-      homeGroups.forEach((grp) => {
-        if (filter === "all" || grp.getAttribute("data-home-group") === filter) {
-          grp.style.display = "block";
-        } else {
-          grp.style.display = "none";
-        }
-      });
+      applyHomeFilter(pill.getAttribute("data-home-filter"), true);
     });
   });
+  if (homePills.length) applyHomeFilter("all", false);
 
   // Submission Categories Pill Filter
   const catPills = document.querySelectorAll("[data-cat-filter]");
