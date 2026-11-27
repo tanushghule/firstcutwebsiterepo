@@ -165,9 +165,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   
   <!-- CSS -->
-  <link rel="stylesheet" href="/styles.css?v=3.13.0">
+  <link rel="stylesheet" href="/styles.css?v=3.15.0">
 </head>
 <body>
+  <!-- Intro slate: plays once per visit, skipped for reduced motion. Click or any key skips it. -->
+  <div class="fc-intro" id="fc-intro" aria-hidden="true">
+    <svg class="fc-slate" viewBox="0 0 560 420" focusable="false">
+      <g class="fc-stick">
+        <path d="M10 70 L548 42 L552 90 L14 116 Z" fill="#F4EFE6" stroke="#F4EFE6" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M70 68 L122 65 L96 112 L44 114 Z M178 62 L230 59 L204 107 L152 109 Z M286 56 L338 53 L312 102 L260 104 Z M394 50 L446 47 L420 96 L368 98 Z M500 45 L540 43 L528 91 L476 93 Z" fill="#141210"/>
+        <circle cx="28" cy="93" r="6" fill="#141210"/>
+      </g>
+      <path class="fc-board" d="M20 122 Q14 122 14 130 L16 400 Q16 410 26 410 L536 408 Q546 408 546 398 L544 132 Q544 122 534 122 Z" fill="none" stroke="#F4EFE6" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M20 128 L540 124" stroke="#F4EFE6" stroke-width="3" fill="none"/>
+      <g font-family="Caveat, 'Segoe Print', 'Bradley Hand', cursive" fill="#F4EFE6">
+        <text x="40" y="180" font-size="24" letter-spacing="2">PRODUCTION</text>
+        <text x="350" y="176" font-size="34" text-anchor="middle">FirstCut</text>
+        <path d="M200 188 Q350 184 520 188" stroke="#F4EFE6" stroke-width="2.5" fill="none"/>
+        <text x="40" y="232" font-size="24" letter-spacing="2">DIRECTOR</text>
+        <text x="350" y="228" font-size="32" text-anchor="middle">FLAME University</text>
+        <path d="M180 240 Q350 236 520 240" stroke="#F4EFE6" stroke-width="2.5" fill="none"/>
+        <text x="40" y="284" font-size="24" letter-spacing="2">FEATURE</text>
+        <text x="350" y="280" font-size="32" text-anchor="middle">Student Cinema</text>
+        <path d="M170 292 Q350 288 520 292" stroke="#F4EFE6" stroke-width="2.5" fill="none"/>
+        <text x="100" y="322" font-size="20" text-anchor="middle" letter-spacing="2">DATE</text>
+        <text x="280" y="322" font-size="20" text-anchor="middle" letter-spacing="2">FESTIVAL</text>
+        <text x="460" y="322" font-size="20" text-anchor="middle" letter-spacing="2">TAKE</text>
+        <path d="M18 332 L544 330 M190 332 L192 408 M370 331 L372 408" stroke="#F4EFE6" stroke-width="3" fill="none"/>
+        <text x="100" y="386" font-size="46" text-anchor="middle">2027</text>
+        <text x="280" y="386" font-size="40" text-anchor="middle">9-11 Feb</text>
+        <text x="460" y="386" font-size="48" text-anchor="middle" fill="#F5C451">13</text>
+      </g>
+    </svg>
+  </div>
+  <script>
+  (function(){
+    var el=document.getElementById('fc-intro'); if(!el) return;
+    var seen=false; try{seen=sessionStorage.getItem('fc_intro')==='1';}catch(e){}
+    var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(seen||reduce){el.parentNode.removeChild(el);return;}
+    try{sessionStorage.setItem('fc_intro','1');}catch(e){}
+    document.documentElement.classList.add('fc-intro-on');
+    var done=false;
+    function end(){ if(done) return; done=true; el.classList.add('is-out');
+      document.documentElement.classList.remove('fc-intro-on');
+      setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); },700); }
+    el.addEventListener('click',end); window.addEventListener('keydown',end,{once:true});
+    setTimeout(end,1900);
+  })();
+  </script>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PVZX9TD4"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -307,7 +353,7 @@
             <p id="hero-desc-p">Welcome to <strong><span class="brand-fc">FirstCut</span></strong>, India’s largest student-run international film festival, headquartered at FLAME University, Pune. With 600+ submissions from 70+ countries in our last take, we are back with our 13th edition and one key mission: celebrating student cinema. We provide a platform that champions young voices and connects global creatives, bridging the gap between student cinema and the world.</p>
             <button type="button" class="hero-more" id="hero-more" aria-expanded="false" aria-controls="hero-desc-p">Read more</button>
             <div class="card-meta-badges" style="margin-top: 14px;">
-              <span class="meta-badge"><span class="badge-dot-box"></span> Free Submissions &amp; Entry</span>
+              <span class="meta-badge"><span class="badge-star">★</span> Free Submissions &amp; Entry</span>
               <span class="meta-badge"><span class="badge-star">★</span> ₹30,000 Prize / Category</span>
               <span class="meta-badge"><span class="badge-star">★</span> 70+ Countries</span>
               <span class="meta-badge"><span class="badge-star">★</span> 9&ndash;11 February 2027, FLAME University, Pune</span>
@@ -412,7 +458,7 @@
                 <div class="h-card-price">Free Entry &bull; ₹30,000 Prize</div>
                 <p class="h-card-desc">Submit your short film in Fiction, Non-Fiction, Animation, or Nano on our website (default) or on FilmFreeway.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Open: 21 Oct 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Open: 21 Oct 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Deadline: 10 Jan 2027 (IST)</span>
                 </div>
               </div>
@@ -429,7 +475,7 @@
                 <div class="h-card-price">70+ Countries &bull; Universities</div>
                 <p class="h-card-desc">Partner your university, film club, media school, or join as an Industry Professional or Campus Ambassador.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> College Tie-ups</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> College Tie-ups</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Industry Pros</span>
                 </div>
               </div>
@@ -446,7 +492,7 @@
                 <div class="h-card-price">3,000+ Campus Footfall</div>
                 <p class="h-card-desc">Connect your brand with student creators through on-ground stalls, theatre branding, and social media outreach.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Custom Tiers</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Custom Tiers</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Media Kit PDF</span>
                 </div>
               </div>
@@ -463,7 +509,7 @@
                 <div class="h-card-price">6 Student Committees</div>
                 <p class="h-card-desc">Meet the student organizing committee and department heads powering <span class="brand-fc">FirstCut</span> Take 13 at FLAME University.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Student-Run</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Student-Run</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> FLAME University</span>
                 </div>
               </div>
@@ -485,7 +531,7 @@
                 <div class="h-card-price">₹30,000 / Category</div>
                 <p class="h-card-desc">Recognizing top student filmmakers with official certificates and cash prizes across all four categories.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Live Ceremony</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Live Ceremony</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> 4 Categories</span>
                 </div>
               </div>
@@ -501,7 +547,7 @@
                 <div class="h-card-price">Live Jury Q&amp;A</div>
                 <p class="h-card-desc">Interactive discussions with student creators and renowned jury members right after live screenings.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Free Entry</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Free Entry</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Open to All</span>
                 </div>
               </div>
@@ -517,7 +563,7 @@
                 <div class="h-card-price">Hands-on Workshops</div>
                 <p class="h-card-desc">Sessions led by acclaimed industry cinematographers, editors, sound designers, and directors.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Certification</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Certification</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Industry Experts</span>
                 </div>
               </div>
@@ -533,7 +579,7 @@
                 <div class="h-card-price">FLAME University, Pune</div>
                 <p class="h-card-desc">Celebrate the opening of Take 13 alongside student delegates, visiting filmmakers, jury, and guests.</p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Networking</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Networking</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Campus Festival</span>
                 </div>
               </div>
@@ -590,7 +636,7 @@
                   Organized by FLAME University, Pune, <span class="brand-fc">FirstCut</span> has grown into one of India’s largest student-run international film festivals. Run entirely by students, for students, we champion complete creative freedom across Fiction, Non-Fiction, Animation, and our signature 2-minute Nano category.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> 100% Free Submissions</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> 100% Free Submissions</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Celebrating Student Cinema</span>
                 </div>
                 <div class="feature-card-footer">
@@ -615,7 +661,7 @@
                   Every year, <span class="brand-fc">FirstCut</span> hosts acclaimed directors, actors, producers, and screenwriters from the Indian and international film industry. Shortlisted films are screened for a live audience and evaluated by our distinguished jury, followed by engaging panel discussions.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Live Jury Feedback</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Live Jury Feedback</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> Panel Discussions</span>
                 </div>
                 <div class="feature-card-footer">
@@ -830,7 +876,7 @@
                   Fiction films explore human emotions, relationships, and imagination through characters and storytelling. From realistic portrayals to fantastical narratives, they bring creative stories to life.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -849,7 +895,7 @@
                   Non-fiction films explore real stories through documentaries, biographies, investigations, and essay films. They offer perspectives on social issues, cultural contexts, and real-life experiences.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -868,7 +914,7 @@
                   Animation films bring stories to life through hand-drawn, stop-motion, 2D digital, or 3D techniques. They use creative visuals and movement to entertain, inspire, or inform.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2025</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2025</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -887,7 +933,7 @@
                   Nano films challenge filmmakers to tell compelling stories in just two minutes. Any genre is welcome, with concise storytelling, striking visuals, and creative editing making every second count.
                 </p>
                 <div class="card-meta-badges">
-                  <span class="meta-badge"><span class="badge-dot-box"></span> Completed after 30 Jan 2026</span>
+                  <span class="meta-badge"><span class="badge-star">★</span> Completed after 30 Jan 2026</span>
                   <span class="meta-badge"><span class="badge-star">☆</span> ₹30,000 Award</span>
                 </div>
               </div>
@@ -1181,7 +1227,7 @@
                 Download the official Take 13 Outreach Brochure covering our historical reach across 70+ countries, campus engagement initiatives, networking schedules, and university partnership models.
               </p>
               <div class="card-meta-badges" style="margin-bottom: 1.5rem;">
-                <span class="meta-badge"><span class="badge-dot-box"></span> University Tie-ups</span>
+                <span class="meta-badge"><span class="badge-star">★</span> University Tie-ups</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Film Clubs &amp; Media</span>
               </div>
             </div>
@@ -1276,7 +1322,7 @@
               <div class="h-card-price">Digital Brand Features</div>
               <p class="h-card-desc">Strategic, creative brand placements and reels across our official Instagram, LinkedIn, and YouTube channels.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> High Engagement</span>
+                <span class="meta-badge"><span class="badge-star">★</span> High Engagement</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Pan-India Reach</span>
               </div>
             </div>
@@ -1292,7 +1338,7 @@
               <div class="h-card-price">Main Theatre &amp; Campus</div>
               <p class="h-card-desc">Banners, standees, red carpet backdrops, and video promotions at our main screening theatres and central FLAME hubs.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> 3,000+ Footfall</span>
+                <span class="meta-badge"><span class="badge-star">★</span> 3,000+ Footfall</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Prime Visibility</span>
               </div>
             </div>
@@ -1308,7 +1354,7 @@
               <div class="h-card-price">Interactive Campus Stalls</div>
               <p class="h-card-desc">Set up interactive food, retail, or experience stalls in the student courtyard during festival days for direct youth reach.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> Live Stalls</span>
+                <span class="meta-badge"><span class="badge-star">★</span> Live Stalls</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Direct Sampling</span>
               </div>
             </div>
@@ -1324,7 +1370,7 @@
               <div class="h-card-price">Title &amp; Co-Sponsor Tiers</div>
               <p class="h-card-desc">Present category awards on stage during the closing ceremony and integrate your brand with student excellence.</p>
               <div class="card-meta-badges">
-                <span class="meta-badge"><span class="badge-dot-box"></span> Stage Presence</span>
+                <span class="meta-badge"><span class="badge-star">★</span> Stage Presence</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Custom Packages</span>
               </div>
             </div>
@@ -1389,7 +1435,7 @@
                 Download the official <span class="brand-fc">FirstCut</span> Take 13 Partnership Presentation detailing audience demographics, engagement channels, pricing structures, and tier deliverables.
               </p>
               <div class="card-meta-badges" style="margin-bottom: 1.5rem;">
-                <span class="meta-badge"><span class="badge-dot-box"></span> 3,000+ Attendees</span>
+                <span class="meta-badge"><span class="badge-star">★</span> 3,000+ Attendees</span>
                 <span class="meta-badge"><span class="badge-star">☆</span> Official Deck</span>
               </div>
             </div>
@@ -1626,7 +1672,7 @@
   <script src="/upload.js?v=2.1.0"></script>
   <script src="/wizard.js?v=1.0.4"></script>
   <script src="/consent.js?v=1.0.0"></script>
-  <script src="/app.js?v=3.6.0"></script>
+  <script src="/app.js?v=3.7.0"></script>
 
   <script>
   /* Hero: pause the background video for reduced motion / data saver; phone "Read more" toggle */

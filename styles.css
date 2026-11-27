@@ -662,25 +662,6 @@ a {
   color: #D4CFC7;
 }
 
-.badge-dot-box {
-  width: 13px;
-  height: 13px;
-  border: 1.4px solid var(--color-green-badge);
-  border-radius: 3px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.badge-dot-box::after {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--color-green-badge);
-}
-
 .badge-star {
   color: var(--color-yellow-base);
   font-size: 0.88rem;
@@ -2587,3 +2568,46 @@ img { height: auto; }
 .privacy-body h2 { font-family: 'Inter', sans-serif; font-weight: 800; text-transform: uppercase; font-size: 1.1rem; color: var(--color-yellow-base); margin: 2rem 0 0.5rem; }
 .privacy-body a { color: var(--color-yellow-base); }
 .privacy-body ul { padding-left: 1.2rem; }
+
+/* Tabs: short fade when a group appears (skipped for reduced motion) */
+@keyframes tabEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.home-filter-group.tab-enter { animation: tabEnter .28s ease both; }
+@media (prefers-reduced-motion: reduce) { .home-filter-group.tab-enter { animation: none; } }
+.pill-tab[aria-pressed="true"] { cursor: default; }
+
+/* ===== Intro slate (like ayush-dubey.com): board claps, then lifts away ===== */
+.fc-intro { position: fixed; inset: 0; z-index: 20000; background: #0B0A09; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform .65s cubic-bezier(.76,0,.24,1); }
+.fc-intro.is-out { transform: translateY(-100%); }
+.fc-slate { width: min(520px, 82vw); height: auto; animation: fcSlateIn .45s cubic-bezier(.33,1,.68,1) both; }
+.fc-stick { transform-box: view-box; transform-origin: 20px 116px; animation: fcClap .9s cubic-bezier(.5,0,.2,1) .25s both; }
+@keyframes fcSlateIn { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes fcClap { 0% { transform: rotate(0); } 35% { transform: rotate(-16deg); } 70% { transform: rotate(-16deg); } 82% { transform: rotate(1.5deg); } 100% { transform: rotate(0); } }
+html.fc-intro-on, html.fc-intro-on body { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .fc-intro { display: none; } }
+
+/* ===== Hover lift (like ayush-dubey.com): 4px rise + gold ring, everywhere ===== */
+:root { --fc-ease: cubic-bezier(.33,1,.68,1); }
+.h-item-card, .fe-card, .feature-detail-card, .app-dark-card, .tm-card, .fc-crew-card,
+.recap-card-wrapper, .stat-pill-box, .photo-grid-strip img, .btn-gold-pill, .btn-gold-full,
+.btn-primary, .btn-download, .pill-tab {
+  transition: transform .42s var(--fc-ease), box-shadow .42s var(--fc-ease), border-color .42s var(--fc-ease), background-color .2s ease, color .2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .h-item-card:hover, .fe-card:hover, .feature-detail-card:hover, .app-dark-card:hover,
+  .tm-card:hover, .fc-crew-card:hover, .recap-card-wrapper:hover, .stat-pill-box:hover,
+  .photo-grid-strip img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 0 2px var(--color-yellow-base), 0 14px 30px rgba(0,0,0,.45);
+  }
+  .btn-gold-pill:hover, .btn-gold-full:hover, .btn-primary:hover, .btn-download:hover, .pill-tab:hover { transform: translateY(-2px); }
+  .tm-photo img, .h-card-thumb img, .feature-card-img-wrap img { transition: transform .6s var(--fc-ease), filter .6s var(--fc-ease); }
+  .tm-card:hover .tm-photo img, .h-item-card:hover .h-card-thumb img, .feature-detail-card:hover .feature-card-img-wrap img { transform: scale(1.05); }
+}
+/* Keyboard users get the same ring */
+.h-item-card:focus-visible, .fe-card:focus-visible, .tm-card:focus-visible { transform: translateY(-4px); box-shadow: 0 0 0 2px var(--color-yellow-base); outline: none; }
+@media (prefers-reduced-motion: reduce) {
+  .h-item-card:hover, .fe-card:hover, .feature-detail-card:hover, .app-dark-card:hover, .tm-card:hover, .fc-crew-card:hover,
+  .recap-card-wrapper:hover, .stat-pill-box:hover, .photo-grid-strip img:hover, .btn-gold-pill:hover, .btn-gold-full:hover,
+  .btn-primary:hover, .btn-download:hover, .pill-tab:hover { transform: none; }
+  .tm-card:hover .tm-photo img, .h-item-card:hover .h-card-thumb img, .feature-detail-card:hover .feature-card-img-wrap img { transform: none; }
+}
